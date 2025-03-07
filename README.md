@@ -72,19 +72,22 @@ composer require scify/laravel-cookie-guard
 php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-public" --force
 ```
 
-Then, make sure to check the configuration file `config/cookies_consent.php` and update it according to [the new one](config/cookies_consent.php).
+Then, make sure to check the configuration file `config/cookies_consent.php` and update it according
+to [the new one](config/cookies_consent.php).
 
 Then, make sure that the Laravel components you use are the new ones:
 
 Intead of using:
 
 ```html
+
 <x-laravel-cookies-consent></x-laravel-cookies-consent>
 ```
 
 Use:
 
 ```html
+
 <x-laravel-cookie-guard-scripts></x-laravel-cookie-guard-scripts>
 <x-laravel-cookie-guard></x-laravel-cookie-guard>
 ```
@@ -121,13 +124,13 @@ front-end.
 
 ## Installation
 
-You can install the package via composer:
+1. You can install the package via composer:
 
 ```bash
 composer require scify/laravel-cookie-guard
 ```
 
-**Make sure to manually publish** the cookie image file, by running:
+2. Then, **Make sure to manually publish** the cookie image file, by running:
 
 ```bash
 php artisan vendor:publish \
@@ -157,6 +160,17 @@ php artisan vendor:publish \
 ```
 
 The configuration file will be published to `config/cookies_consent.php`.
+
+3. Use the Laravel View Components provided
+
+In order to use the plugin, you need to include the Laravel View Components in your Blade files, where you want the
+cookies to appear (typically just before the closing `</body>` tag):
+
+```html
+
+<x-laravel-cookie-guard></x-laravel-cookie-guard>
+<x-laravel-cookie-guard-scripts></x-laravel-cookie-guard-scripts>
+```
 
 ### Explanation of the configuration file
 
