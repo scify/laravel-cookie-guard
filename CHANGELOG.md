@@ -24,7 +24,9 @@ php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookie
 php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-config" --force
 ```
 
-And then make sure that the Laravel components you use are the new ones:
+Then, make sure to set again the `cookie_prefix` in the config file, as well as the `strictly_necessary` first cookie (that has the cookie prefix).
+
+Then, make sure that the Laravel components you use are the new ones:
 
 Intead of using:
 
