@@ -39,7 +39,7 @@ return [
                 'name' => 'my_app_cookies_consent',
                 'description' => 'cookies_consent::messages.cookie_cookies_consent_description',
                 'duration' => 'cookies_consent::messages.years',
-                'duration_count' => 2,
+                'duration_count' => 1,
                 'policy_external_link' => null,
             ],
             [
