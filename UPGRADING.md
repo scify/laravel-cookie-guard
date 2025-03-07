@@ -24,6 +24,8 @@ not 100% backward compatible with the v1 configuration file.
 So, in order to update to the new configuration file, you should save your current configuration file (e.g.
 `config/cookies-consent.php`) to a safe place.
 
+Then, make sure to check the configuration file `config/cookies_consent.php` and update it according to [the new one](config/cookies_consent.php).
+
 ### Step 1: Backup any changes made to the styles file
 
 The v.1 of the plugin had a styles file that was published to `public/vendor/scify/laravel-cookie-guard/css/style.css`.

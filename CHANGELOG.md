@@ -20,11 +20,9 @@ composer remove scify/laravel-cookies-consent
 composer require scify/laravel-cookie-guard
 
 php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-public" --force
-
-php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-config" --force
 ```
 
-Then, make sure to set again the `cookie_prefix` in the config file, as well as the `strictly_necessary` first cookie (that has the cookie prefix).
+Then, make sure to check the configuration file `config/cookies_consent.php` and update it according to [the new one](config/cookies_consent.php).
 
 Then, make sure that the Laravel components you use are the new ones:
 
