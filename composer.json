@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "php": "^7|^8"
+        "php": "^8"
     },
     "require-dev": {
         "larastan/larastan": "^3.1",
