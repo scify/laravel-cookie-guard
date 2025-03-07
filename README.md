@@ -2,7 +2,7 @@
 
 # Laravel Cookie Guard - Make your Laravel app compliant with the EU GDPR cookie law
 
-The only Consent Plugin your app will ever need!
+The only Consent Plugin your **Laravel app** will ever need!
 
 <p align="center">
 <img src="logo.jpg" alt="logo" width="400">
