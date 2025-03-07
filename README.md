@@ -1,27 +1,28 @@
 <!-- omit in toc -->
 
-# Laravel Cookies Consent Plugin - Make your Laravel app compliant with the EU GDPR cookie law
+# Laravel Cookie Guard - Make your Laravel app compliant with the EU GDPR cookie law
+
+The only Consent Plugin your app will ever need!
 
 <p align="center">
 <img src="logo.jpg" alt="logo" width="400">
 </p>
 
-
 <hr>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/scify/laravel-cookies-consent.svg?style=flat-square)](https://packagist.org/packages/scify/laravel-cookies-consent)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/scify/laravel-cookies-consent/run-tests.yml?branch=main)](https://github.com/scify/laravel-cookies-consent/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/scify/laravel-cookies-consent.svg?style=flat-square)](https://packagist.org/packages/scify/laravel-cookies-consent)
-[![GitHub Issues](https://img.shields.io/github/issues/scify/laravel-cookies-consent)](https://img.shields.io/github/issues/scify/laravel-cookies-consent)
-[![GitHub Stars](https://img.shields.io/github/stars/scify/laravel-cookies-consent)](https://img.shields.io/github/stars/scify/laravel-cookies-consent)
-[![GitHub forks](https://img.shields.io/github/forks/scify/laravel-cookies-consent)](https://img.shields.io/github/forks/scify/laravel-cookies-consent)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/scify/laravel-cookie-guard.svg?style=flat-square)](https://packagist.org/packages/scify/laravel-cookie-guard)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/scify/laravel-cookie-guard/run-tests.yml?branch=main)](https://github.com/scify/laravel-cookie-guard/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/scify/laravel-cookie-guard.svg?style=flat-square)](https://packagist.org/packages/scify/laravel-cookie-guard)
+[![GitHub Issues](https://img.shields.io/github/issues/scify/laravel-cookie-guard)](https://img.shields.io/github/issues/scify/laravel-cookie-guard)
+[![GitHub Stars](https://img.shields.io/github/stars/scify/laravel-cookie-guard)](https://img.shields.io/github/stars/scify/laravel-cookie-guard)
+[![GitHub forks](https://img.shields.io/github/forks/scify/laravel-cookie-guard)](https://img.shields.io/github/forks/scify/laravel-cookie-guard)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/scify)
-[![GitHub contributors](https://img.shields.io/github/contributors/scify/laravel-cookies-consent)](https://github.com/scify/laravel-cookies-consent/graphs/contributors)
-[![GitHub pull-requests](https://img.shields.io/github/issues-pr/scify/laravel-cookies-consent)](https://github.com/scify/laravel-cookies-consent/pulls)
-[![GitHub closed pull-requests](https://img.shields.io/github/issues-pr-closed/scify/laravel-cookies-consent)](https://github.com/scify/laravel-cookies-consent/pulls?q=is%3Apr+is%3Aclosed)
+[![GitHub contributors](https://img.shields.io/github/contributors/scify/laravel-cookie-guard)](https://github.com/scify/laravel-cookie-guard/graphs/contributors)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/scify/laravel-cookie-guard)](https://github.com/scify/laravel-cookie-guard/pulls)
+[![GitHub closed pull-requests](https://img.shields.io/github/issues-pr-closed/scify/laravel-cookie-guard)](https://github.com/scify/laravel-cookie-guard/pulls?q=is%3Apr+is%3Aclosed)
 
 ## Table of Contents
 
@@ -55,10 +56,41 @@
 
 ## Upgrading to v4
 
-As of **February 2025**, The `v4` of the Laravel Cookies Consent plugin has been released! 🎉🥳😍
+As of **March 2025**, The `v4` of the Laravel Cookies Consent plugin has been released! 🎉🥳😍
+It offers a **new, revamped UI**, and a lot of new features and improvements.
+
+**Important:**
+Since the plugin now has a completely new name, you will need to uninstall the old package, and install the new one.
+
+```bash
+rm -rf public/vendor/scify && rm -rf vendor/scify
+
+composer remove scify/laravel-cookies-consent
+
+composer require scify/laravel-cookie-guard
+
+php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-public" --force
+```
+
+And then make sure that the Laravel components you use are the new ones:
+
+Intead of using:
+
+```html
+<x-laravel-cookies-consent></x-laravel-cookies-consent>
+```
+
+Use:
+
+```html
+<x-laravel-cookie-guard-scripts></x-laravel-cookie-guard-scripts>
+<x-laravel-cookie-guard></x-laravel-cookie-guard>
+```
 
 In order to upgrade to `v4`, please follow the instructions in the [CHANGELOG](CHANGELOG.md) file, and consult also
 the [How To Upgrade to a New Major Version](UPGRADING.md) file.
+
+Then, make sure to publish the assets, the translations, and the configuration file, and update your Blade files
 
 ## About the plugin
 
@@ -90,7 +122,7 @@ front-end.
 You can install the package via composer:
 
 ```bash
-composer require scify/laravel-cookies-consent
+composer require scify/laravel-cookie-guard
 ```
 
 **Make sure to manually publish** the cookie image file, by running:
@@ -105,11 +137,11 @@ php artisan vendor:publish \
 sure to
 use `--force` option, to overwrite the file.
 
-By doing so, the image file will be copied to `public/vendor/scify/laravel-cookies-consent`.
+By doing so, the image file will be copied to `public/vendor/scify/laravel-cookie-guard`.
 
 **IMPORTANT:**
 
-You can then either decide to include the `public/vendor/scify/laravel-cookies-consent/*` files to git (especially if
+You can then either decide to include the `public/vendor/scify/laravel-cookie-guard/*` files to git (especially if
 you
 want
 to edit it first), or add it to `.gitignore`, and make sure to also run this command on the staging/production server.
@@ -240,12 +272,20 @@ If you want to change how long the cookies will be stored, edit the `cookie_life
 
 **Suitable for**: Apps that would like to show a single dialog with all the cookie categories.
 
-When the plugin is installed, a `laravel-cookies-consent`
+When the plugin is installed, a `laravel-cookie-guard`
 custom [Laravel View Component](https://laravel.com/docs/9.x/blade#components) is automatically registered.
 
 This will render the following cookies consent that, will look very much like this one.
 
-![dialog](readme-images/img2.png)
+![dialog 1](readme-images/dialog_1.png)
+
+When the user cliks on "Customise", they will see the following dialog:
+
+![dialog 2](readme-images/dialog_2.png)
+
+They then can open each cookies category and see the cookies:
+
+![dialog 3](readme-images/dialog_3.png)
 
 You can then use this component in order to display the cookies consent window, wherever you'd like.
 
@@ -257,8 +297,8 @@ Typically, a good strategy is to put the component just before the closing `<bod
 ...
 ...
 ...
-<x-laravel-cookies-consent></x-laravel-cookies-consent>
-<x-laravel-cookies-consent-scripts></x-laravel-cookies-consent-scripts>
+<x-laravel-cookie-guard></x-laravel-cookie-guard>
+<x-laravel-cookie-guard-scripts></x-laravel-cookie-guard-scripts>
 </body>
 ```
 
@@ -320,19 +360,23 @@ Route::get('/cookie-policy/{locale}', function () {
 Then, you can create a new route in your `routes/web.php` file:
 
 Now, in the `resources/views/my-custom-cookies-policy.blade.php` file, you will need to render the
-`x-laravel-cookies-consent-page` component, in order to show the cookies preferences dialog.
+`x-laravel-cookie-guard-page` component, in order to show the cookies preferences dialog.
 
 Here is a usage example:
 
 ```bladehtml
 @extends('layouts.app')
 @section('head)
-<x-laravel-cookies-consent-scripts></x-laravel-cookies-consent-scripts>
+<x-laravel-cookie-guard-scripts></x-laravel-cookie-guard-scripts>
 @endsection
 @section('content')
-<x-laravel-cookies-consent-page></x-laravel-cookies-consent-page>
+<x-laravel-cookie-guard-page></x-laravel-cookie-guard-page>
 @endsection
 ```
+
+Then, the user will see an appropriate dialog, with a link to the `/my-custom-cookies-policy` page:
+
+![dialog 4](readme-images/dialog_4.png)
 
 ### Option 4: Simple dialog, with a link to an external (off-the-app) page
 
@@ -347,14 +391,16 @@ following in the `config/cookies_consent.php` file:
     'cookie_policy_page_custom_url' => 'https://www.example.com/cookies-policy',
 ```
 
+Then, the user will see an appropriate dialog, with a link to the external page.
+
 ## How to override the CSS styles
 
 If you want to override the CSS styles of the cookies consent dialog, you can do this:
 
 ```html
 
-<x-laravel-cookies-consent></x-laravel-cookies-consent>
-<x-laravel-cookies-consent-scripts></x-laravel-cookies-consent-scripts>
+<x-laravel-cookie-guard></x-laravel-cookie-guard>
+<x-laravel-cookie-guard-scripts></x-laravel-cookie-guard-scripts>
 ```
 
 Then, you can add a `<style>` tag in your Blade file, in order to override the CSS styles:
@@ -363,7 +409,7 @@ Then, you can add a `<style>` tag in your Blade file, in order to override the C
 
 <style>
   #scify-cookies-consent, .scify-cookie-policy-page, #scify-cookie-consent-floating-button {
-    --primary-color: #ff5722; /* Override primary color */
+    --scify-cookies-primary-color: #ff5722; /* Override primary color */
 
     ...
 
@@ -373,7 +419,7 @@ Then, you can add a `<style>` tag in your Blade file, in order to override the C
 ```
 
 The full list of CSS variables that can be overridden can be found in the
-`public/vendor/scify/laravel-cookies-consent/_variables.css` file.
+`public/vendor/scify/laravel-cookie-guard/_variables.css` file.
 
 ## How to add a new cookie category
 
@@ -532,7 +578,7 @@ php artisan vendor:publish \
 --tag="cookies-consent-translations"
 ```
 
-This will publish the translation files to `lang/vendor/scify/laravel-cookies-consent/` directory.
+This will publish the translation files to `lang/vendor/scify/laravel-cookie-guard/` directory.
 
 The plugin comes with many built-in languages. You can change the translations for a given language, or add additional
 languages yourself.
@@ -547,7 +593,7 @@ php artisan vendor:publish \
 --tag="cookies-consent-components"
 ```
 
-This will copy the view files over to `resources/views/components/vendor/scify/laravel-cookies-consent` directory.
+This will copy the view files over to `resources/views/components/vendor/scify/laravel-cookie-guard` directory.
 
 ## Development
 
@@ -558,14 +604,14 @@ Make sure that the `composer.json` file of the Laravel app has the following ent
 ```text
 
 "require": {
-    "scify/laravel-cookies-consent": "@dev",
+    "scify/laravel-cookie-guard": "@dev",
 }
 ...
 ...
 "repositories": [
         {
             "type": "path",
-            "url": "../path/to/laravel-cookies-consent/",
+            "url": "../path/to/laravel-cookie-guard/",
             "options": {
                 "symlink": true
             }
@@ -580,7 +626,7 @@ path.
 Then run:
 
 ```bash
-composer update scify/laravel-cookies-consent --prefer-source
+composer update scify/laravel-cookie-guard --prefer-source
 ```
 
 To fetch the local package.
@@ -590,7 +636,7 @@ Or, to prune everything and re-install:
 ```bash
 rm -rf public/vendor/scify && \
 rm -rf vendor/scify && \
-composer require scify/laravel-cookies-consent && \
+composer require scify/laravel-cookie-guard && \
 php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-public" --force && \
 php artisan config:cache
 ```
@@ -608,7 +654,7 @@ composer test
 **Question:** Is this plugin free to use?
 
 **Answer:** Yes. This plugin is totally free and developed as
-an [Open-Source project](https://github.com/scify/laravel-cookies-consent).
+an [Open-Source project](https://github.com/scify/laravel-cookie-guard).
 
 ---
 
@@ -647,7 +693,7 @@ php artisan vendor:publish \
 ```
 
 And add/change your own translations. If you add a new language, consider also opening
-a [pull request](https://github.com/scify/laravel-cookies-consent/pulls), in order for this language to be included in
+a [pull request](https://github.com/scify/laravel-cookie-guard/pulls), in order for this language to be included in
 the plugin.
 
 ---
@@ -656,7 +702,7 @@ the plugin.
 
 **Answer:** We have tested the plugin with Laravel 7, 8, and 9. The plugin's simplicity allows it to work with any
 Laravel version, but if you try it with a version other that the tested ones and it does not work, please open an issue
-on [GitHub](https://github.com/scify/laravel-cookies-consent/issues).
+on [GitHub](https://github.com/scify/laravel-cookie-guard/issues).
 
 ---
 
@@ -701,7 +747,7 @@ Then, push the tag:
 git push origin vx.y.z
 ```
 
-Then, in the [GitHub Releases page](https://github.com/scify/laravel-cookies-consent/releases), create a new Release *
+Then, in the [GitHub Releases page](https://github.com/scify/laravel-cookie-guard/releases), create a new Release *
 *and correlate it with the tag that you just created.**
 
 That's it! Packagist will be updated automatically.
@@ -711,8 +757,6 @@ Also, don't forget to update the `CHANGELOG.md` file with the new version name, 
 ## Credits
 
 - [SciFY Dev Team](https://github.com/scify)
-- <a href="https://www.flaticon.com/free-icons/cookie" title="cookie icons">Cookie icons created by Freepik -
-  Flaticon</a>
 
 ## License
 

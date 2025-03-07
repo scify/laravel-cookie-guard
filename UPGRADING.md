@@ -6,7 +6,8 @@ According to the EU General Data Protection Regulation (GDPR), websites must obt
 on a user's device. The Laravel Cookies Consent plugin helps you comply with this regulation by providing a customizable
 cookies consent dialog that allows users to choose which cookies they want to accept.
 
-The intuition behind the a new major release is always to provide a more analytical, user-friendly and intuitive UI for the cookies
+The intuition behind the a new major release is always to provide a more analytical, user-friendly and intuitive UI for
+the cookies
 consent dialog,
 as well as to make the configuration file more structured and easier to use.
 
@@ -25,11 +26,13 @@ So, in order to update to the new configuration file, you should save your curre
 
 ### Step 1: Backup any changes made to the styles file
 
-The v.1 of the plugin had a styles file that was published to `public/vendor/scify/laravel-cookies-consent/css/style.css`. If you have
+The v.1 of the plugin had a styles file that was published to `public/vendor/scify/laravel-cookie-guard/css/style.css`.
+If you have
 made any changes to this file, you should back it up before updating the plugin.
 
 The v2 of the plugin has a new styles file, which is published to
-`public/vendor/scify/laravel-cookies-consent/css/cookies-consent.css`. You should transfer any changes you made to the old styles file
+`public/vendor/scify/laravel-cookie-guard/css/styles.css`. You should transfer any changes you made to the old styles
+file
 to the new one.
 
 ### Step 2: Update the Plugin
@@ -37,7 +40,7 @@ to the new one.
 First, update the plugin to the latest version. You can do this by running the following command:
 
 ```bash
-composer update scify/laravel-cookies-consent
+composer update scify/laravel-cookie-guard
 ```
 
 ### Step 3: Update the Configuration file
@@ -72,12 +75,13 @@ php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookie
 If you have made any changes to the styles file in the v1 version of the plugin, you should transfer these changes to
 the new styles file.
 
-Old styles file: `public/vendor/scify/laravel-cookies-consent/css/style.css`
-New styles file: `public/vendor/scify/laravel-cookies-consent/css/cookies-consent.css`
+Old styles file: `public/vendor/scify/laravel-cookie-guard/css/style.css`
+New styles file: `public/vendor/scify/laravel-cookie-guard/css/styles.css`
 
 ### Step 5: Test that the Plugin Works Correctly
 
-After updating the plugin and the configuration file, you should test that the plugin works correctly. You should test the following:
+After updating the plugin and the configuration file, you should test that the plugin works correctly. You should test
+the following:
 
 1. The cookies consent dialog is displayed correctly on your website.
 2. The cookies consent dialog is displayed in the correct language.

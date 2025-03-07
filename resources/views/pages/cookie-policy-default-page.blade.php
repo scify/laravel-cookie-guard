@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ __('cookies_consent::messages.cookie_policy_title') }}</title>
-    <link rel="stylesheet" href="{{ asset('vendor/scify/laravel-cookies-consent/cookies-consent.css') }}">
-    @include('cookies_consent::components.laravel-cookies-consent-scripts')
+    <link rel="stylesheet" href="{{ asset('vendor/scify/laravel-cookie-guard/styles.css') }}">
+    @include('cookies_consent::components.laravel-cookie-guard-scripts')
 </head>
 
 <body class="scify-cookie-policy-page">
@@ -32,7 +32,7 @@
         </div>
         <div class="row">
             <div class="col-lg-9 col-sm-12 mx-auto">
-                @include('cookies_consent::components.laravel-cookies-consent-page')
+                @include('cookies_consent::components.laravel-cookie-guard-page')
             </div>
         </div>
     </div>

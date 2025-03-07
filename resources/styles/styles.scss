@@ -1,0 +1,259 @@
+@use 'variables';
+@use 'generic-rules';
+@use "form";
+@use "accordion";
+
+#scify-cookies-consent-wrapper, #scify-cookie-policy-page {
+
+  .cookies-external-page {
+    min-height: 100vh;
+    width: auto;
+    max-width: 100%;
+
+    .cookies-policy-wrapper {
+      min-height: auto;
+      max-width: 100%;
+      margin: 0 auto;
+      position: relative !important;
+      width: 100% !important;
+
+      .accordion .accordion-item .accordion-button {
+        font-size: var(--scify-cookies-font-size-base);
+      }
+    }
+
+    .scify-cookies-consent-banner {
+      padding: 2rem 1rem;
+      max-width: 100%;
+      width: 100%;
+      margin: 0 auto;
+
+      // cancel bottom and left properties
+      bottom: auto;
+      left: auto;
+      border: none;
+      box-shadow: none;
+
+
+      .accordion-item.cookies-consent-category-item {
+        border: none;
+        border-bottom: 1px solid var(--scify-cookies-accordion-border-color);
+      }
+
+      .btn {
+        padding: var(--scify-cookies-btn-padding-lg);
+      }
+    }
+
+    .cookies-policy-wrapper {
+      padding-bottom: 40px;
+    }
+  }
+
+  // Cookie Success Message
+  .cookie-success-message {
+    position: fixed;
+    bottom: var(--scify-cookies-gutter);
+    right: var(--scify-cookies-gutter);
+    z-index: 100000000;
+    padding: var(--scify-cookies-success-message-padding);
+    margin-bottom: var(--scify-cookies-gutter);
+    border: 1px solid var(--scify-cookies-success-message-border-color);
+    border-radius: var(--scify-cookies-border-radius);
+    background-color: var(--scify-cookies-success-message-bg-color);
+    color: var(--scify-cookies-success-message-text-color);
+    box-shadow: var(--scify-cookies-success-message-box-shadow);
+    transition: opacity 0.15s linear;
+    font-size: var(--scify-cookies-font-size-base);
+
+    &.show {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    }
+  }
+
+  .scify-cookies-consent-banner {
+
+    color: var(--scify-cookies-text-color);
+    font-family: var(--scify-cookies-font-family), sans-serif;
+    font-size: var(--scify-cookies-font-size-base);
+    font-weight: 400;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: var(--scify-cookies-bg-color);
+    border: var(--scify-cookies-border-width) solid var(--scify-cookies-border-color);
+    border-radius: var(--scify-cookies-banner-border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0;
+
+    .btn {
+      display: inline-block;
+      line-height: 1.5;
+      color: var(--scify-cookies-btn-text-color);
+      background-color: var(--scify-cookies-btn-bg-color);
+      text-align: center;
+      text-decoration: none;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      border: var(--scify-cookies-btn-border-width) solid var(--scify-cookies-btn-border-color);
+      padding: var(--scify-cookies-btn-padding);
+      font-size: var(--scify-cookies-btn-text-font-size);
+      font-weight: 500;
+      border-radius: var(--scify-cookies-btn-border-radius);
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      white-space: nowrap;
+      height: auto;
+      text-transform: none;
+
+      &:hover {
+        background-color: var(--scify-cookies-btn-hover-bg-color);
+        border-color: var(--scify-cookies-btn-hover-border-color);
+      }
+    }
+
+    .list-group {
+      display: flex;
+      flex-direction: column;
+      padding-left: 0;
+      margin-bottom: 0;
+
+      .list-group-item {
+        position: relative;
+        display: block;
+        padding: 0.75rem 1.25rem;
+        background-color: #fff;
+        border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+        @media (max-width: 575.98px) {
+          padding: 0.25rem 0.5rem;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+
+
+    code {
+      font-size: 87.5%;
+      color: var(--scify-cookies-name-text-color);
+      word-wrap: break-word;
+    }
+
+    .cookie-actions {
+      margin-top: 10px;
+      width: 100%;
+      text-align: center;
+
+      .row {
+        margin: 0;
+      }
+    }
+
+    #cookie-consent-title {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 24px;
+      margin: 0 0 12px 0;
+    }
+
+    position: fixed;
+    bottom: var(--scify-cookies-banner-bottom);
+    left: var(--scify-cookies-banner-left);
+    z-index: 1000;
+    width: 450px;
+    max-height: 80%;
+    display: inline-block;
+    overflow: hidden;
+
+    &.separate-page-mode {
+      // when larger than mobile
+      @media (min-width: 576px) {
+        width: 450px;
+      }
+    }
+
+    .scify-cookies-container {
+      max-height: calc(100% - 80px);
+      overflow-y: auto;
+
+      .always-active {
+        color: var(--scify-cookies-always-active-message-color);
+        margin-left: 5px;
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      width: calc(100% - 20px);
+      max-width: calc(100% - 20px);
+      left: 10px;
+      right: 10px;
+      padding: 10px;
+      max-height: 95%;
+
+      .scify-cookies-container {
+        max-height: calc(100% - 145px);
+      }
+
+      .cookie-actions {
+
+        button#customise-cookies, button#reject-all-cookies, button#accept-selected-cookies {
+          border-bottom: 0;
+        }
+
+        button#accept-all-cookies {
+          border-top: 0;
+        }
+      }
+    }
+
+
+    .policy-link {
+      font-size: small;
+      text-decoration: underline;
+    }
+  }
+}
+
+#scify-cookies-consent-wrapper.scify-cookies-consent-wrapper-page {
+  .scify-cookies-consent-banner {
+    margin: 0 auto;
+    position: relative;
+    width: auto;
+    max-width: 100%;
+  }
+}
+
+#scify-cookie-consent-floating-button {
+  position: fixed;
+  bottom: var(--scify-cookies-floating-btn-bottom);
+  left: var(--scify-cookies-floating-btn-left);
+  z-index: 1000000;
+  background-color: var(--scify-cookies-floating-btn-bg-color);
+  color: var(--scify-cookies-floating-btn-text-color);
+  border: var(--scify-cookies-floating-btn-border-width) solid var(--scify-cookies-floating-btn-border-color);
+  border-radius: var(--scify-cookies-floating-btn-border-radius);
+  padding: var(--scify-cookies-floating-btn-padding);
+  height: var(--scify-cookies-floating-btn-height);
+  width: var(--scify-cookies-floating-btn-width);
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--scify-cookies-floating-btn-hover-bg-color);
+    color: var(--scify-cookies-floating-btn-hover-text-color);
+  }
+
+  img, svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  svg {
+    stroke: currentColor;
+  }
+}

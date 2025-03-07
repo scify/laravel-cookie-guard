@@ -6,6 +6,6 @@ use Illuminate\View\Component;
 
 class LaravelCookiesConsentScripts extends Component {
     public function render() {
-        return view('cookies_consent::components.laravel-cookies-consent-scripts');
+        return view('cookies_consent::components.laravel-cookie-guard-scripts');
     }
 }

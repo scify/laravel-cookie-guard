@@ -10,8 +10,8 @@ use SciFY\LaravelCookiesConsent\View\Components\LaravelCookiesConsentScripts;
 
 class LaravelCookiesConsentServiceProvider extends ServiceProvider {
     public function boot() {
-        $publishedPathResources = resource_path('lang/vendor/scify/laravel-cookies-consent');
-        $publishedPathLang = base_path('lang/vendor/scify/laravel-cookies-consent');
+        $publishedPathResources = resource_path('lang/vendor/scify/laravel-cookie-guard');
+        $publishedPathLang = base_path('lang/vendor/scify/laravel-cookie-guard');
         $packagePath = __DIR__ . '/../lang';
 
         if (is_dir($publishedPathResources)) {
@@ -25,11 +25,11 @@ class LaravelCookiesConsentServiceProvider extends ServiceProvider {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'cookies_consent');
 
         $this->publishes([
-            __DIR__ . '/../resources/views/components/' => resource_path('views/vendor/scify/laravel-cookies-consent/components'),
+            __DIR__ . '/../resources/views/components/' => resource_path('views/vendor/scify/laravel-cookie-guard/components'),
         ], 'cookies-consent-components');
 
         $this->publishes([
-            __DIR__ . '/../public' => public_path('vendor/scify/laravel-cookies-consent'),
+            __DIR__ . '/../public' => public_path('vendor/scify/laravel-cookie-guard'),
         ], 'cookies-consent-public');
 
         $this->publishes([
@@ -37,14 +37,14 @@ class LaravelCookiesConsentServiceProvider extends ServiceProvider {
         ], 'cookies-consent-config');
 
         $this->publishes([
-            __DIR__ . '/../lang' => app()->langPath() . '/vendor/scify/laravel-cookies-consent',
+            __DIR__ . '/../lang' => app()->langPath() . '/vendor/scify/laravel-cookie-guard',
         ], 'cookies-consent-translations');
 
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
 
-        Blade::component('laravel-cookies-consent', \SciFY\LaravelCookiesConsent\View\Components\LaravelCookiesConsent::class);
-        Blade::component('laravel-cookies-consent-page', LaravelCookiesConsentPage::class);
-        Blade::component('laravel-cookies-consent-scripts', LaravelCookiesConsentScripts::class);
+        Blade::component('laravel-cookie-guard', \SciFY\LaravelCookiesConsent\View\Components\LaravelCookiesConsent::class);
+        Blade::component('laravel-cookie-guard-page', LaravelCookiesConsentPage::class);
+        Blade::component('laravel-cookie-guard-scripts', LaravelCookiesConsentScripts::class);
     }
 
     public function register() {

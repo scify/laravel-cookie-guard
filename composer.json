@@ -1,21 +1,21 @@
 {
-    "name": "scify/laravel-cookies-consent",
+    "name": "scify/laravel-cookie-guard",
     "description": "A Laravel package that provides a Cookies consent floating window and publishes the Cookies for the different consent categories",
     "keywords": [
         "scify",
         "laravel",
-        "laravel-cookies-consent",
+        "laravel-cookie-guard",
         "cookies",
         "gdpr",
         "laravel cookies",
         "laravel gdpr"
     ],
-    "homepage": "https://github.com/scify/laravel-cookies-consent",
+    "homepage": "https://github.com/scify/laravel-cookie-guard",
     "license": "MIT",
     "authors": [
         {
             "name": "Paul Isaris",
-            "email": "paulisaris@gmail.com",
+            "email": "paul@scify.com",
             "role": "Developer"
         }
     ],

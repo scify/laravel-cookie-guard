@@ -6,24 +6,17 @@ export default defineConfig({
         outDir: path.resolve(__dirname, 'public'),
         rollupOptions: {
             input: {
-                main: path.resolve(__dirname, 'resources/js/cookies-consent.js'),
+                main: path.resolve(__dirname, 'resources/js/scripts.js'),
             },
             output: {
-                entryFileNames: 'cookies-consent.js',
-                assetFileNames: 'cookies-consent.css',
+                entryFileNames: 'scripts.js',
+                assetFileNames: 'styles.css',
             },
         },
     },
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'resources'),
-        },
-    },
-    css: {
-        preprocessorOptions: {
-            scss: {
-                additionalData: `@import "@/styles/_variables.css";` // Import variables globally
-            },
         },
     },
 });

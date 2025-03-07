@@ -1,11 +1,41 @@
 # Changelog
 
-All notable changes to `laravel-cookies-consent` will be documented in this file.
+All notable changes to `laravel-cookie-guard` will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v4.0.0 - Multilingual Support & Better Theming - Breaking Changes in Configuration and Functionality - 2025-02-24
+
+The plugin is now renamed to `laravel-cookie-guard` and has undergone some major updates! 🎉🥳😍
+
+**Important:**
+Since the plugin now has a completely new name, you will need to uninstall the old package, and install the new one.
+
+```bash
+rm -rf public/vendor/scify && rm -rf vendor/scify
+
+composer remove scify/laravel-cookies-consent
+
+composer require scify/laravel-cookie-guard
+
+php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-public" --force
+```
+
+And then make sure that the Laravel components you use are the new ones:
+
+Intead of using:
+
+```html
+<x-laravel-cookies-consent></x-laravel-cookies-consent>
+```
+
+Use:
+
+```html
+<x-laravel-cookie-guard-scripts></x-laravel-cookie-guard-scripts>
+<x-laravel-cookie-guard></x-laravel-cookie-guard>
+```
 
 ### Introduction
 
@@ -16,7 +46,7 @@ in all the texts that are displayed to the user!
 
 Also, in order to improve the flexibility and theming of the plugin, we now provide a `_variables.css` file, which can
 be used to customize the colors and fonts of the plugin. This file is located in the
-`public/vendor/scify/laravel-cookies-consent/styles` directory and can
+`public/vendor/scify/laravel-cookie-guard/styles` directory and can
 be customized to match the design of your application.
 
 ### New Features
@@ -27,7 +57,7 @@ be customized to match the design of your application.
 - **Automatic locale detection:** The plugin automatically detects the app's locale based on the Laravel locale, and
   displays the banner in the corresponding language.
 - **Customizable Theme:** A `_variables.css` file is now being added to the
-  `public/vendor/scify/laravel-cookies-consent/styles`
+  `public/vendor/scify/laravel-cookie-guard/styles`
   directory, once you publish the front-end assets. This file can be used to customize the colors and fonts of the
   plugin to match the design of your
   application.
@@ -43,10 +73,10 @@ If you want to override the CSS styles of the cookies consent dialog, you can do
 
 ```html
 
-<x-laravel-cookies-consent></x-laravel-cookies-consent>
+<x-laravel-cookie-guard></x-laravel-cookie-guard>
 <style>
     #scify-cookies-consent {
-        --primary-color: #ff5722; /* Override primary color */
+        --scify-cookies-primary-color: #ff5722; /* Override primary color */
 
         ...
 
@@ -56,7 +86,7 @@ If you want to override the CSS styles of the cookies consent dialog, you can do
 ```
 
 The full list of CSS variables that can be overridden can be found in the
-`public/vendor/scify/laravel-cookies-consent/_variables.css` file.
+`public/vendor/scify/laravel-cookie-guard/_variables.css` file.
 
 ### Breaking Changes
 
@@ -106,18 +136,18 @@ the cookies included in that category. This can be tweaked in the `config/cookie
 ## v3.1.0 - Changes in assets files in the public directory - 2025-01-31
 
 In order to simplify the installation process and avoid potential conflicts with existing assets, the front-end assets
-are now included directly in the package and loaded from the `vendor/scify/laravel-cookies-consent/` directory.
+are now included directly in the package and loaded from the `vendor/scify/laravel-cookie-guard/` directory.
 
-This means that the `public/vendor/scify/laravel-cookies-consent` directory should be deleted, and the assets should be
+This means that the `public/vendor/scify/laravel-cookie-guard` directory should be deleted, and the assets should be
 published
 again:
 
-In order to update to the new version, you need to remove the `public/vendor/scify/laravel-cookies-consent` directory
+In order to update to the new version, you need to remove the `public/vendor/scify/laravel-cookie-guard` directory
 and run the
 asset publishing command:
 
 ```bash
-rm -rf public/vendor/scify/laravel-cookies-consent
+rm -rf public/vendor/scify/laravel-cookie-guard
 ```
 
 And then:
@@ -247,14 +277,14 @@ This version includes some important changes and improvements, such as:
 ## v.1.1.2 - Portuguese Language v2
 
 Added Portuguese Language corrections, thanks to
-this [PR](https://github.com/scify/laravel-cookies-consent/commit/a0ce037cd3bc82ca95c52ff30d2bf07236bd8306)
-by [ViNiSeNnAtt](https://github.com/scify/laravel-cookies-consent/commits?author=ViNiSeNnAtt)
+this [PR](https://github.com/scify/laravel-cookie-guard/commit/a0ce037cd3bc82ca95c52ff30d2bf07236bd8306)
+by [ViNiSeNnAtt](https://github.com/scify/laravel-cookie-guard/commits?author=ViNiSeNnAtt)
 
 ## v1.1.1 - Portuguese Language
 
 Added Portuguese Language, thanks
-to [this commit](https://github.com/scify/laravel-cookies-consent/commit/c5e015f93df4ad9a40450cea37231592613e77b8)
-by [ViNiSeNnAtt](https://github.com/scify/laravel-cookies-consent/commits?author=ViNiSeNnAtt)
+to [this commit](https://github.com/scify/laravel-cookie-guard/commit/c5e015f93df4ad9a40450cea37231592613e77b8)
+by [ViNiSeNnAtt](https://github.com/scify/laravel-cookie-guard/commits?author=ViNiSeNnAtt)
 
 ## v1.1.0 - Improvements regarding the styles file, Composer lib updates
 
@@ -262,15 +292,15 @@ Improvements regarding the styles file, Composer lib updates
 
 **List of Updates:**
 
-- Fixed z-index issue (as reported in https://github.com/scify/laravel-cookies-consent/issues/10)
-- Now the front-end assets (styles) file is not automatically published, to avoid causing overriding (reported   
-  in https://github.com/scify/laravel-cookies-consent/issues/11)
+- Fixed z-index issue (as reported in https://github.com/scify/laravel-cookie-guard/issues/10)
+- Now the front-end assets (styles) file is not automatically published, to avoid causing overriding (reported
+  in https://github.com/scify/laravel-cookie-guard/issues/11)
 - Composer libraries update
 - Improved Development guidelines in Readme file
 
 **Notable Changes:**
 
-Now, in order to publish the styles file to `public/vendor/scify/laravel-cookies-consent/css/style.css` it is **required
+Now, in order to publish the styles file to `public/vendor/scify/laravel-cookie-guard/css/style.css` it is **required
 ** to manually
 run the publishing command:
 
@@ -283,15 +313,15 @@ php artisan vendor:publish \
 
 ## v1.0.1 - Fixed bug on setting "all" cookies button - 2023-03-16
 
-This release addresses [this issue](https://github.com/scify/laravel-cookies-consent/issues/4), regarding the cookie
+This release addresses [this issue](https://github.com/scify/laravel-cookie-guard/issues/4), regarding the cookie
 prefix when accepting "all" cookies.
 
 ## v1.0.0 - First Stable Release - 2022-12-19
 
 This is the first stable release of the plugin!
 Feel free to download, try and customize it. If you find any issues, please report them to
-the [issue page](https://github.com/scify/laravel-cookies-consent/issues).
-Check out the [CONTRIBUTING.md](https://github.com/scify/laravel-cookies-consent/blob/main/CONTRIBUTING.md) guide to
+the [issue page](https://github.com/scify/laravel-cookie-guard/issues).
+Check out the [CONTRIBUTING.md](https://github.com/scify/laravel-cookie-guard/blob/main/CONTRIBUTING.md) guide to
 contribute to this open-source project!
 
 ## Use of app()->langPath() Laravel method, in order to publish the translation resources - 2022-12-09

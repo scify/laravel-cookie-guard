@@ -1,4 +1,4 @@
-import '../styles/cookies-consent.scss';
+import '../styles/styles.scss';
 
 document.addEventListener('DOMContentLoaded', function () {
     initializeAccordionButtons();
@@ -99,7 +99,7 @@ function toggleAccordion(button) {
  * The cookie settings are stored as a JSON object with the category names as keys and their consent status as values.
  */
 function initializeCookieBanner() {
-    const cookieBanner = document.getElementById('cookies-consent-banner');
+    const cookieBanner = document.getElementById('scify-cookies-consent');
     const cookieButton = document.getElementById('scify-cookie-consent-floating-button');
     const showFloatingButton = cookieBanner.dataset.showFloatingButton === 'true' || cookieBanner.dataset.showFloatingButton === '1';
     const hideFloatingButtonOnMobile = cookieBanner.dataset.hideFloatingButtonOnMobile === 'true' || cookieBanner.dataset.hideFloatingButtonOnMobile === '1';
@@ -171,7 +171,7 @@ function setSliders(cookieConsent) {
 function handleCustomiseCookies() {
     const cookieCategoriesContainer = document.getElementById('cookie-categories-container');
     // find the closest parent element with the "banner" class, and set the width to 650px
-    cookieCategoriesContainer.closest('.banner').style.width = '650px';
+    cookieCategoriesContainer.closest('.scify-cookies-consent-banner').style.width = '650px';
     // remove the "display-none" class to show the cookie categories
     cookieCategoriesContainer.classList.remove('display-none');
 
@@ -213,7 +213,7 @@ function getConsentSettings(acceptAll = false, requiredCategory = null) {
  * to inform the user about the successful storage of their consent.
  */
 function handleCookieConsent(consent) {
-    const cookieBanner = document.getElementById('cookies-consent-banner');
+    const cookieBanner = document.getElementById('scify-cookies-consent');
     const cookieButton = document.getElementById('scify-cookie-consent-floating-button');
     const showFloatingButton = cookieBanner.dataset.showFloatingButton === 'true' || cookieBanner.dataset.showFloatingButton === '1';
     const cookiePrefix = cookieBanner.dataset.cookiePrefix;
@@ -226,6 +226,8 @@ function handleCookieConsent(consent) {
             cookieButton.style.display = 'block';
         }
     }
+
+    console.log('ajax url', cookieBanner.dataset.ajaxUrl);
 
     fetch(cookieBanner.dataset.ajaxUrl, {
         method: 'POST', headers: {
@@ -243,7 +245,7 @@ function handleCookieConsent(consent) {
 }
 
 function showSuccessMessage(messageText) {
-    const parent = document.getElementById('scify-cookies-consent');
+    const parent = document.getElementById('scify-cookies-consent-wrapper');
     if (parent) {
         const message = document.createElement('div');
         message.classList.add('cookie-success-message');
@@ -271,7 +273,7 @@ function initializeCookiePolicyLink() {
 }
 
 function onCookiesPage() {
-    const cookieBanner = document.getElementById('cookies-consent-banner');
+    const cookieBanner = document.getElementById('scify-cookies-consent');
     return cookieBanner.dataset.onCookiesPage === 'true' || cookieBanner.dataset.onCookiesPage === '1';
 }
 
@@ -305,16 +307,18 @@ window.toggleCookieBanner = function () {
     // if on cookies page, do nothing
     if (onCookiesPage()) return;
 
-    const cookieBanner = document.getElementById('cookies-consent-banner');
+    const cookieBanner = document.getElementById('scify-cookies-consent');
     const cookieButton = document.getElementById('scify-cookie-consent-floating-button');
     const showFloatingButton = cookieBanner.dataset.showFloatingButton === 'true' || cookieBanner.dataset.showFloatingButton === '1';
 
     if (cookieBanner.style.display === 'none' || cookieBanner.style.display === '') {
+        console.log('showing banner');
         cookieBanner.style.display = 'block';
         if (showFloatingButton) {
             cookieButton.style.display = 'none';
         }
     } else {
+        console.log('hiding banner');
         cookieBanner.style.display = 'none';
         if (showFloatingButton) {
             cookieButton.style.display = 'block';
