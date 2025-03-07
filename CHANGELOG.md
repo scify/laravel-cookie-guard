@@ -5,7 +5,7 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## v4.0.0 - Multilingual Support & Better Theming - Breaking Changes in Configuration and Functionality - 2025-02-24
+## v4.0.0 - Multilingual Support & Better Theming - Breaking Changes in Configuration and Functionality - 2025-03-07
 
 The plugin is now renamed to `laravel-cookie-guard` and has undergone some major updates! 🎉🥳😍
 
