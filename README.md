@@ -134,7 +134,7 @@ composer require scify/laravel-cookie-guard
 ```bash
 php artisan vendor:publish \
 --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" \
---tag="cookies-consent-assets"
+--tag="cookies-consent-public"
 ```
 
 **Notice:** if a new version of the plugin has been released, and you want to update the front-end files, please make

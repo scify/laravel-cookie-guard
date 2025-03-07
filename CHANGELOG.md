@@ -244,7 +244,7 @@ Example:
 3. Publish the front-end assets
 
 * Run the following command to publish the updated assets:
-  `php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-assets" --force`
+  `php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-public" --force`
 
 4. Test your application
 
@@ -309,7 +309,7 @@ run the publishing command:
 ```bash
 php artisan vendor:publish \
 --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" \
---tag="cookies-consent-assets"
+--tag="cookies-consent-public"
 
 ```
 
