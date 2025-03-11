@@ -1,7 +1,7 @@
 <!-- omit in toc -->
 # Laravel Cookie Guard - Make your Laravel app compliant with the EU GDPR cookie law
 
-The last Consent Plugin your **Laravel app** will ever need!
+The **last** Cookies Consent Plugin your **Laravel app** will ever need!
 
 ![logo](readme-images/Laravel_Cookie_Guard.png)
 
