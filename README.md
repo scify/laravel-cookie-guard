@@ -4,8 +4,8 @@
 
 The only Consent Plugin your **Laravel app** will ever need!
 
-<p align="center">
-<img src="logo.jpg" alt="logo" width="400">
+<p align="center" style="margin-top: 25px;">
+<img src="readme-images/Laravel_Cookie_Guard.png" alt="logo" width="400">
 </p>
 
 <hr>
@@ -26,17 +26,19 @@ The only Consent Plugin your **Laravel app** will ever need!
 
 ## Table of Contents
 
-- [Upgrading to v4](#upgrading-to-v4)
-- [About the plugin](#about-the-plugin)
-- [Features](#features)
-- [Installation](#installation)
-  - [Explanation of the configuration file](#explanation-of-the-configuration-file)
+- [Laravel Cookie Guard - Make your Laravel app compliant with the EU GDPR cookie law](#laravel-cookie-guard---make-your-laravel-app-compliant-with-the-eu-gdpr-cookie-law)
+  - [Table of Contents](#table-of-contents)
+  - [Upgrading to v4](#upgrading-to-v4)
+  - [About the plugin](#about-the-plugin)
+  - [Features](#features)
+  - [Installation](#installation)
+    - [Explanation of the configuration file](#explanation-of-the-configuration-file)
   - [Usage](#usage)
     - [Option 1: All-in-one dialog (default)](#option-1-all-in-one-dialog-default)
     - [Option 2: Simple dialog, with a link to the default separate internal page](#option-2-simple-dialog-with-a-link-to-the-default-separate-internal-page)
     - [Option 3: Simple dialog, with a link to a customized separate internal page with navbars, footers, etc.](#option-3-simple-dialog-with-a-link-to-a-customized-separate-internal-page-with-navbars-footers-etc)
     - [Option 4: Simple dialog, with a link to an external (off-the-app) page](#option-4-simple-dialog-with-a-link-to-an-external-off-the-app-page)
-    - [How to override the CSS styles](#how-to-override-the-css-styles)
+  - [How to override the CSS styles](#how-to-override-the-css-styles)
   - [How to add a new cookie category](#how-to-add-a-new-cookie-category)
   - [How to check if a cookie category is allowed](#how-to-check-if-a-cookie-category-is-allowed)
     - [Backend code](#backend-code)
@@ -44,15 +46,15 @@ The only Consent Plugin your **Laravel app** will ever need!
   - [Customization](#customization)
     - [Customizing the component texts](#customizing-the-component-texts)
     - [Customizing the component contents](#customizing-the-component-contents)
-- [Development](#development)
-  - [Testing](#testing)
-- [FAQ](#faq)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-  - [PHP code style - Laravel Pint](#php-code-style---laravel-pint)
-  - [Releasing a new version](#releasing-a-new-version)
-- [Credits](#credits)
-- [License](#license)
+  - [Development](#development)
+    - [Testing](#testing)
+  - [FAQ](#faq)
+  - [Changelog](#changelog)
+  - [Contributing](#contributing)
+    - [PHP code style - Laravel Pint](#php-code-style---laravel-pint)
+    - [Releasing a new version](#releasing-a-new-version)
+  - [Credits](#credits)
+  - [License](#license)
 
 ## Upgrading to v4
 
