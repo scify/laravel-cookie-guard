@@ -10,11 +10,11 @@ processes, please [contact us](https://scify.org/#footer-form).
 
 - **Security SLA:** SciFY typically addresses vulnerabilities in the SciFY Network according
   to the following guidelines:
-    - Critical: Typically addressed within 7 days.
-    - High: Typically addressed within 30 days.
-    - Medium: Typically addressed within 90 days.
-    - Low: Typically addressed within 180 days.
-    - Informational: Addressed as necessary.  
+  - Critical: Typically addressed within 7 days.
+  - High: Typically addressed within 30 days.
+  - Medium: Typically addressed within 90 days.
+  - Low: Typically addressed within 180 days.
+  - Informational: Addressed as necessary.
       These timelines are targets and may vary based on specific circumstances.
 - **Release Schedule:** Updates are deployed to the SciFY Network as
   vulnerabilities are resolved.
@@ -24,11 +24,11 @@ processes, please [contact us](https://scify.org/#footer-form).
 ## SciFY Enterprise License Customers
 
 - **Security SLA:** SciFY addresses vulnerabilities based on their severity:
-    - Critical: Typically addressed within 14 days.
-    - High: Typically addressed within 30 days.
-    - Medium: Typically addressed within 90 days.
-    - Low: Typically addressed within 180 days.
-    - Informational: Addressed as necessary.  
+  - Critical: Typically addressed within 14 days.
+  - High: Typically addressed within 30 days.
+  - Medium: Typically addressed within 90 days.
+  - Low: Typically addressed within 180 days.
+  - Informational: Addressed as necessary.
       These timelines are targets and may vary based on specific circumstances.
 - **Release Schedule:** Updates are made available as vulnerabilities are
   resolved. SciFY works closely with enterprise customers to ensure timely updates
