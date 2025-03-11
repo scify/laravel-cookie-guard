@@ -4,9 +4,7 @@
 
 The only Consent Plugin your **Laravel app** will ever need!
 
-<p align="center" style="margin-top: 25px;">
-<img src="readme-images/Laravel_Cookie_Guard.png" alt="logo" width="400">
-</p>
+![logo](readme-images/Laravel_Cookie_Guard.png)
 
 <hr>
 
