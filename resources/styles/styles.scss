@@ -86,6 +86,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 0;
+    z-index: 1000000;
 
     .btn {
       display: inline-block;
@@ -164,8 +165,7 @@
     position: fixed;
     bottom: var(--scify-cookies-banner-bottom);
     left: var(--scify-cookies-banner-left);
-    z-index: 1000;
-    width: 450px;
+    width: 510px;
     max-height: 80%;
     display: inline-block;
     overflow: hidden;
