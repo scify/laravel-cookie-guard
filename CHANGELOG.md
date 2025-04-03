@@ -14,7 +14,7 @@ The `<dialog>` element is designed to create a modal dialog that captures the us
 the rest of the webpage
 until the dialog is dismissed.
 This approach ensures that users must make a choice regarding cookie consent before they
-can continue using the website.
+can continue using the website. Read more [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog).
 
 By using the `<dialog>` element, we achieve the following benefits:
 
