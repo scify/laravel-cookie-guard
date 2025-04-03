@@ -36,8 +36,7 @@ Overall, the use of the `<dialog>` element enhances the user experience by provi
 manage cookie consent, ensuring that all users can interact with our website in a compliant and user-friendly manner.
 
 This functionality is now the **default behavior of the plugin**, and it can be disabled by setting the new
-`use_floating_modal`
-flag in the `config/cookies_consent.php` file to `true`.
+`use_floating_modal` flag in the `config/cookies_consent.php` file to `true`.
 
 ## v4.0.0 - Multilingual Support & Better Theming - Breaking Changes in Configuration and Functionality - 2025-03-07
 
