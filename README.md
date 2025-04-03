@@ -1,4 +1,5 @@
 <!-- omit in toc -->
+
 # Laravel Cookie Guard - Make your Laravel app compliant with the EU GDPR cookie law
 
 The **last** Cookies Consent Plugin your **Laravel app** will ever need!
@@ -22,6 +23,7 @@ The **last** Cookies Consent Plugin your **Laravel app** will ever need!
 [![GitHub closed pull-requests](https://img.shields.io/github/issues-pr-closed/scify/laravel-cookie-guard)](https://github.com/scify/laravel-cookie-guard/pulls?q=is%3Apr+is%3Aclosed)
 
 <!-- omit in toc -->
+
 ## Table of Contents
 
 - [Upgrading to v4](#upgrading-to-v4)
@@ -192,6 +194,7 @@ return [
     'hide_floating_button_on_mobile' => false, // Set to true to hide the floating button on mobile
     'use_separate_page' => false, // Set to true to use a separate page for cookies explanation
     'categories_collapsed_by_default' => true, // Set to false to initially collapse the optional categories
+    'use_show_modal' => true, // Set to false to disable the use of showModal() on the dialog HTML element
     /*
     |--------------------------------------------------------------------------
     | Editor
@@ -270,6 +273,9 @@ page.
 The `categories_collapsed_by_default` field is optional and, if set to `false`, will initially collapse the optional
 categories.
 If set to `true`, all categories will be collapsed by default.
+
+The `use_floating_modal` field is optional and, if set to `true`, will disable the use of `showModal()` on the dialog HTML,
+and the fully-accessible modal.
 
 You can add as many cookie categories as you like, simply by adding values to the `cookies` array.
 
@@ -651,8 +657,7 @@ Or, to prune everything and re-install:
 rm -rf public/vendor/scify && \
 rm -rf vendor/scify && \
 composer require scify/laravel-cookie-guard && \
-php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-public" --force && \
-php artisan config:cache
+php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-public" --force
 ```
 
 ### Testing

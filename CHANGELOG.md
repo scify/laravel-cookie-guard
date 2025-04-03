@@ -5,6 +5,40 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## v4.1.0 - Improved Accessibility & Bug Fixes - 2025-04-03
+
+We have decided to give the developers the ability to use the pure `<dialog>` HTML element functionality for our cookie
+consent component to enhance accessibility and ensure compliance with privacy regulations.
+
+The `<dialog>` element is designed to create a modal dialog that captures the user's focus, preventing interaction with
+the rest of the webpage
+until the dialog is dismissed.
+This approach ensures that users must make a choice regarding cookie consent before they
+can continue using the website.
+
+By using the `<dialog>` element, we achieve the following benefits:
+
+1. **Improved Accessibility:** The `<dialog>` element is natively supported by modern browsers and provides built-in
+   accessibility features. It ensures that screen readers and other assistive technologies can properly announce the
+   dialog and its contents to users with disabilities.
+
+
+2. **Focus Management:** When the dialog is open, it automatically captures the focus, preventing users from navigating
+   outside of it. This ensures that users cannot interact with other parts of the website until they have accepted or
+   rejected the cookies, making the consent process clear and unavoidable.
+
+
+3. **Compliance with Privacy Regulations:** By requiring users to make a choice before continuing to use the website, we
+   ensure compliance with privacy regulations such as the GDPR. This approach guarantees that users are informed about
+   and consent to the use of cookies before any data is collected.
+
+Overall, the use of the `<dialog>` element enhances the user experience by providing a clear and accessible way to
+manage cookie consent, ensuring that all users can interact with our website in a compliant and user-friendly manner.
+
+This functionality is now the **default behavior of the plugin**, and it can be disabled by setting the new
+`use_floating_modal`
+flag in the `config/cookies_consent.php` file to `true`.
+
 ## v4.0.0 - Multilingual Support & Better Theming - Breaking Changes in Configuration and Functionality - 2025-03-07
 
 The plugin is now renamed to `laravel-cookie-guard` and has undergone some major updates! 🎉🥳😍
@@ -22,19 +56,22 @@ composer require scify/laravel-cookie-guard
 php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-public" --force
 ```
 
-Then, make sure to check the configuration file `config/cookies_consent.php` and update it according to [the new one](config/cookies_consent.php).
+Then, make sure to check the configuration file `config/cookies_consent.php` and update it according
+to [the new one](config/cookies_consent.php).
 
 Then, make sure that the Laravel components you use are the new ones:
 
 Intead of using:
 
 ```html
+
 <x-laravel-cookies-consent></x-laravel-cookies-consent>
 ```
 
 Use:
 
 ```html
+
 <x-laravel-cookie-guard-scripts></x-laravel-cookie-guard-scripts>
 <x-laravel-cookie-guard></x-laravel-cookie-guard>
 ```
@@ -77,13 +114,13 @@ If you want to override the CSS styles of the cookies consent dialog, you can do
 
 <x-laravel-cookie-guard></x-laravel-cookie-guard>
 <style>
-    #scify-cookies-consent {
-        --scify-cookies-primary-color: #ff5722; /* Override primary color */
+  #scify-cookies-consent {
+    --scify-cookies-primary-color: #ff5722; /* Override primary color */
 
-        ...
+    ...
 
-        /* Add more override rules here */
-    }
+    /* Add more override rules here */
+  }
 </style>
 ```
 

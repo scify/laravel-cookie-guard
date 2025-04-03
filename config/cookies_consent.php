@@ -22,6 +22,7 @@ return [
     'use_separate_page' => false, // Set to true to use a separate page for cookies explanation
     'categories_collapsed_by_default' => true, // Set to false to initially collapse the optional categories
     'cookie_policy_page_custom_url' => null, // Set the custom page URL if use_separate_page is set to true and you want to use a custom URL or Laravel route
+    'use_floating_modal' => false, // Set to false to disable the use of showModal() on the dialog HTML element
     /*
     |--------------------------------------------------------------------------
     | Editor

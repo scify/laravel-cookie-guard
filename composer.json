@@ -23,17 +23,17 @@
         "php": "^8"
     },
     "require-dev": {
-        "larastan/larastan": "^3.1",
-        "laravel/pint": "^1.6",
-        "nunomaduro/collision": "^8.0",
+        "larastan/larastan": "^3.2",
+        "laravel/pint": "^1.21",
+        "nunomaduro/collision": "^8.7",
         "orchestra/testbench": "^10.0",
-        "pestphp/pest": "^3.7",
+        "pestphp/pest": "^3.8",
         "pestphp/pest-plugin-laravel": "^v3.1",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpunit/phpunit": "^11.5",
-        "spatie/laravel-ray": "^1.39"
+        "spatie/laravel-ray": "^1.40"
     },
     "autoload": {
         "psr-4": {

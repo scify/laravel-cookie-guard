@@ -135,6 +135,7 @@ function initialiseBanner(cookieBanner, cookieButton, showFloatingButton, hideFl
 }
 
 function toggleBannerDisplay(cookieBanner, cookieButton, showFloatingButton, hideFloatingButtonOnMobile, cookieConsent) {
+    const useShowModal = cookieBanner.dataset.useShowModal === 'true' || cookieBanner.dataset.useShowModal === '1';
     if (cookieConsent) {
         cookieBanner.style.display = 'none';
         if (showFloatingButton && cookieButton) {
@@ -143,6 +144,10 @@ function toggleBannerDisplay(cookieBanner, cookieButton, showFloatingButton, hid
         }
     } else {
         cookieBanner.style.display = 'block';
+        const dialog = cookieBanner.querySelector('dialog');
+        if (dialog && useShowModal) {
+            dialog.showModal();
+        }
     }
 }
 
@@ -227,8 +232,6 @@ function handleCookieConsent(consent) {
         }
     }
 
-    console.log('ajax url', cookieBanner.dataset.ajaxUrl);
-
     fetch(cookieBanner.dataset.ajaxUrl, {
         method: 'POST', headers: {
             'Content-Type': 'application/json',
@@ -240,6 +243,17 @@ function handleCookieConsent(consent) {
                 setCookie(cookiePrefix + 'cookies_consent', JSON.stringify(consent), 30);
                 setSliders(JSON.stringify(consent));
                 showSuccessMessage(data.message);
+                const dialog = cookieBanner.querySelector('dialog');
+                if (dialog) {
+                    dialog.close();
+                }
+            }
+        })
+        .catch(() => {
+            console.error('Error storing cookie consent');
+            const dialog = cookieBanner.querySelector('dialog');
+            if (dialog) {
+                dialog.close();
             }
         });
 }
@@ -310,16 +324,22 @@ window.toggleCookieBanner = function () {
     const cookieBanner = document.getElementById('scify-cookies-consent');
     const cookieButton = document.getElementById('scify-cookie-consent-floating-button');
     const showFloatingButton = cookieBanner.dataset.showFloatingButton === 'true' || cookieBanner.dataset.showFloatingButton === '1';
+    const useShowModal = cookieBanner.dataset.useShowModal === 'true' || cookieBanner.dataset.useShowModal === '1';
+    const dialog = cookieBanner.querySelector('dialog');
 
     if (cookieBanner.style.display === 'none' || cookieBanner.style.display === '') {
-        console.log('showing banner');
         cookieBanner.style.display = 'block';
+        if (dialog && useShowModal) {
+            dialog.showModal();
+        }
         if (showFloatingButton) {
             cookieButton.style.display = 'none';
         }
     } else {
-        console.log('hiding banner');
         cookieBanner.style.display = 'none';
+        if (dialog && useShowModal) {
+            dialog.close();
+        }
         if (showFloatingButton) {
             cookieButton.style.display = 'block';
         }

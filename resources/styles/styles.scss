@@ -33,7 +33,6 @@
       border: none;
       box-shadow: none;
 
-
       .accordion-item.cookies-consent-category-item {
         border: none;
         border-bottom: 1px solid var(--scify-cookies-accordion-border-color);
@@ -84,9 +83,36 @@
     border: var(--scify-cookies-border-width) solid var(--scify-cookies-border-color);
     border-radius: var(--scify-cookies-banner-border-radius);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin: 0;
     z-index: 1000000;
+    width: 90%; // Default width for small screens
+    max-width: 600px; // Maximum width for small screens
+
+    &::backdrop {
+      background: black;
+      opacity: .3;
+    }
+
+    @media (min-width: 768px) {
+      width: 60%; // Width for medium screens
+    }
+
+    @media (min-width: 1200px) {
+      width: 45%; // Width for large screens
+    }
+
+    &.custom-dialog {
+      height: auto;
+      max-height: 80vh;
+      overflow-y: auto;
+      left: var(--scify-cookies-banner-left);
+      bottom: var(--scify-cookies-banner-bottom);
+      margin: 0;
+
+      @media (max-width: 991px) {
+        left: unset;
+        margin: 0 auto;
+      }
+    }
 
     .btn {
       display: inline-block;
@@ -157,28 +183,16 @@
 
     #cookie-consent-title {
       font-weight: 700;
-      font-size: 18px;
+      font-size: 21px;
       line-height: 24px;
       margin: 0 0 12px 0;
     }
 
     position: fixed;
-    bottom: var(--scify-cookies-banner-bottom);
-    left: var(--scify-cookies-banner-left);
-    width: 510px;
-    max-height: 80%;
     display: inline-block;
     overflow: hidden;
 
-    &.separate-page-mode {
-      // when larger than mobile
-      @media (min-width: 576px) {
-        width: 450px;
-      }
-    }
-
     .scify-cookies-container {
-      max-height: calc(100% - 80px);
       overflow-y: auto;
 
       .always-active {
@@ -187,18 +201,7 @@
       }
     }
 
-    @media (max-width: 575.98px) {
-      width: calc(100% - 20px);
-      max-width: calc(100% - 20px);
-      left: 10px;
-      right: 10px;
-      padding: 10px;
-      max-height: 95%;
-
-      .scify-cookies-container {
-        max-height: calc(100% - 145px);
-      }
-
+    @media (max-width: 991px) {
       .cookie-actions {
 
         button#customise-cookies, button#reject-all-cookies, button#accept-selected-cookies {

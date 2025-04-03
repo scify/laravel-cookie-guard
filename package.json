@@ -1,6 +1,6 @@
 {
   "name": "laravel-cookie-guard",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "<p align=\"center\"> <img src=\"logo.jpg\" alt=\"logo\" width=\"400\"> </p>",
   "main": "index.js",
   "directories": {
@@ -24,7 +24,7 @@
   "homepage": "https://github.com/scify/laravel-cookie-guard#readme",
   "devDependencies": {
     "blade-formatter": "^1.42.2",
-    "sass": "^1.85.1",
+    "sass": "^1.86.2",
     "vite": "^6.2.4"
   }
 }

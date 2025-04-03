@@ -5,9 +5,12 @@
          data-hide-floating-button-on-mobile="{{ config('cookies_consent.hide_floating_button_on_mobile') }}"
          data-cookie-prefix="{{ config('cookies_consent.cookie_prefix') }}"
          data-locale="{{ app()->getLocale() }}"
+         data-use-show-modal="{{ !config('cookies_consent.use_floating_modal') }}"
          style="display: none;">
         <dialog
-            class="scify-cookies-consent-banner cookies-policy-wrapper {{ config('cookies_consent.use_separate_page') ? 'separate-page-mode' : '' }}"
+            class="scify-cookies-consent-banner cookies-policy-wrapper
+            {{ config('cookies_consent.use_separate_page') ? 'separate-page-mode' : '' }}
+            {{ config('cookies_consent.use_floating_modal') ? 'custom-dialog' : '' }}"
             aria-labelledby="cookie-consent-title" aria-describedby="cookie-consent-description"
         >
             <div class="scify-cookies-container">
@@ -28,13 +31,13 @@
                     <div class="container-fluid p-0">
                         <div class="row g-0">
                             @if (config('cookies_consent.use_separate_page'))
-                                <div class="button-col col-6 col-sm-12 pl-0">
+                                <div class="button-col col-lg-6 col-sm-12 pl-0">
                                     <button type="button" class="btn btn-light w-100" id="reject-optional-cookies"
                                             aria-label="{{ __('cookies_consent::messages.reject_optional_btn') }}">
                                         {{ __('cookies_consent::messages.reject_optional_btn') }}
                                     </button>
                                 </div>
-                                <div class="button-col col-6 col-sm-12 pr-0">
+                                <div class="button-col col-lg-6 col-sm-12 pr-0">
                                     <button type="button" class="btn btn-light w-100" id="accept-all-cookies"
                                             aria-label="{{ __('cookies_consent::messages.accept_all_btn') }}">
                                         {{ __('cookies_consent::messages.accept_all_btn') }}
