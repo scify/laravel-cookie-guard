@@ -27,6 +27,10 @@
     }
   }
 
+  button {
+    font-family: var(--scify-cookies-font-family), sans-serif;
+  }
+
   button, input, optgroup, select, textarea {
     font-family: inherit;
     font-size: inherit;

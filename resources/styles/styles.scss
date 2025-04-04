@@ -1,6 +1,7 @@
 @use 'generic-rules';
 @use "form";
 @use "accordion";
+@import 'scify-cookie-policy-page';
 
 #scify-cookies-consent-wrapper, #scify-cookie-policy-page {
 
@@ -258,4 +259,19 @@
   svg {
     stroke: currentColor;
   }
+}
+
+body:has(dialog.scify-cookies-consent-banner[open]) {
+  // If the modal is open, then do not overflow main page:
+  // (removes scrolling from main page):
+  overflow: hidden;
+  // Bootstrap only: mimics its behavior for its own modals
+  // This is helpful when using containers on main page.
+  // Can be ommited.
+  padding-right: 0;
+}
+
+dialog.scify-cookies-consent-banner {
+  /* (i.e. remove overflow: hidden from original stylesheet) */
+  overflow: auto !important;
 }

@@ -50,4 +50,5 @@ return [
     'selection_saved_message' => 'Cookies consent selection saved',
     'cookies_settings' => 'Cookies Settings',
     'always_active' => 'always active',
+    'close_btn' => 'Save and close',
 ];

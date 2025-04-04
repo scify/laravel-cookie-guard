@@ -113,7 +113,8 @@ function initializeCookieBanner() {
         'customise-cookies': handleCustomiseCookies,
         'accept-all-cookies': handleAcceptAllCookies,
         'accept-selected-cookies': handleAcceptSelectedCookies,
-        'reject-optional-cookies': handleRejectOptionalCookies
+        'reject-optional-cookies': handleRejectOptionalCookies,
+        'close-cookie-policy-page': handleAcceptSelectedCookies,
     });
 }
 
@@ -175,8 +176,6 @@ function setSliders(cookieConsent) {
 
 function handleCustomiseCookies() {
     const cookieCategoriesContainer = document.getElementById('cookie-categories-container');
-    // find the closest parent element with the "banner" class, and set the width to 650px
-    cookieCategoriesContainer.closest('.scify-cookies-consent-banner').style.width = '650px';
     // remove the "display-none" class to show the cookie categories
     cookieCategoriesContainer.classList.remove('display-none');
 
@@ -247,6 +246,8 @@ function handleCookieConsent(consent) {
                 if (dialog) {
                     dialog.close();
                 }
+                if(onCookiesPage())
+                    history.back();
             }
         })
         .catch(() => {

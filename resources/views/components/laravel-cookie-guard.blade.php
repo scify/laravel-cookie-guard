@@ -20,7 +20,7 @@
                 @if (config('cookies_consent.use_separate_page'))
                     <p class="small">{{ __('cookies_consent::messages.please_visit_1') }} <a
                             href="{{ config('cookies_consent.cookie_policy_page_custom_url') ?? url('/cookie-policy', ['locale' => app()->getLocale()]) }}"
-                            target="_blank"><b>{{ __('cookies_consent::messages.cookie_policy_page') }}</b></a>.</p>
+                        ><b>{{ __('cookies_consent::messages.cookie_policy_page') }}</b></a>.</p>
                 @else
                     <div id="cookie-categories-container" class="display-none">
                         @include('cookies_consent::components._cookie-categories')

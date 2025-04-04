@@ -49,4 +49,5 @@ return [
     'read_less' => 'Διαβάστε λιγότερα',
     'selection_saved_message' => 'Η επιλογή συναίνεσης για τα cookies αποθηκεύτηκε',
     'cookies_settings' => 'Ρυθμίσεις Cookies',
+    'close_btn' => 'Αποθήκευση και κλείσιμο',
 ];

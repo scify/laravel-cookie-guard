@@ -428,7 +428,7 @@ Then, you can add a `<style>` tag in your Blade file, in order to override the C
 ```html
 
 <style>
-  #scify-cookies-consent, .scify-cookie-policy-page, #scify-cookie-consent-floating-button {
+  #scify-cookies-consent, #scify-cookie-policy-page, #scify-cookie-consent-floating-button {
     --scify-cookies-primary-color: #ff5722; /* Override primary color */
 
     ...
