@@ -5,6 +5,11 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## v4.1.2 - Fixed Back Scrolling & Button focus
+
+- Fixed the issue with the back scrolling of the page when the cookies consent modal is open.
+- Fixed the issue with the button focus in Safari.
+
 ## v4.1.0 - Improved Accessibility & Bug Fixes - 2025-04-03
 
 We have decided to give the developers the ability to use the pure `<dialog>` HTML element functionality for our cookie

@@ -136,8 +136,16 @@
       text-transform: none;
 
       &:hover {
-        background-color: var(--scify-cookies-btn-hover-bg-color);
+        background-color: var(--scify-cookies-primary-hover-color);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15), 0 10px 25px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
         border-color: var(--scify-cookies-btn-hover-border-color);
+      }
+
+      &:focus {
+        outline: 0;
+        box-shadow: 0 0 3px var(--scify-cookies-btn-border-color), 0 0 3px var(--scify-cookies-btn-border-color);
+        -webkit-box-shadow: 0 0 3px var(--scify-cookies-btn-border-color), 0 0 3px var(--scify-cookies-btn-border-color);
       }
     }
 
