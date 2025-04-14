@@ -275,7 +275,7 @@ categories.
 If set to `true`, all categories will be collapsed by default.
 
 The `use_floating_modal` field is optional and, if set to `true`, will disable the use of `showModal()` on the dialog HTML,
-and the fully-accessible modal.
+and the fully-accessible modal. It will show a floating window on the left, instead.
 
 You can add as many cookie categories as you like, simply by adding values to the `cookies` array.
 
