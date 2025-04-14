@@ -140,6 +140,7 @@
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15), 0 10px 25px rgba(0, 0, 0, 0.15);
         cursor: pointer;
         border-color: var(--scify-cookies-btn-hover-border-color);
+        color: var(--scify-cookies-btn-hover-text-color);
       }
 
       &:focus {
@@ -280,6 +281,11 @@ body:has(dialog.scify-cookies-consent-banner[open]) {
 }
 
 dialog.scify-cookies-consent-banner {
-  /* (i.e. remove overflow: hidden from original stylesheet) */
-  overflow: auto !important;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0; // Remove any default margin
+  overflow: auto !important; // Ensure content is scrollable if needed
+  max-height: 90vh; // Prevent overflow on smaller screens
 }

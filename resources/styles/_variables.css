@@ -26,6 +26,7 @@
   --scify-cookies-btn-border-width: 2px;
   --scify-cookies-btn-border-radius: 2px;
   --scify-cookies-btn-text-color: var(--scify-cookies-primary-color);
+  --scify-cookies-btn-hover-text-color: #e7f1ff;
   --scify-cookies-btn-border-color: var(--scify-cookies-primary-color);
   --scify-cookies-btn-hover-border-color: var(--scify-cookies-primary-hover-color);
   --scify-cookies-btn-padding: 8px;

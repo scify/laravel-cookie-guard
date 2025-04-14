@@ -10,7 +10,7 @@
         <dialog
             class="scify-cookies-consent-banner cookies-policy-wrapper
             {{ config('cookies_consent.use_separate_page') ? 'separate-page-mode' : '' }}
-            {{ config('cookies_consent.use_floating_modal') ? 'custom-dialog' : '' }}"
+            {{ config('cookies_consent.use_floating_modal') ? 'custom-dialog' : 'modal-base-dialog' }}"
             aria-labelledby="cookie-consent-title" aria-describedby="cookie-consent-description"
         >
             <div class="scify-cookies-container">
