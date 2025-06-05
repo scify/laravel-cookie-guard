@@ -2,7 +2,7 @@
     <div id="scify-cookies-consent"
          class="scify-cookies-consent-banner cookies-policy-wrapper"
          aria-labelledby="cookie-consent-title" aria-describedby="cookie-consent-description"
-         data-ajax-url="{{ url('/cookie-consent/save') }}"
+         data-ajax-url="{{ url('/guard-settings/save') }}"
          data-cookie-prefix="{{ config('cookies_consent.cookie_prefix') }}"
          data-show-floating-button="false" data-on-cookies-page="true"
          data-hide-floating-button-on-mobile="{{ config('cookies_consent.hide_floating_button_on_mobile') }}">

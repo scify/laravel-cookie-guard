@@ -1,6 +1,6 @@
 <div id="scify-cookies-consent-wrapper">
     <div id="scify-cookies-consent"
-         data-ajax-url="{{ url('/cookie-consent/save') }}"
+         data-ajax-url="{{ url('/guard-settings/save') }}"
          data-show-floating-button="{{ config('cookies_consent.display_floating_button') }}"
          data-hide-floating-button-on-mobile="{{ config('cookies_consent.hide_floating_button_on_mobile') }}"
          data-cookie-prefix="{{ config('cookies_consent.cookie_prefix') }}"

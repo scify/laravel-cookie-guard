@@ -18,4 +18,4 @@ Route::get('/cookie-policy/{locale}', function (string $locale) {
     return view('cookies_consent::pages.cookie-policy-default-page');
 });
 
-Route::post('/cookie-consent/save', [CookiesController::class, 'save_cookies_consent_selection']);
+Route::post('/guard-settings/save', [CookiesController::class, 'save_cookies_consent_selection']);
