@@ -23,14 +23,6 @@ function openCookieBannerByHash() {
             window.toggleCookieBanner();
         }
     }
-
-    window.addEventListener('hashchange', function () {
-        if (window.location.hash === '#consent-settings') {
-            if (typeof window.toggleCookieBanner === 'function') {
-                window.toggleCookieBanner();
-            }
-        }
-    });
 }
 
 /**
