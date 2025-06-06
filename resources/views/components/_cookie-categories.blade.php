@@ -17,7 +17,7 @@
             </label>
         </div>
         <div class="accordion-item cookies-consent-category-item">
-            <h5 class="accordion-header h5" id="heading-{{ $category }}">
+            <{{ $accordionHeading }} class="accordion-header h5" id="heading-{{ $category }}">
                 <button
                     class="accordion-button {{ $alwaysOpen || (!$categoriesCollapsedByDefault && $category === 'strictly_necessary') ? '' : 'collapsed' }}"
                     type="button" data-toggle="collapse" data-target="#collapse-{{ $category }}"
@@ -29,7 +29,7 @@
                         {{ __('cookies_consent::messages.read_more') }}
                     @endif
                 </button>
-            </h5>
+            </{{ $accordionHeading }}>
             <div id="collapse-{{ $category }}"
                 class="accordion-collapse {{ $alwaysOpen || (!$categoriesCollapsedByDefault && $category === 'strictly_necessary') ? 'show' : '' }}"
                 aria-labelledby="heading-{{ $category }}" data-parent="#cookieAccordion">

@@ -1,3 +1,4 @@
+
 <div id="scify-cookies-consent-wrapper">
     <div id="scify-cookies-consent"
          data-ajax-url="{{ url('/guard-settings/save') }}"
@@ -14,7 +15,9 @@
             aria-labelledby="cookie-consent-title" aria-describedby="cookie-consent-description"
         >
             <div class="scify-cookies-container">
-                <h5 id="cookie-consent-title" class="h5 pt-0 pb-2">{{ __('cookies_consent::messages.title') }}</h5>
+                <{{ $heading }} id="cookie-consent-title" class="h5 pt-0 pb-2">
+                    {{ __('cookies_consent::messages.title') }}
+                </{{ $heading }}>
                 <p id="cookie-consent-description"
                    class="small mb-4">{{ __('cookies_consent::messages.description') }}</p>
                 @if (config('cookies_consent.use_separate_page'))

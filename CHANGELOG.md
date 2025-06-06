@@ -5,6 +5,26 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## v4.1.4 - Customizable Heading Level for Dialog & Opening by hash
+
+- Added the ability to customize the heading level of the cookie consent dialog title and the accordion headings via the `heading` and `accordion-heading` attribute on the `<x-laravel-cookie-guard>` component.
+- This allows developers to specify the semantic heading tag (e.g., `h2`, `h3`, etc.) for better accessibility and SEO integration with their application's heading structure.
+- Example usage:
+
+  ```blade
+  <x-laravel-cookie-guard heading="h2" accordion-heading="h5"/>
+  ```
+
+- The default heading level is now `h2` for `heading` and `h5` for `accordion-heading`, if not specified.
+- The cookie consent banner can now also be opened by navigating to the `#consent-settings` hash in the URL. The banner will open automatically on page load or when the hash changes to `#consent-settings`.
+  Example usage:
+
+  ```html
+  <div>
+    <a href="#consent-settings">Cookies Preferences</a>
+  </div>
+  ```
+
 ## v4.1.3 - Button hover text color & Modal placement
 
 - Fixed the issue with the button hover text color in the cookies consent modal.
@@ -32,11 +52,9 @@ By using the `<dialog>` element, we achieve the following benefits:
    accessibility features. It ensures that screen readers and other assistive technologies can properly announce the
    dialog and its contents to users with disabilities.
 
-
 2. **Focus Management:** When the dialog is open, it automatically captures the focus, preventing users from navigating
    outside of it. This ensures that users cannot interact with other parts of the website until they have accepted or
    rejected the cookies, making the consent process clear and unavoidable.
-
 
 3. **Compliance with Privacy Regulations:** By requiring users to make a choice before continuing to use the website, we
    ensure compliance with privacy regulations such as the GDPR. This approach guarantees that users are informed about
@@ -210,27 +228,27 @@ php artisan vendor:publish \
 
 ### Breaking Changes
 
-* JSON Cookie Storage: Cookies are now stored in a JSON object under a single key with the prefix specified in the
+- JSON Cookie Storage: Cookies are now stored in a JSON object under a single key with the prefix specified in the
   configuration file. This change improves the structure and management of cookies.
 
-* Configuration File Changes: The configuration file format has been updated to reflect the new JSON cookie storage
+- Configuration File Changes: The configuration file format has been updated to reflect the new JSON cookie storage
   method. The `cookie_prefix` is now used to store cookies in a JSON object.
 
 ## New Features
 
-* JSON Cookie Storage: Cookies are now stored in a JSON object under a single key with the prefix specified in the
+- JSON Cookie Storage: Cookies are now stored in a JSON object under a single key with the prefix specified in the
   configuration file. This change improves the structure and management of cookies.
-* `hide_floating_button_on_mobile` option: A new configuration option has been added to hide the floating cookies button
+- `hide_floating_button_on_mobile` option: A new configuration option has been added to hide the floating cookies button
   on mobile devices. This option allows you to control the visibility of the floating button based on the device type.
-* UI/UX Improvements: The cookies consent modal has been updated with improved styling and layout for a better user
+- UI/UX Improvements: The cookies consent modal has been updated with improved styling and layout for a better user
   experience.
 
 ### Migration Guide
 
 1. Update the configuration file to reflect the new JSON cookie storage method:
 
-* Ensure the `cookie_prefix` is set in the `config/cookies_consent.php` file.
-* Update the `name` field of each cookie in the `cookies` array to reflect the new JSON storage format.
+- Ensure the `cookie_prefix` is set in the `config/cookies_consent.php` file.
+- Update the `name` field of each cookie in the `cookies` array to reflect the new JSON storage format.
 
 Example:
 
@@ -254,7 +272,7 @@ Example:
 
 2. Update Blade Files
 
-* Update the Blade files to reflect the new JSON cookie storage method. The `cookie` helper function is used to set and
+- Update the Blade files to reflect the new JSON cookie storage method. The `cookie` helper function is used to set and
   retrieve cookies from the JSON object.
 
 Example:
@@ -289,13 +307,13 @@ Example:
 
 3. Publish the front-end assets
 
-* Run the following command to publish the updated assets:
+- Run the following command to publish the updated assets:
   `php artisan vendor:publish --provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" --tag="cookies-consent-public" --force`
 
 4. Test your application
 
-* Ensure that the cookies consent functionality works as expected with the new JSON storage format.
-* Verify that the cookies are correctly set and retrieved in the browser.
+- Ensure that the cookies consent functionality works as expected with the new JSON storage format.
+- Verify that the cookies are correctly set and retrieved in the browser.
 
 ## v2.0.7 - UI Improvements for smaller screens - 2024-01-27
 
@@ -340,9 +358,9 @@ Improvements regarding the styles file, Composer lib updates
 
 **List of Updates:**
 
-- Fixed z-index issue (as reported in https://github.com/scify/laravel-cookie-guard/issues/10)
+- Fixed z-index issue (as reported in <https://github.com/scify/laravel-cookie-guard/issues/10>)
 - Now the front-end assets (styles) file is not automatically published, to avoid causing overriding (reported
-  in https://github.com/scify/laravel-cookie-guard/issues/11)
+  in <https://github.com/scify/laravel-cookie-guard/issues/11>)
 - Composer libraries update
 - Improved Development guidelines in Readme file
 

@@ -4,7 +4,33 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeAccordionButtons();
     initializeCookieBanner();
     initializeCookiePolicyLink();
+    openCookieBannerByHash();
 });
+
+/**
+ * Opens the cookie banner by hash.
+ * @function openCookieBannerByHash
+ * @returns {void}
+ * @description
+ * This function opens the cookie banner by hash.
+ * If the hash is #consent-settings, the cookie banner is opened.
+ * If the hash is not #consent-settings, the cookie banner is closed.
+ */
+function openCookieBannerByHash() {
+    if (window.location.hash === '#consent-settings') {
+        if (typeof window.toggleCookieBanner === 'function') {
+            window.toggleCookieBanner();
+        }
+    }
+
+    window.addEventListener('hashchange', function () {
+        if (window.location.hash === '#consent-settings') {
+            if (typeof window.toggleCookieBanner === 'function') {
+                window.toggleCookieBanner();
+            }
+        }
+    });
+}
 
 /**
  * Initializes the accordion buttons by attaching event listeners to them.

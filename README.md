@@ -26,33 +26,36 @@ The **last** Cookies Consent Plugin your **Laravel app** will ever need!
 
 ## Table of Contents
 
-- [Upgrading to v4](#upgrading-to-v4)
-- [About the plugin](#about-the-plugin)
-- [Features](#features)
-- [Installation](#installation)
-  - [Explanation of the configuration file](#explanation-of-the-configuration-file)
-- [Usage](#usage)
-  - [Option 1: All-in-one dialog (default)](#option-1-all-in-one-dialog-default)
-  - [Option 2: Simple dialog, with a link to the default separate internal page](#option-2-simple-dialog-with-a-link-to-the-default-separate-internal-page)
-  - [Option 3: Simple dialog, with a link to a customized separate internal page with navbars, footers, etc.](#option-3-simple-dialog-with-a-link-to-a-customized-separate-internal-page-with-navbars-footers-etc)
-  - [Option 4: Simple dialog, with a link to an external (off-the-app) page](#option-4-simple-dialog-with-a-link-to-an-external-off-the-app-page)
-- [How to override the CSS styles](#how-to-override-the-css-styles)
-- [How to add a new cookie category](#how-to-add-a-new-cookie-category)
-- [How to check if a cookie category is allowed](#how-to-check-if-a-cookie-category-is-allowed)
-  - [Backend code](#backend-code)
-  - [Frontend code](#frontend-code)
-- [Customization](#customization)
-  - [Customizing the component texts](#customizing-the-component-texts)
-  - [Customizing the component contents](#customizing-the-component-contents)
-- [Development](#development)
-  - [Testing](#testing)
-- [FAQ](#faq)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-  - [PHP code style - Laravel Pint](#php-code-style---laravel-pint)
-  - [Releasing a new version](#releasing-a-new-version)
-- [Credits](#credits)
-- [License](#license)
+- [Laravel Cookie Guard - Make your Laravel app compliant with the EU GDPR cookie law](#laravel-cookie-guard---make-your-laravel-app-compliant-with-the-eu-gdpr-cookie-law)
+  - [Table of Contents](#table-of-contents)
+  - [Upgrading to v4](#upgrading-to-v4)
+  - [About the plugin](#about-the-plugin)
+  - [Features](#features)
+  - [Installation](#installation)
+    - [SEO](#seo)
+    - [Explanation of the configuration file](#explanation-of-the-configuration-file)
+  - [Usage](#usage)
+    - [Option 1: All-in-one dialog (default)](#option-1-all-in-one-dialog-default)
+    - [Option 2: Simple dialog, with a link to the default separate internal page](#option-2-simple-dialog-with-a-link-to-the-default-separate-internal-page)
+    - [Option 3: Simple dialog, with a link to a customized separate internal page with navbars, footers, etc.](#option-3-simple-dialog-with-a-link-to-a-customized-separate-internal-page-with-navbars-footers-etc)
+    - [Option 4: Simple dialog, with a link to an external (off-the-app) page](#option-4-simple-dialog-with-a-link-to-an-external-off-the-app-page)
+  - [How to override the CSS styles](#how-to-override-the-css-styles)
+  - [How to add a new cookie category](#how-to-add-a-new-cookie-category)
+  - [How to check if a cookie category is allowed](#how-to-check-if-a-cookie-category-is-allowed)
+    - [Backend code](#backend-code)
+    - [Frontend code](#frontend-code)
+  - [Customization](#customization)
+    - [Customizing the component texts](#customizing-the-component-texts)
+    - [Customizing the component contents](#customizing-the-component-contents)
+  - [Development](#development)
+    - [Testing](#testing)
+  - [FAQ](#faq)
+  - [Changelog](#changelog)
+  - [Contributing](#contributing)
+    - [PHP code style - Laravel Pint](#php-code-style---laravel-pint)
+    - [Releasing a new version](#releasing-a-new-version)
+  - [Credits](#credits)
+  - [License](#license)
 
 ## Upgrading to v4
 
@@ -161,7 +164,7 @@ php artisan vendor:publish \
 
 The configuration file will be published to `config/cookies_consent.php`.
 
-3. Use the Laravel View Components provided
+3. Use the provided Laravel View Components
 
 In order to use the plugin, you need to include the Laravel View Components in your Blade files, where you want the
 cookies to appear (typically just before the closing `</body>` tag):
@@ -171,6 +174,16 @@ cookies to appear (typically just before the closing `</body>` tag):
 <x-laravel-cookie-guard></x-laravel-cookie-guard>
 <x-laravel-cookie-guard-scripts></x-laravel-cookie-guard-scripts>
 ```
+
+### SEO
+
+Tip: Depending on the HTML structure of your app, you can specify the `heading` and `accordion-heading` attributes, so that the SEO rules are respected:
+
+```html
+<x-laravel-cookie-guard heading="h2" accordion-heading="h5" />
+```
+
+This will impact the heading level of the "We value your privacy" dialog title, and the "Read More" accordion titles.
 
 ### Explanation of the configuration file
 
@@ -256,10 +269,19 @@ of `my_app_cookies_consent_targeting`.
 The `display_floating_button` field is optional and, if set to `true`, will display a floating button in the bottom
 right corner of the page.
 If set to `false`, then you will need to add a relevant link in your footer, in order to show the cookies preferences
-page:
+dialog:
 
 ```html
 <a href="javascript:void(0);" onclick="toggleCookieBanner()" onkeyup="if (event.key === 'Enter') toggleCookieBanner()"
+   role="button" aria-label="{{ __('cookies_consent::messages.cookies_settings') }}">
+  {{ __('cookies_consent::messages.cookies_settings') }}
+</a>
+```
+
+If you prefer opening the dialog by hash, you can use:
+
+```html
+<a href="#consent-settings"
    role="button" aria-label="{{ __('cookies_consent::messages.cookies_settings') }}">
   {{ __('cookies_consent::messages.cookies_settings') }}
 </a>
