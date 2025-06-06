@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeCookieBanner();
     initializeCookiePolicyLink();
     openCookieBannerByHash();
+    initializeConsentSettingsLink();
 });
 
 /**
@@ -372,3 +373,18 @@ window.toggleCookieBanner = function () {
         }
     }
 };
+
+/**
+ * Ensures that clicking any link with href="#consent-settings" always opens the cookie banner dialog.
+ */
+function initializeConsentSettingsLink() {
+    document.querySelectorAll('a[href="#consent-settings"]').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.location.hash = '#consent-settings'; // Optional: update hash for consistency
+            if (typeof window.toggleCookieBanner === 'function') {
+                window.toggleCookieBanner();
+            }
+        });
+    });
+}
