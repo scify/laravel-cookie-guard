@@ -85,8 +85,8 @@
     border-radius: var(--scify-cookies-banner-border-radius);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000000;
-    width: 90%; // Default width for small screens
-    max-width: 600px; // Maximum width for small screens
+    width: 90%;
+    max-width: 700px;
 
     &::backdrop {
       background: black;
@@ -94,11 +94,11 @@
     }
 
     @media (min-width: 768px) {
-      width: 60%; // Width for medium screens
+      width: 60%;
     }
 
     @media (min-width: 1200px) {
-      width: 45%; // Width for large screens
+      width: 45%;
     }
 
     &.custom-dialog {
@@ -203,7 +203,7 @@
     overflow: hidden;
 
     .scify-cookies-container {
-      overflow-y: auto;
+      min-height: fit-content;
 
       .always-active {
         color: var(--scify-cookies-always-active-message-color);
@@ -285,7 +285,8 @@ dialog.scify-cookies-consent-banner {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin: 0; // Remove any default margin
+  margin: 0;
   overflow: auto !important; // Ensure content is scrollable if needed
-  max-height: 90vh; // Prevent overflow on smaller screens
+  overflow-y: auto;
+  max-height: 90vh;
 }

@@ -5,6 +5,10 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## v4.1.5 - Fixes For Safari Browser
+
+- Fixed the issue with the cookie consent dialog overflow in Safari.
+
 ## v4.1.4 - Customizable Heading Level for Dialog & Opening by hash
 
 - Added the ability to customize the heading level of the cookie consent dialog title and the accordion headings via the `heading` and `accordion-heading` attribute on the `<x-laravel-cookie-guard>` component.
