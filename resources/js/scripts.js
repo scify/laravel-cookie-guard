@@ -183,12 +183,16 @@ function toggleBannerDisplay(cookieBanner, cookieButton, showFloatingButton, hid
  */
 function setSliders(cookieConsent) {
     if (cookieConsent) {
-        const consentSettings = JSON.parse(cookieConsent);
-        for (const category in consentSettings) {
-            const categoryCheckbox = document.getElementById(category);
-            if (categoryCheckbox) {
-                categoryCheckbox.checked = consentSettings[category];
+        try {
+            const consentSettings = JSON.parse(cookieConsent);
+            for (const category in consentSettings) {
+                const categoryCheckbox = document.getElementById(category);
+                if (categoryCheckbox) {
+                    categoryCheckbox.checked = consentSettings[category];
+                }
             }
+        } catch (error) {
+            console.warn('Error parsing cookie consent JSON:', error);
         }
     }
 }
