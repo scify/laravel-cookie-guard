@@ -1,292 +1,303 @@
-@use 'generic-rules';
+@use "generic-rules";
 @use "form";
 @use "accordion";
-@import 'scify-cookie-policy-page';
+@import "scify-cookie-policy-page";
 
-#scify-cookies-consent-wrapper, #scify-cookie-policy-page {
+#scify-cookies-consent-wrapper,
+#scify-cookie-policy-page {
+	.cookies-external-page {
+		min-height: 100vh;
+		width: auto;
+		max-width: 100%;
 
-  .cookies-external-page {
-    min-height: 100vh;
-    width: auto;
-    max-width: 100%;
+		.cookies-policy-wrapper {
+			min-height: auto;
+			max-width: 100%;
+			margin: 0 auto;
+			position: relative !important;
+			width: 100% !important;
 
-    .cookies-policy-wrapper {
-      min-height: auto;
-      max-width: 100%;
-      margin: 0 auto;
-      position: relative !important;
-      width: 100% !important;
+			.accordion .accordion-item .accordion-button {
+				font-size: var(--scify-cookies-font-size-base);
+			}
+		}
 
-      .accordion .accordion-item .accordion-button {
-        font-size: var(--scify-cookies-font-size-base);
-      }
-    }
+		.scify-cookies-consent-banner {
+			padding: 2rem 1rem;
+			max-width: 100%;
+			width: 100%;
+			margin: 0 auto;
 
-    .scify-cookies-consent-banner {
-      padding: 2rem 1rem;
-      max-width: 100%;
-      width: 100%;
-      margin: 0 auto;
+			// cancel bottom and left properties
+			bottom: auto;
+			left: auto;
+			border: none;
+			box-shadow: none;
 
-      // cancel bottom and left properties
-      bottom: auto;
-      left: auto;
-      border: none;
-      box-shadow: none;
+			.accordion-item.cookies-consent-category-item {
+				border: none;
+				border-bottom: 1px solid var(--scify-cookies-accordion-border-color);
+			}
 
-      .accordion-item.cookies-consent-category-item {
-        border: none;
-        border-bottom: 1px solid var(--scify-cookies-accordion-border-color);
-      }
+			.btn {
+				padding: var(--scify-cookies-btn-padding-lg);
+			}
+		}
 
-      .btn {
-        padding: var(--scify-cookies-btn-padding-lg);
-      }
-    }
+		.cookies-policy-wrapper {
+			padding-bottom: 40px;
+		}
+	}
 
-    .cookies-policy-wrapper {
-      padding-bottom: 40px;
-    }
-  }
+	// Cookie Success Message
+	.cookie-success-message {
+		position: fixed;
+		bottom: var(--scify-cookies-gutter);
+		right: var(--scify-cookies-gutter);
+		z-index: 100000000;
+		padding: var(--scify-cookies-success-message-padding);
+		margin-bottom: var(--scify-cookies-gutter);
+		border: 1px solid var(--scify-cookies-success-message-border-color);
+		border-radius: var(--scify-cookies-border-radius);
+		background-color: var(--scify-cookies-success-message-bg-color);
+		color: var(--scify-cookies-success-message-text-color);
+		box-shadow: var(--scify-cookies-success-message-box-shadow);
+		transition: opacity 0.15s linear;
+		font-size: var(--scify-cookies-font-size-base);
 
-  // Cookie Success Message
-  .cookie-success-message {
-    position: fixed;
-    bottom: var(--scify-cookies-gutter);
-    right: var(--scify-cookies-gutter);
-    z-index: 100000000;
-    padding: var(--scify-cookies-success-message-padding);
-    margin-bottom: var(--scify-cookies-gutter);
-    border: 1px solid var(--scify-cookies-success-message-border-color);
-    border-radius: var(--scify-cookies-border-radius);
-    background-color: var(--scify-cookies-success-message-bg-color);
-    color: var(--scify-cookies-success-message-text-color);
-    box-shadow: var(--scify-cookies-success-message-box-shadow);
-    transition: opacity 0.15s linear;
-    font-size: var(--scify-cookies-font-size-base);
+		&.show {
+			opacity: 1;
+			transform: translateY(0);
+			transition:
+				opacity 0.5s ease-in-out,
+				transform 0.5s ease-in-out;
+		}
+	}
 
-    &.show {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-    }
-  }
+	.scify-cookies-consent-banner {
+		color: var(--scify-cookies-text-color);
+		font-family: var(--scify-cookies-font-family), sans-serif;
+		font-size: var(--scify-cookies-font-size-base);
+		font-weight: 400;
+		line-height: 1.6;
+		padding: 25px;
+		background-color: var(--scify-cookies-bg-color);
+		border: var(--scify-cookies-border-width) solid var(--scify-cookies-border-color);
+		border-radius: var(--scify-cookies-banner-border-radius);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		z-index: 1000000;
+		width: 90%;
+		max-width: 700px;
 
-  .scify-cookies-consent-banner {
+		&::backdrop {
+			background: black;
+			opacity: 0.3;
+		}
 
-    color: var(--scify-cookies-text-color);
-    font-family: var(--scify-cookies-font-family), sans-serif;
-    font-size: var(--scify-cookies-font-size-base);
-    font-weight: 400;
-    line-height: 1.6;
-    padding: 25px;
-    background-color: var(--scify-cookies-bg-color);
-    border: var(--scify-cookies-border-width) solid var(--scify-cookies-border-color);
-    border-radius: var(--scify-cookies-banner-border-radius);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000000;
-    width: 90%;
-    max-width: 700px;
+		@media (min-width: 768px) {
+			width: 60%;
+		}
 
-    &::backdrop {
-      background: black;
-      opacity: .3;
-    }
+		@media (min-width: 1200px) {
+			width: 45%;
+		}
 
-    @media (min-width: 768px) {
-      width: 60%;
-    }
+		&.custom-dialog {
+			height: auto;
+			max-height: 80vh;
+			overflow-y: auto;
+			left: var(--scify-cookies-banner-left);
+			bottom: var(--scify-cookies-banner-bottom);
+			margin: 0;
 
-    @media (min-width: 1200px) {
-      width: 45%;
-    }
+			@media (max-width: 991px) {
+				left: unset;
+				margin: 0 auto;
+			}
+		}
 
-    &.custom-dialog {
-      height: auto;
-      max-height: 80vh;
-      overflow-y: auto;
-      left: var(--scify-cookies-banner-left);
-      bottom: var(--scify-cookies-banner-bottom);
-      margin: 0;
+		.btn {
+			display: inline-block;
+			line-height: 1.5;
+			color: var(--scify-cookies-btn-text-color);
+			background-color: var(--scify-cookies-btn-bg-color);
+			text-align: center;
+			text-decoration: none;
+			vertical-align: middle;
+			cursor: pointer;
+			user-select: none;
+			border: var(--scify-cookies-btn-border-width) solid var(--scify-cookies-btn-border-color);
+			padding: var(--scify-cookies-btn-padding);
+			font-size: var(--scify-cookies-btn-text-font-size);
+			font-weight: 500;
+			border-radius: var(--scify-cookies-btn-border-radius);
+			transition:
+				color 0.15s ease-in-out,
+				background-color 0.15s ease-in-out,
+				border-color 0.15s ease-in-out,
+				box-shadow 0.15s ease-in-out;
+			white-space: nowrap;
+			height: auto;
+			text-transform: none;
 
-      @media (max-width: 991px) {
-        left: unset;
-        margin: 0 auto;
-      }
-    }
+			&:hover {
+				background-color: var(--scify-cookies-primary-hover-color);
+				box-shadow:
+					0 6px 8px rgba(0, 0, 0, 0.15),
+					0 10px 25px rgba(0, 0, 0, 0.15);
+				cursor: pointer;
+				border-color: var(--scify-cookies-btn-hover-border-color);
+				color: var(--scify-cookies-btn-hover-text-color);
+			}
 
-    .btn {
-      display: inline-block;
-      line-height: 1.5;
-      color: var(--scify-cookies-btn-text-color);
-      background-color: var(--scify-cookies-btn-bg-color);
-      text-align: center;
-      text-decoration: none;
-      vertical-align: middle;
-      cursor: pointer;
-      user-select: none;
-      border: var(--scify-cookies-btn-border-width) solid var(--scify-cookies-btn-border-color);
-      padding: var(--scify-cookies-btn-padding);
-      font-size: var(--scify-cookies-btn-text-font-size);
-      font-weight: 500;
-      border-radius: var(--scify-cookies-btn-border-radius);
-      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-      white-space: nowrap;
-      height: auto;
-      text-transform: none;
+			&:focus {
+				outline: 0;
+				box-shadow:
+					0 0 3px var(--scify-cookies-btn-border-color),
+					0 0 3px var(--scify-cookies-btn-border-color);
+				-webkit-box-shadow:
+					0 0 3px var(--scify-cookies-btn-border-color),
+					0 0 3px var(--scify-cookies-btn-border-color);
+			}
+		}
 
-      &:hover {
-        background-color: var(--scify-cookies-primary-hover-color);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15), 0 10px 25px rgba(0, 0, 0, 0.15);
-        cursor: pointer;
-        border-color: var(--scify-cookies-btn-hover-border-color);
-        color: var(--scify-cookies-btn-hover-text-color);
-      }
+		.list-group {
+			display: flex;
+			flex-direction: column;
+			padding-left: 0;
+			margin-bottom: 0;
 
-      &:focus {
-        outline: 0;
-        box-shadow: 0 0 3px var(--scify-cookies-btn-border-color), 0 0 3px var(--scify-cookies-btn-border-color);
-        -webkit-box-shadow: 0 0 3px var(--scify-cookies-btn-border-color), 0 0 3px var(--scify-cookies-btn-border-color);
-      }
-    }
+			.list-group-item {
+				position: relative;
+				display: block;
+				padding: 0.75rem 1.25rem;
+				background-color: #fff;
+				border: none;
+				border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
-    .list-group {
-      display: flex;
-      flex-direction: column;
-      padding-left: 0;
-      margin-bottom: 0;
+				@media (max-width: 575.98px) {
+					padding: 0.25rem 0.5rem;
+				}
 
-      .list-group-item {
-        position: relative;
-        display: block;
-        padding: 0.75rem 1.25rem;
-        background-color: #fff;
-        border: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+				&:last-child {
+					border-bottom: none;
+				}
+			}
+		}
 
-        @media (max-width: 575.98px) {
-          padding: 0.25rem 0.5rem;
-        }
+		code {
+			font-size: 87.5%;
+			color: var(--scify-cookies-name-text-color);
+			word-wrap: break-word;
+		}
 
-        &:last-child {
-          border-bottom: none;
-        }
-      }
-    }
+		.cookie-actions {
+			margin-top: 10px;
+			width: 100%;
+			text-align: center;
 
+			.row {
+				margin: 0;
+			}
+		}
 
-    code {
-      font-size: 87.5%;
-      color: var(--scify-cookies-name-text-color);
-      word-wrap: break-word;
-    }
+		#cookie-consent-title {
+			font-weight: 700;
+			font-size: 21px;
+			line-height: 24px;
+			margin: 0 0 12px 0;
+		}
 
-    .cookie-actions {
-      margin-top: 10px;
-      width: 100%;
-      text-align: center;
+		position: fixed;
+		display: inline-block;
+		overflow: hidden;
 
-      .row {
-        margin: 0;
-      }
-    }
+		.scify-cookies-container {
+			min-height: fit-content;
 
-    #cookie-consent-title {
-      font-weight: 700;
-      font-size: 21px;
-      line-height: 24px;
-      margin: 0 0 12px 0;
-    }
+			.always-active {
+				color: var(--scify-cookies-always-active-message-color);
+				margin-left: 5px;
+			}
+		}
 
-    position: fixed;
-    display: inline-block;
-    overflow: hidden;
+		@media (max-width: 991px) {
+			.cookie-actions {
+				button#customise-cookies,
+				button#reject-all-cookies,
+				button#accept-selected-cookies {
+					border-bottom: 0;
+				}
 
-    .scify-cookies-container {
-      min-height: fit-content;
+				button#accept-all-cookies {
+					border-top: 0;
+				}
+			}
+		}
 
-      .always-active {
-        color: var(--scify-cookies-always-active-message-color);
-        margin-left: 5px;
-      }
-    }
-
-    @media (max-width: 991px) {
-      .cookie-actions {
-
-        button#customise-cookies, button#reject-all-cookies, button#accept-selected-cookies {
-          border-bottom: 0;
-        }
-
-        button#accept-all-cookies {
-          border-top: 0;
-        }
-      }
-    }
-
-
-    .policy-link {
-      font-size: small;
-      text-decoration: underline;
-    }
-  }
+		.policy-link {
+			font-size: small;
+			text-decoration: underline;
+		}
+	}
 }
 
 #scify-cookies-consent-wrapper.scify-cookies-consent-wrapper-page {
-  .scify-cookies-consent-banner {
-    margin: 0 auto;
-    position: relative;
-    width: auto;
-    max-width: 100%;
-  }
+	.scify-cookies-consent-banner {
+		margin: 0 auto;
+		position: relative;
+		width: auto;
+		max-width: 100%;
+	}
 }
 
 #scify-cookie-consent-floating-button {
-  position: fixed;
-  bottom: var(--scify-cookies-floating-btn-bottom);
-  left: var(--scify-cookies-floating-btn-left);
-  z-index: 1000000;
-  background-color: var(--scify-cookies-floating-btn-bg-color);
-  color: var(--scify-cookies-floating-btn-text-color);
-  border: var(--scify-cookies-floating-btn-border-width) solid var(--scify-cookies-floating-btn-border-color);
-  border-radius: var(--scify-cookies-floating-btn-border-radius);
-  padding: var(--scify-cookies-floating-btn-padding);
-  height: var(--scify-cookies-floating-btn-height);
-  width: var(--scify-cookies-floating-btn-width);
+	position: fixed;
+	bottom: var(--scify-cookies-floating-btn-bottom);
+	left: var(--scify-cookies-floating-btn-left);
+	z-index: 1000000;
+	background-color: var(--scify-cookies-floating-btn-bg-color);
+	color: var(--scify-cookies-floating-btn-text-color);
+	border: var(--scify-cookies-floating-btn-border-width) solid var(--scify-cookies-floating-btn-border-color);
+	border-radius: var(--scify-cookies-floating-btn-border-radius);
+	padding: var(--scify-cookies-floating-btn-padding);
+	height: var(--scify-cookies-floating-btn-height);
+	width: var(--scify-cookies-floating-btn-width);
 
-  &:hover {
-    cursor: pointer;
-    background-color: var(--scify-cookies-floating-btn-hover-bg-color);
-    color: var(--scify-cookies-floating-btn-hover-text-color);
-  }
+	&:hover {
+		cursor: pointer;
+		background-color: var(--scify-cookies-floating-btn-hover-bg-color);
+		color: var(--scify-cookies-floating-btn-hover-text-color);
+	}
 
-  img, svg {
-    width: 100%;
-    height: 100%;
-  }
+	img,
+	svg {
+		width: 100%;
+		height: 100%;
+	}
 
-  svg {
-    stroke: currentColor;
-  }
+	svg {
+		stroke: currentColor;
+	}
 }
 
 body:has(dialog.scify-cookies-consent-banner[open]) {
-  // If the modal is open, then do not overflow main page:
-  // (removes scrolling from main page):
-  overflow: hidden;
-  // Bootstrap only: mimics its behavior for its own modals
-  // This is helpful when using containers on main page.
-  // Can be ommited.
-  padding-right: 0;
+	// If the modal is open, then do not overflow main page:
+	// (removes scrolling from main page):
+	overflow: hidden;
+	// Bootstrap only: mimics its behavior for its own modals
+	// This is helpful when using containers on main page.
+	// Can be ommited.
+	padding-right: 0;
 }
 
 dialog.scify-cookies-consent-banner {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  overflow: auto !important; // Ensure content is scrollable if needed
-  overflow-y: auto;
-  max-height: 90vh;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	margin: 0;
+	overflow: auto !important; // Ensure content is scrollable if needed
+	overflow-y: auto;
+	max-height: 90vh;
 }

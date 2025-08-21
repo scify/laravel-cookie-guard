@@ -1,97 +1,104 @@
-#scify-cookies-consent-wrapper, #scify-cookie-policy-page {
-  .form-check {
-    position: relative;
-    display: block;
-    padding-left: 1.25rem;
+#scify-cookies-consent-wrapper,
+#scify-cookie-policy-page {
+	.form-check {
+		position: relative;
+		display: block;
+		padding-left: 1.25rem;
 
-    .form-check-input {
-      float: left;
-      margin-left: -1.25rem;
-      width: var(--scify-cookies-checkbox-size);
-      height: var(--scify-cookies-checkbox-size);
-      border: 1px solid var(--scify-cookies-check-input-border-color);
-      border-radius: var(--scify-cookies-border-radius);
-      background-color: #fff;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      appearance: none;
-      -webkit-print-color-adjust: exact;
-      color-adjust: exact;
-      transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+		.form-check-input {
+			float: left;
+			margin-left: -1.25rem;
+			width: var(--scify-cookies-checkbox-size);
+			height: var(--scify-cookies-checkbox-size);
+			border: 1px solid var(--scify-cookies-check-input-border-color);
+			border-radius: var(--scify-cookies-border-radius);
+			background-color: #fff;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: contain;
+			appearance: none;
+			-webkit-print-color-adjust: exact;
+			color-adjust: exact;
+			transition:
+				background-color 0.15s ease-in-out,
+				border-color 0.15s ease-in-out,
+				box-shadow 0.15s ease-in-out;
 
-      &[type='checkbox'] {
-        border-radius: 1em;
-      }
+			&[type="checkbox"] {
+				border-radius: 1em;
+			}
 
-      &:checked {
-        background-color: var(--scify-cookies-primary-color);
-        border-color: var(--scify-cookies-primary-color);
-      }
+			&:checked {
+				background-color: var(--scify-cookies-primary-color);
+				border-color: var(--scify-cookies-primary-color);
+			}
 
-      &:focus {
-        border-color: var(--scify-cookies-primary-color);
-        outline: 0;
-        box-shadow: 0 0 0 0.25rem rgba(var(--scify-cookies-primary-color), 0.25);
-      }
+			&:focus {
+				border-color: var(--scify-cookies-primary-color);
+				outline: 0;
+				box-shadow: 0 0 0 0.25rem rgba(var(--scify-cookies-primary-color), 0.25);
+			}
 
-      &:disabled {
-        filter: none;
-        opacity: .5;
-        pointer-events: none;
+			&:disabled {
+				filter: none;
+				opacity: 0.5;
+				pointer-events: none;
 
-        ~ .form-check-label {
-          cursor: default;
-          opacity: .5;
-        }
-      }
-    }
-  }
+				~ .form-check-label {
+					cursor: default;
+					opacity: 0.5;
+				}
+			}
+		}
+	}
 
-  .form-switch {
-    padding-left: 2.5rem;
-    display: flex;
-    align-items: center;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+	.form-switch {
+		padding-left: 2.5rem;
+		display: flex;
+		align-items: center;
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+		margin-bottom: 0;
 
-    .form-check-input {
-      width: 2em;
-      height: 18px;
-      margin-right: 10px;
-      background-color: #adb5bd;
-      border-radius: 1em;
-      position: relative;
-      transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-      --bs-form-switch-bg: none !important; // Removes Bootstrap background
+		.form-check-input {
+			width: 2em;
+			height: 18px;
+			margin-right: 10px;
+			background-color: #adb5bd;
+			border-radius: 1em;
+			position: relative;
+			transition:
+				background-color 0.15s ease-in-out,
+				border-color 0.15s ease-in-out,
+				box-shadow 0.15s ease-in-out;
+			--bs-form-switch-bg: none !important; // Removes Bootstrap background
 
-      &:hover {
-        cursor: pointer;
-      }
+			&:hover {
+				cursor: pointer;
+			}
 
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0.125em;
-        left: 0.125em;
-        width: 0.75em;
-        height: 0.75em;
-        border-radius: 0.75em;
-        background-image: none !important; // Removes Bootstrap's background image
-        background-color: #fff !important;
-        transition: transform 0.15s ease-in-out;
-      }
+			&::before {
+				content: "";
+				position: absolute;
+				top: 0.125em;
+				left: 0.125em;
+				width: 0.75em;
+				height: 0.75em;
+				border-radius: 0.75em;
+				background-image: none !important; // Removes Bootstrap's background image
+				background-color: #fff !important;
+				transition: transform 0.15s ease-in-out;
+			}
 
-      &:checked::before {
-        transform: translateX(1em);
-      }
+			&:checked::before {
+				transform: translateX(1em);
+			}
 
-      &:checked {
-        background-color: var(--scify-cookies-primary-color);
-        --bs-form-switch-bg: none !important;
-        background-image: none !important; // Ensures Bootstrap does not override the background
-      }
-    }
-  }
+			&:checked {
+				background-color: var(--scify-cookies-primary-color);
+				--bs-form-switch-bg: none !important;
+				background-image: none !important; // Ensures Bootstrap does not override the background
+			}
+		}
+	}
 }

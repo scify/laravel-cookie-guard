@@ -6,6 +6,7 @@ use Illuminate\View\Component;
 
 class LaravelCookiesConsent extends Component {
     public $heading;
+
     public $accordionHeading;
 
     public function __construct($heading = 'h2', $accordionHeading = 'h5') {

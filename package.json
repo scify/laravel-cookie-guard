@@ -1,6 +1,6 @@
 {
   "name": "laravel-cookie-guard",
-  "version": "4.1.6",
+  "version": "4.1.7",
   "description": "<p align=\"center\"> <img src=\"logo.jpg\" alt=\"logo\" width=\"400\"> </p>",
   "main": "index.js",
   "directories": {
@@ -9,7 +9,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
-    "build": "vite build && cp resources/styles/_variables.css public/_variables.css"
+    "build": "vite build && cp resources/styles/_variables.css public/_variables.css",
+    "lint": "eslint resources",
+    "lint:fix": "eslint --fix resources",
+    "format": "prettier --write \"resources/\"",
+    "lint:styles": "stylelint './resources/**/*.css' './resources/**/*.scss'",
+		"lint:styles:fix": "stylelint './resources/**/*.css' './resources/**/*.scss' --fix"
   },
   "repository": {
     "type": "git",
@@ -23,8 +28,17 @@
   },
   "homepage": "https://github.com/scify/laravel-cookie-guard#readme",
   "devDependencies": {
-    "blade-formatter": "^1.42.2",
-    "sass": "^1.89.2",
-    "vite": "^7.0.2"
+    "blade-formatter": "^1.44.2",
+    "sass": "^1.90.0",
+    "vite": "^7.1.3",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsdoc": "^54.1.1",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-vue": "^10.4.0",
+    "prettier": "^3.6.2",
+    "stylelint": "^16.23",
+		"stylelint-config-standard-scss": "^15.0",
+		"stylelint-prettier": "^5.0"
   }
 }

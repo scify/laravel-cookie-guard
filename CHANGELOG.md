@@ -5,6 +5,12 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## v4.1.6 - Bug Fixes & Improvements
+
+- Fixed the issue with the undefined `$accordionHeader` in the cookie consent dialog.
+- Added dev-related tools (linter, prettier, etc)
+- Updated dependencies to their latest versions.
+
 ## v4.1.5 - Fixes For Safari Browser
 
 - Fixed the issue with the cookie consent dialog overflow in Safari.
