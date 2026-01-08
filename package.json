@@ -1,6 +1,6 @@
 {
   "name": "laravel-cookie-guard",
-  "version": "4.1.7",
+  "version": "4.1.8",
   "description": "<p align=\"center\"> <img src=\"logo.jpg\" alt=\"logo\" width=\"400\"> </p>",
   "main": "index.js",
   "directories": {
@@ -29,15 +29,15 @@
   "homepage": "https://github.com/scify/laravel-cookie-guard#readme",
   "devDependencies": {
     "blade-formatter": "^1.44.2",
-    "sass": "^1.93.2",
-    "vite": "^7.1.11",
-    "eslint": "^9.37.0",
+    "sass": "^1.97.2",
+    "vite": "^7.3.1",
+    "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-jsdoc": "^60.8.0",
+    "eslint-plugin-jsdoc": "^61.5.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
-    "eslint-plugin-vue": "^10.5.0",
-    "prettier": "^3.6.2",
-    "stylelint": "^16.25",
+    "eslint-plugin-vue": "^10.6.2",
+    "prettier": "^3.7.4",
+    "stylelint": "^16.26",
 		"stylelint-config-standard-scss": "^16.0",
 		"stylelint-prettier": "^5.0"
   }

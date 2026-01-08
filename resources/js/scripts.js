@@ -193,6 +193,7 @@ function toggleBannerDisplay(
 function setSliders(cookieConsent) {
 	if (cookieConsent) {
 		try {
+            console.log("Setting sliders with cookie consent:", cookieConsent);
 			const consentSettings = JSON.parse(cookieConsent);
 			if (consentSettings && Object.keys(consentSettings).length > 0) {
 				for (const category in consentSettings) {
@@ -280,6 +281,7 @@ function handleCookieConsent(consent) {
 		.then((data) => {
 			if (data.success) {
 				setCookie(cookiePrefix + "cookies_consent", JSON.stringify(consent), 30);
+                console.log("Cookie consent stored:", consent);
 				setSliders(JSON.stringify(consent));
 				showSuccessMessage(data.message);
 				const dialog = cookieBanner.querySelector("dialog");
@@ -338,7 +340,7 @@ function setCookie(name, value, days) {
 		date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
 		expires = "; expires=" + date.toUTCString();
 	}
-	document.cookie = name + "=" + (value || "") + expires + "; path=/";
+	document.cookie = name + "=" + encodeURIComponent(value || "") + expires + "; path=/";
 }
 
 function getCookie(name) {
@@ -347,7 +349,7 @@ function getCookie(name) {
 	for (const c of ca) {
 		const cookie = c.trim();
 		if (cookie.startsWith(nameEQ)) {
-			return cookie.substring(nameEQ.length, cookie.length);
+			return decodeURIComponent(cookie.substring(nameEQ.length, cookie.length));
 		}
 	}
 	return null;
