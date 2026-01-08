@@ -1,6 +1,6 @@
 {
   "name": "laravel-cookie-guard",
-  "version": "4.1.8",
+  "version": "4.1.9",
   "description": "<p align=\"center\"> <img src=\"logo.jpg\" alt=\"logo\" width=\"400\"> </p>",
   "main": "index.js",
   "directories": {
