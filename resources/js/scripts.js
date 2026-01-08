@@ -193,7 +193,6 @@ function toggleBannerDisplay(
 function setSliders(cookieConsent) {
 	if (cookieConsent) {
 		try {
-            console.log("Setting sliders with cookie consent:", cookieConsent);
 			const consentSettings = JSON.parse(cookieConsent);
 			if (consentSettings && Object.keys(consentSettings).length > 0) {
 				for (const category in consentSettings) {
@@ -281,7 +280,6 @@ function handleCookieConsent(consent) {
 		.then((data) => {
 			if (data.success) {
 				setCookie(cookiePrefix + "cookies_consent", JSON.stringify(consent), 30);
-                console.log("Cookie consent stored:", consent);
 				setSliders(JSON.stringify(consent));
 				showSuccessMessage(data.message);
 				const dialog = cookieBanner.querySelector("dialog");
