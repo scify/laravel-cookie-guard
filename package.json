@@ -29,16 +29,16 @@
   "homepage": "https://github.com/scify/laravel-cookie-guard#readme",
   "devDependencies": {
     "blade-formatter": "^1.44.2",
-    "sass": "^1.97.2",
+    "sass": "^1.97.3",
     "vite": "^7.3.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-jsdoc": "^61.5.0",
+    "eslint-plugin-jsdoc": "^62.5.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
-    "eslint-plugin-vue": "^10.6.2",
-    "prettier": "^3.7.4",
-    "stylelint": "^16.26",
-		"stylelint-config-standard-scss": "^16.0",
+    "eslint-plugin-vue": "^10.7.0",
+    "prettier": "^3.8.1",
+    "stylelint": "^17.1",
+		"stylelint-config-standard-scss": "^17.0",
 		"stylelint-prettier": "^5.0"
   }
 }
