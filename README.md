@@ -10,6 +10,7 @@ The **last** Cookies Consent Plugin your **Laravel app** will ever need!
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/scify/laravel-cookie-guard.svg?style=flat-square)](https://packagist.org/packages/scify/laravel-cookie-guard)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/scify/laravel-cookie-guard/run-tests.yml?branch=main)](https://github.com/scify/laravel-cookie-guard/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![codecov](https://codecov.io/gh/scify/laravel-cookie-guard/graph/badge.svg)](https://codecov.io/gh/scify/laravel-cookie-guard)
 [![Total Downloads](https://img.shields.io/packagist/dt/scify/laravel-cookie-guard.svg?style=flat-square)](https://packagist.org/packages/scify/laravel-cookie-guard)
 [![GitHub Issues](https://img.shields.io/github/issues/scify/laravel-cookie-guard)](https://img.shields.io/github/issues/scify/laravel-cookie-guard)
 [![GitHub Stars](https://img.shields.io/github/stars/scify/laravel-cookie-guard)](https://img.shields.io/github/stars/scify/laravel-cookie-guard)

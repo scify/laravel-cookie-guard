@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 use SciFY\LaravelCookiesConsent\Http\Controllers\CookiesController;
 
@@ -12,7 +14,7 @@ use SciFY\LaravelCookiesConsent\Http\Controllers\CookiesController;
 |
 */
 
-Route::get('/cookie-policy/{locale}', function (string $locale) {
+Route::get('/cookie-policy/{locale}', function (string $locale): Factory|View {
     app()->setLocale($locale);
 
     return view('cookies_consent::pages.cookie-policy-default-page');

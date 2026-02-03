@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Cookie;
  * Manages the cookies consent submission
  */
 class CookiesController extends Controller {
-    private static $MINUTES_IN_A_DAY = 1440;
+    private static int $MINUTES_IN_A_DAY = 1440;
 
     /**
      * Called when the user clicks on "ACCEPT SELECTION"
