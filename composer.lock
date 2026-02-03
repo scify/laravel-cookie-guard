@@ -102,16 +102,16 @@
         },
         {
             "name": "brick/math",
-            "version": "0.14.3",
+            "version": "0.14.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "6af96b11de3f7d99730c118c200418c48274edb4"
+                "reference": "a8b53e6cc4d3a336543f042a4dfa0e3f2f2356a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/6af96b11de3f7d99730c118c200418c48274edb4",
-                "reference": "6af96b11de3f7d99730c118c200418c48274edb4",
+                "url": "https://api.github.com/repos/brick/math/zipball/a8b53e6cc4d3a336543f042a4dfa0e3f2f2356a4",
+                "reference": "a8b53e6cc4d3a336543f042a4dfa0e3f2f2356a4",
                 "shasum": ""
             },
             "require": {
@@ -150,7 +150,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.14.3"
+                "source": "https://github.com/brick/math/tree/0.14.4"
             },
             "funding": [
                 {
@@ -158,7 +158,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-01T15:18:05+00:00"
+            "time": "2026-02-02T16:57:31+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -662,21 +662,22 @@
         },
         {
             "name": "driftingly/rector-laravel",
-            "version": "2.1.2",
+            "version": "2.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/driftingly/rector-laravel.git",
-                "reference": "d7cd932cff9e398a43393f1a1a63b27d574e35ef"
+                "reference": "aee9d4a1d489e7ec484fc79f33137f8ee051b3f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/driftingly/rector-laravel/zipball/d7cd932cff9e398a43393f1a1a63b27d574e35ef",
-                "reference": "d7cd932cff9e398a43393f1a1a63b27d574e35ef",
+                "url": "https://api.github.com/repos/driftingly/rector-laravel/zipball/aee9d4a1d489e7ec484fc79f33137f8ee051b3f7",
+                "reference": "aee9d4a1d489e7ec484fc79f33137f8ee051b3f7",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ^8.0",
-                "rector/rector": "^2.2.7"
+                "rector/rector": "^2.2.7",
+                "webmozart/assert": "^1.11"
             },
             "type": "rector-extension",
             "autoload": {
@@ -691,9 +692,9 @@
             "description": "Rector upgrades rules for Laravel Framework",
             "support": {
                 "issues": "https://github.com/driftingly/rector-laravel/issues",
-                "source": "https://github.com/driftingly/rector-laravel/tree/2.1.2"
+                "source": "https://github.com/driftingly/rector-laravel/tree/2.1.9"
             },
-            "time": "2025-10-31T21:56:58+00:00"
+            "time": "2025-12-25T23:31:36+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -1554,16 +1555,16 @@
         },
         {
             "name": "iamcal/sql-parser",
-            "version": "v0.6",
+            "version": "v0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iamcal/SQLParser.git",
-                "reference": "947083e2dca211a6f12fb1beb67a01e387de9b62"
+                "reference": "610392f38de49a44dab08dc1659960a29874c4b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iamcal/SQLParser/zipball/947083e2dca211a6f12fb1beb67a01e387de9b62",
-                "reference": "947083e2dca211a6f12fb1beb67a01e387de9b62",
+                "url": "https://api.github.com/repos/iamcal/SQLParser/zipball/610392f38de49a44dab08dc1659960a29874c4b8",
+                "reference": "610392f38de49a44dab08dc1659960a29874c4b8",
                 "shasum": ""
             },
             "require-dev": {
@@ -1589,9 +1590,9 @@
             "description": "MySQL schema parser",
             "support": {
                 "issues": "https://github.com/iamcal/SQLParser/issues",
-                "source": "https://github.com/iamcal/SQLParser/tree/v0.6"
+                "source": "https://github.com/iamcal/SQLParser/tree/v0.7"
             },
-            "time": "2025-03-17T16:59:46+00:00"
+            "time": "2026-01-28T22:20:33+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
@@ -1655,21 +1656,21 @@
         },
         {
             "name": "larastan/larastan",
-            "version": "v3.9.1",
+            "version": "v3.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/larastan/larastan.git",
-                "reference": "4b92d9627f779fd32bdc16f53f8ce88c50446ff5"
+                "reference": "2e9ed291bdc1969e7f270fb33c9cdf3c912daeb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/larastan/larastan/zipball/4b92d9627f779fd32bdc16f53f8ce88c50446ff5",
-                "reference": "4b92d9627f779fd32bdc16f53f8ce88c50446ff5",
+                "url": "https://api.github.com/repos/larastan/larastan/zipball/2e9ed291bdc1969e7f270fb33c9cdf3c912daeb2",
+                "reference": "2e9ed291bdc1969e7f270fb33c9cdf3c912daeb2",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "iamcal/sql-parser": "^0.6.0",
+                "iamcal/sql-parser": "^0.7.0",
                 "illuminate/console": "^11.44.2 || ^12.4.1",
                 "illuminate/container": "^11.44.2 || ^12.4.1",
                 "illuminate/contracts": "^11.44.2 || ^12.4.1",
@@ -1733,7 +1734,7 @@
             ],
             "support": {
                 "issues": "https://github.com/larastan/larastan/issues",
-                "source": "https://github.com/larastan/larastan/tree/v3.9.1"
+                "source": "https://github.com/larastan/larastan/tree/v3.9.2"
             },
             "funding": [
                 {
@@ -1741,7 +1742,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-21T09:15:17+00:00"
+            "time": "2026-01-30T15:16:32+00:00"
         },
         {
             "name": "laravel/framework",
@@ -4722,16 +4723,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "6.0.1",
+            "version": "5.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "2f5cbed597cb261d1ea458f3da3a9ad32e670b1e"
+                "reference": "5cee1d3dfc2d2aa6599834520911d246f656bcb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2f5cbed597cb261d1ea458f3da3a9ad32e670b1e",
-                "reference": "2f5cbed597cb261d1ea458f3da3a9ad32e670b1e",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/5cee1d3dfc2d2aa6599834520911d246f656bcb8",
+                "reference": "5cee1d3dfc2d2aa6599834520911d246f656bcb8",
                 "shasum": ""
             },
             "require": {
@@ -4739,8 +4740,8 @@
                 "ext-filter": "*",
                 "php": "^7.4 || ^8.0",
                 "phpdocumentor/reflection-common": "^2.2",
-                "phpdocumentor/type-resolver": "^2.0",
-                "phpstan/phpdoc-parser": "^2.0",
+                "phpdocumentor/type-resolver": "^1.7",
+                "phpstan/phpdoc-parser": "^1.7|^2.0",
                 "webmozart/assert": "^1.9.1 || ^2"
             },
             "require-dev": {
@@ -4750,8 +4751,7 @@
                 "phpstan/phpstan-mockery": "^1.1",
                 "phpstan/phpstan-webmozart-assert": "^1.2",
                 "phpunit/phpunit": "^9.5",
-                "psalm/phar": "^5.26",
-                "shipmonk/dead-code-detector": "^0.5.1"
+                "psalm/phar": "^5.26"
             },
             "type": "library",
             "extra": {
@@ -4781,44 +4781,44 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/6.0.1"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.6"
             },
-            "time": "2026-01-20T15:30:42+00:00"
+            "time": "2025-12-22T21:13:58+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "2.0.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "327a05bbee54120d4786a0dc67aad30226ad4cf9"
+                "reference": "92a98ada2b93d9b201a613cb5a33584dde25f195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/327a05bbee54120d4786a0dc67aad30226ad4cf9",
-                "reference": "327a05bbee54120d4786a0dc67aad30226ad4cf9",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/92a98ada2b93d9b201a613cb5a33584dde25f195",
+                "reference": "92a98ada2b93d9b201a613cb5a33584dde25f195",
                 "shasum": ""
             },
             "require": {
                 "doctrine/deprecations": "^1.0",
-                "php": "^7.4 || ^8.0",
+                "php": "^7.3 || ^8.0",
                 "phpdocumentor/reflection-common": "^2.0",
-                "phpstan/phpdoc-parser": "^2.0"
+                "phpstan/phpdoc-parser": "^1.18|^2.0"
             },
             "require-dev": {
                 "ext-tokenizer": "*",
                 "phpbench/phpbench": "^1.2",
-                "phpstan/extension-installer": "^1.4",
-                "phpstan/phpstan": "^2.1",
-                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-phpunit": "^1.1",
                 "phpunit/phpunit": "^9.5",
-                "psalm/phar": "^4"
+                "rector/rector": "^0.13.9",
+                "vimeo/psalm": "^4.25"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-1.x": "1.x-dev",
-                    "dev-2.x": "2.x-dev"
+                    "dev-1.x": "1.x-dev"
                 }
             },
             "autoload": {
@@ -4839,9 +4839,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/2.0.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.12.0"
             },
-            "time": "2026-01-06T21:53:42+00:00"
+            "time": "2025-11-21T15:09:14+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -5258,28 +5258,28 @@
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "5.1.0",
+            "version": "5.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "118cfaaa8bc5aef3287bf315b6060b1174754af6"
+                "reference": "2f3a64888c814fc235386b7387dd5b5ed92ad903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/118cfaaa8bc5aef3287bf315b6060b1174754af6",
-                "reference": "118cfaaa8bc5aef3287bf315b6060b1174754af6",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/2f3a64888c814fc235386b7387dd5b5ed92ad903",
+                "reference": "2f3a64888c814fc235386b7387dd5b5ed92ad903",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^11.0"
+                "phpunit/phpunit": "^11.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "5.0-dev"
+                    "dev-main": "5.1-dev"
                 }
             },
             "autoload": {
@@ -5307,15 +5307,27 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-file-iterator/issues",
                 "security": "https://github.com/sebastianbergmann/php-file-iterator/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-file-iterator/tree/5.1.0"
+                "source": "https://github.com/sebastianbergmann/php-file-iterator/tree/5.1.1"
             },
             "funding": [
                 {
                     "url": "https://github.com/sebastianbergmann",
                     "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpunit/php-file-iterator",
+                    "type": "tidelift"
                 }
             ],
-            "time": "2024-08-27T05:02:59+00:00"
+            "time": "2026-02-02T13:52:54+00:00"
         },
         {
             "name": "phpunit/php-invoker",
@@ -8595,16 +8607,16 @@
         },
         {
             "name": "symfony/mime",
-            "version": "v7.4.4",
+            "version": "v7.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "40945014c0a9471ccfe19673c54738fa19367a3c"
+                "reference": "b18c7e6e9eee1e19958138df10412f3c4c316148"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/40945014c0a9471ccfe19673c54738fa19367a3c",
-                "reference": "40945014c0a9471ccfe19673c54738fa19367a3c",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/b18c7e6e9eee1e19958138df10412f3c4c316148",
+                "reference": "b18c7e6e9eee1e19958138df10412f3c4c316148",
                 "shasum": ""
             },
             "require": {
@@ -8615,15 +8627,15 @@
             },
             "conflict": {
                 "egulias/email-validator": "~3.0.0",
-                "phpdocumentor/reflection-docblock": "<3.2.2",
-                "phpdocumentor/type-resolver": "<1.4.0",
+                "phpdocumentor/reflection-docblock": "<5.2|>=6",
+                "phpdocumentor/type-resolver": "<1.5.1",
                 "symfony/mailer": "<6.4",
                 "symfony/serializer": "<6.4.3|>7.0,<7.0.3"
             },
             "require-dev": {
                 "egulias/email-validator": "^2.1.10|^3.1|^4",
                 "league/html-to-markdown": "^5.0",
-                "phpdocumentor/reflection-docblock": "^3.0|^4.0|^5.0",
+                "phpdocumentor/reflection-docblock": "^5.2",
                 "symfony/dependency-injection": "^6.4|^7.0|^8.0",
                 "symfony/process": "^6.4|^7.0|^8.0",
                 "symfony/property-access": "^6.4|^7.0|^8.0",
@@ -8660,7 +8672,7 @@
                 "mime-type"
             ],
             "support": {
-                "source": "https://github.com/symfony/mime/tree/v7.4.4"
+                "source": "https://github.com/symfony/mime/tree/v7.4.5"
             },
             "funding": [
                 {
@@ -8680,7 +8692,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-01-08T16:12:55+00:00"
+            "time": "2026-01-27T08:59:58+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -10728,23 +10740,23 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "2.1.2",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "ce6a2f100c404b2d32a1dd1270f9b59ad4f57649"
+                "reference": "9be6926d8b485f55b9229203f962b51ed377ba68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/ce6a2f100c404b2d32a1dd1270f9b59ad4f57649",
-                "reference": "ce6a2f100c404b2d32a1dd1270f9b59ad4f57649",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/9be6926d8b485f55b9229203f962b51ed377ba68",
+                "reference": "9be6926d8b485f55b9229203f962b51ed377ba68",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
                 "ext-date": "*",
                 "ext-filter": "*",
-                "php": "^8.2"
+                "php": "^7.2 || ^8.0"
             },
             "suggest": {
                 "ext-intl": "",
@@ -10754,7 +10766,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-feature/2-0": "2.0-dev"
+                    "dev-master": "1.10-dev"
                 }
             },
             "autoload": {
@@ -10770,10 +10782,6 @@
                 {
                     "name": "Bernhard Schussek",
                     "email": "bschussek@gmail.com"
-                },
-                {
-                    "name": "Woody Gilk",
-                    "email": "woody.gilk@gmail.com"
                 }
             ],
             "description": "Assertions to validate method input/output with nice error messages.",
@@ -10784,9 +10792,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/2.1.2"
+                "source": "https://github.com/webmozarts/assert/tree/1.12.1"
             },
-            "time": "2026-01-13T14:02:24+00:00"
+            "time": "2025-10-29T15:56:20+00:00"
         },
         {
             "name": "zbateson/mail-mime-parser",
