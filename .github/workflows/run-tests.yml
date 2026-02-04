@@ -24,6 +24,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Build frontend assets
+        run: npm ci && npm run build
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -41,7 +50,7 @@ jobs:
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: composer test
+        run: composer test && npm test
 
   coverage:
     runs-on: ubuntu-latest
@@ -50,6 +59,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Build frontend assets
+        run: npm ci && npm run build
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
