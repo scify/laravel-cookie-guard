@@ -9,6 +9,7 @@ export default defineConfig({
                 main: path.resolve(__dirname, 'resources/js/scripts.js'),
             },
             output: {
+                format: 'iife',
                 entryFileNames: 'scripts.js',
                 assetFileNames: 'styles.css',
             },

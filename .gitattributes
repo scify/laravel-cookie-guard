@@ -19,7 +19,6 @@
 /phpstan-baseline.neon  export-ignore
 /CHANGELOG.md       export-ignore
 /CONTRIBUTING.md    export-ignore
-/README.md          export-ignore
 /SECURITY.md        export-ignore
 
 # Ignore all IDE files
