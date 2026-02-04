@@ -26,7 +26,7 @@ class CookiesController extends Controller {
         // store the JSON in a cookie
         Cookie::queue($this->get_cookie_prefix() . 'cookies_consent_selection', json_encode($data), (self::$MINUTES_IN_A_DAY * config('cookies_consent.cookie_lifetime')));
 
-        $locale = $request->get('locale');
+        $locale = $request->input('locale');
 
         // get the message for the specific locale
         $message = __('cookies_consent::messages.selection_saved_message', [], $locale);
