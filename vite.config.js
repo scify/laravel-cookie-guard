@@ -4,6 +4,7 @@ import path from 'path';
 export default defineConfig({
     build: {
         outDir: path.resolve(__dirname, 'public'),
+        cssCodeSplit: false,
         rollupOptions: {
             input: {
                 main: path.resolve(__dirname, 'resources/js/scripts.js'),
