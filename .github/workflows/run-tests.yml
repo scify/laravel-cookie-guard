@@ -91,7 +91,7 @@ jobs:
           push_badge: false
 
       - name: Upload coverage badge
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: coverage-badge
           path: output/coverage.svg
