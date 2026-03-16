@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node tests/scripts.test.js",
+    "test": "node tests/scripts.test.js && node tests/scripts.behaviour.test.js",
     "test:coverage": "c8 node tests/scripts.test.js",
     "dev": "vite",
     "build": "vite build && cp resources/styles/_variables.css public/_variables.css",
@@ -36,6 +36,7 @@
     "eslint-plugin-jsdoc": "^62.8.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-vue": "^10.8.0",
+    "jsdom": "^29.0.0",
     "prettier": "^3.8.1",
     "sass": "^1.98.0",
     "stylelint": "^17.4",
