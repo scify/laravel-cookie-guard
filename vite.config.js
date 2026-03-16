@@ -13,6 +13,7 @@ export default defineConfig({
                 format: 'iife',
                 entryFileNames: 'scripts.js',
                 assetFileNames: 'styles.css',
+                intro: '"use strict";',
             },
         },
     },
