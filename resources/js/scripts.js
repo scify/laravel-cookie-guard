@@ -197,7 +197,7 @@ function setSliders(cookieConsent) {
 			if (consentSettings && Object.keys(consentSettings).length > 0) {
 				for (const category in consentSettings) {
 					if (consentSettings.hasOwnProperty(category)) {
-						const categoryCheckbox = document.getElementById(category);
+						const categoryCheckbox = document.getElementById("lcg-" + category);
 						if (categoryCheckbox) {
 							categoryCheckbox.checked = consentSettings[category];
 						}
@@ -236,7 +236,9 @@ function handleRejectOptionalCookies() {
 function getConsentSettings(acceptAll = false, requiredCategory = null) {
 	const consent = {};
 	document.querySelectorAll(".cookie-category").forEach((checkbox) => {
-		consent[checkbox.id] = acceptAll || checkbox.id === requiredCategory || checkbox.checked;
+		const category = checkbox.id.replace(/^lcg-/, "");
+		consent[category] =
+			acceptAll || category === requiredCategory || (requiredCategory === null && checkbox.checked);
 	});
 	return consent;
 }

@@ -8,9 +8,9 @@
 <div class="accordion" id="cookieAccordion">
     @foreach ($cookieCategories as $category => $cookies)
         <div class="form-check form-switch">
-            <input class="form-check-input cookie-category" type="checkbox" id="{{ $category }}"
+            <input class="form-check-input cookie-category" type="checkbox" id="lcg-{{ $category }}"
                 {{ in_array($category, config('cookies_consent.required')) ? 'checked disabled' : '' }}>
-            <label class="form-check-label" for="{{ $category }}">
+            <label class="form-check-label" for="lcg-{{ $category }}">
                 {{ __('cookies_consent::messages.' . $category) }}
                 @if (in_array($category, config('cookies_consent.required')))
                     <span class="always-active">({{ __('cookies_consent::messages.always_active') }})</span>

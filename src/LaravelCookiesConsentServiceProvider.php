@@ -23,7 +23,10 @@ class LaravelCookiesConsentServiceProvider extends ServiceProvider {
             $this->loadTranslationsFrom($packagePath, 'cookies_consent');
         }
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'cookies_consent');
+        $this->loadViewsFrom([
+            resource_path('views/vendor/scify/laravel-cookie-guard'),
+            __DIR__ . '/../resources/views',
+        ], 'cookies_consent');
 
         $this->publishes([
             __DIR__ . '/../resources/views/components/' => resource_path('views/vendor/scify/laravel-cookie-guard/components'),

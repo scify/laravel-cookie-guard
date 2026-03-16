@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\File;
+
 it('renders the main cookie guard component', function (): void {
     $view = $this->blade('<x-laravel-cookie-guard />');
 
@@ -126,6 +128,38 @@ it('renders customise button in default mode', function (): void {
     $view = $this->blade('<x-laravel-cookie-guard />');
 
     $view->assertSee(__('cookies_consent::messages.customise_btn'), false);
+});
+
+it('renders cookie category checkboxes with lcg- prefixed ids', function (): void {
+    config(['cookies_consent.use_separate_page' => false]);
+    config(['cookies_consent.cookies' => [
+        'analytics' => [['name' => 'a', 'description' => 'a', 'duration' => 'cookies_consent::messages.days', 'duration_count' => 1, 'policy_external_link' => null]],
+        'marketing' => [['name' => 'b', 'description' => 'b', 'duration' => 'cookies_consent::messages.days', 'duration_count' => 1, 'policy_external_link' => null]],
+    ]]);
+
+    $view = $this->blade('<x-laravel-cookie-guard />');
+
+    $view->assertSee('id="lcg-analytics"', false);
+    $view->assertSee('id="lcg-marketing"', false);
+    $view->assertSee('for="lcg-analytics"', false);
+    $view->assertSee('for="lcg-marketing"', false);
+    $view->assertDontSee('id="analytics"', false);
+    $view->assertDontSee('id="marketing"', false);
+});
+
+it('uses published view override when present', function (): void {
+    $publishedDir = resource_path('views/vendor/scify/laravel-cookie-guard/components');
+    $publishedView = $publishedDir . '/laravel-cookie-guard.blade.php';
+
+    File::makeDirectory($publishedDir, 0755, true, true);
+    File::put($publishedView, '<div id="custom-override">custom-published-view</div>');
+
+    $view = $this->blade('<x-laravel-cookie-guard />');
+
+    File::deleteDirectory(resource_path('views/vendor'));
+
+    $view->assertSee('custom-published-view', false);
+    $view->assertDontSee('scify-cookies-consent-banner', false);
 });
 
 it('renders link to cookie policy page when separate page is enabled', function (): void {
