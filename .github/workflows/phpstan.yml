@@ -1,4 +1,6 @@
 name: PHPStan
+permissions:
+  contents: read
 
 on:
   push:
