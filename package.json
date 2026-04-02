@@ -28,6 +28,10 @@
     "url": "https://github.com/scify/laravel-cookie-guard/issues"
   },
   "homepage": "https://github.com/scify/laravel-cookie-guard#readme",
+  "engines": {
+    "node": ">=24.14.0",
+    "npm": ">=11.11.0"
+  },
   "devDependencies": {
     "blade-formatter": "^1.44.2",
     "c8": "^11.0.0",
