@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
+
+      - name: Upgrade npm
+        run: npm install -g npm@latest
     
       - name: Dependabot metadata
         id: metadata
