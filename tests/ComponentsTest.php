@@ -154,6 +154,12 @@ it('uses published view override when present', function (): void {
     File::makeDirectory($publishedDir, 0755, true, true);
     File::put($publishedView, '<div id="custom-override">custom-published-view</div>');
 
+    // The service provider only registers the published path when it exists at boot time.
+    // Simulate what would happen if the app booted after vendor:publish was run.
+    // Flush the finder's path cache so any previously resolved view paths don't shadow the override.
+    view()->getFinder()->flush();
+    view()->prependNamespace('cookies_consent', resource_path('views/vendor/scify/laravel-cookie-guard'));
+
     $view = $this->blade('<x-laravel-cookie-guard />');
 
     File::deleteDirectory(resource_path('views/vendor'));
