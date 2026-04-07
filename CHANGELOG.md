@@ -5,6 +5,10 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## v4.1.13 - Fix `view:cache` failure when vendor views are not published
+
+- Fixed a `DirectoryNotFoundException` thrown by `php artisan view:cache` when the package's vendor views had not been published. The service provider now only registers the published views path if it actually exists, falling back to the bundled package views otherwise.
+
 ## v4.1.6 - Bug Fixes & Improvements
 
 - Fixed the issue with the undefined `$accordionHeader` in the cookie consent dialog.
