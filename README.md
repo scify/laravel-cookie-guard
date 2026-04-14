@@ -29,7 +29,7 @@ The **last** Cookies Consent Plugin your **Laravel app** will ever need!
 
 - [Laravel Cookie Guard - Make your Laravel app compliant with the EU GDPR cookie law](#laravel-cookie-guard---make-your-laravel-app-compliant-with-the-eu-gdpr-cookie-law)
   - [Table of Contents](#table-of-contents)
-  - [Upgrading to v4](#upgrading-to-v4)
+  - [Upgrading to a new major version](#upgrading-to-a-new-major-version)
   - [About the plugin](#about-the-plugin)
   - [Features](#features)
   - [Installation](#installation)
@@ -58,13 +58,13 @@ The **last** Cookies Consent Plugin your **Laravel app** will ever need!
   - [Credits](#credits)
   - [License](#license)
 
-## Upgrading to v4
-
-As of **March 2025**, The `v4` of the Laravel Cookies Consent plugin has been released! 🎉🥳😍
-It offers a **new, revamped UI**, and a lot of new features and improvements.
+## Upgrading to a new major version
 
 **Important:**
-Since the plugin now has a completely new name, you will need to uninstall the old package, and install the new one.
+
+If you are upgrading to a new major version, make sure to check the [CHANGELOG](CHANGELOG.md) file for the breaking changes, and follow the instructions below.
+
+If you have published the public assets already and have customized the `variables.css` file, make sure to copy the customized file before running the commands below, and then paste it back after running the commands.
 
 ```bash
 rm -rf public/vendor/scify && rm -rf vendor/scify
