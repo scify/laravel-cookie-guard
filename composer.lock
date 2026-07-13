@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7f0ff027ae810b2d2efdd536f94d128",
+    "content-hash": "12b0635b9e076e5ef1bfbb093b75bcd8",
     "packages": [],
     "packages-dev": [
         {
@@ -5140,16 +5140,16 @@
         },
         {
             "name": "phpstan/phpstan-phpunit",
-            "version": "2.0.17",
+            "version": "2.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
-                "reference": "c2f977551f0736d60467b3d754b2e0cf4e337b3f"
+                "reference": "f5dc20ff8082d02339b60cab68ec3eb0d859fb30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/c2f977551f0736d60467b3d754b2e0cf4e337b3f",
-                "reference": "c2f977551f0736d60467b3d754b2e0cf4e337b3f",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/f5dc20ff8082d02339b60cab68ec3eb0d859fb30",
+                "reference": "f5dc20ff8082d02339b60cab68ec3eb0d859fb30",
                 "shasum": ""
             },
             "require": {
@@ -5192,9 +5192,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-phpunit/issues",
-                "source": "https://github.com/phpstan/phpstan-phpunit/tree/2.0.17"
+                "source": "https://github.com/phpstan/phpstan-phpunit/tree/2.0.18"
             },
-            "time": "2026-06-29T05:32:23+00:00"
+            "time": "2026-07-04T12:16:09+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -6343,16 +6343,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.5.2",
+            "version": "2.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "49ff6339174bdbdf50b0b35ecbcff14a05ac9e24"
+                "reference": "3d3577ad88d70d9f8dccd0a4c2f75bf13d6268e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/49ff6339174bdbdf50b0b35ecbcff14a05ac9e24",
-                "reference": "49ff6339174bdbdf50b0b35ecbcff14a05ac9e24",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/3d3577ad88d70d9f8dccd0a4c2f75bf13d6268e6",
+                "reference": "3d3577ad88d70d9f8dccd0a4c2f75bf13d6268e6",
                 "shasum": ""
             },
             "require": {
@@ -6391,7 +6391,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.5.2"
+                "source": "https://github.com/rectorphp/rector/tree/2.5.3"
             },
             "funding": [
                 {
@@ -6399,7 +6399,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-22T11:39:33+00:00"
+            "time": "2026-07-05T01:32:08+00:00"
         },
         {
             "name": "sebastian/cli-parser",
