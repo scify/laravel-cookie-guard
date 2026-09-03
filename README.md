@@ -742,7 +742,7 @@ the plugin.
 
 **Question:** Does this plugin work with all Laravel versions?
 
-**Answer:** The package requires PHP 8.2 or newer and Laravel 11 or newer. We test it against Laravel 12 on PHP 8.2,
+**Answer:** The package requires PHP 8.2 or newer and Laravel 12 or 13. We test it against Laravel 12 on PHP 8.2,
 8.3 and 8.4, and against Laravel 13 on PHP 8.3 and 8.4. The plugin's
 simplicity allows it to work with other Laravel versions, but if you try it with a version other than the tested ones and
 it does not work, please open an issue on [GitHub](https://github.com/scify/laravel-cookie-guard/issues).

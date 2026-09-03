@@ -85,26 +85,17 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction
 
-      - name: Run tests with coverage
+      - name: Run PHP tests with coverage
         run: vendor/bin/pest --coverage --coverage-clover=clover.xml
 
-      - name: Generate coverage badge
-        uses: timkrase/phpunit-coverage-badge@b2cec23f5564ebf1030a6aa5b1e0fcadc5674d79 # v1.2.1
-        with:
-          clover_report: clover.xml
-          coverage_badge_path: output/coverage.svg
-          push_badge: false
-
-      - name: Upload coverage badge
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
-        with:
-          name: coverage-badge
-          path: output/coverage.svg
+      - name: Run JavaScript tests with coverage
+        run: npm run test:coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: clover.xml
+          files: clover.xml,coverage/lcov.info
+          disable_search: true
           fail_ci_if_error: false
         continue-on-error: true

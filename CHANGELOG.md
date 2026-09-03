@@ -5,6 +5,14 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## v5.0.1 - Locale validation, Laravel 12+, real JavaScript coverage reporting
+
+- **Security:** the `locale` submitted to `POST /guard-settings/save` is now validated against a locale identifier pattern (for example `en`, `pt-br`, `zh_Hant_TW`) before it is passed to the translator. Previously the raw value ended up in a translation file path. Invalid values fall back to the application locale. The `GET /cookie-policy/{locale}` route now applies the same pattern and returns 404 for anything else.
+- **Laravel 11 support removed** (`illuminate/contracts: ^12.0|^13.0`). Laravel 11 reached end of life in March 2026 and was declared but never tested in v5.0.0. The README now states Laravel 12 or 13.
+- JavaScript behaviour tests now execute the compiled bundle through `vm.Script` with jsdom's `runVMScript` instead of `window.eval`, so c8 can attribute coverage to the source. The Vite build now emits `public/scripts.js.map`, which is committed and published with the other assets, and which c8 uses to report against `resources/js/scripts.js`.
+- `npm run test:coverage` runs both JavaScript test files and emits an lcov report, which the CI coverage job uploads to Codecov next to the PHP clover report.
+- Removed the unused coverage badge step and its artifact upload from the CI coverage job. The README badge is served by Codecov.
+
 ## v5.0.0 - PHP 8.2 requirement & dependency updates
 
 - **Breaking:** the package now requires PHP 8.2 or newer (`"php": "^8.2"`). PHP 8.0 and 8.1 are no longer supported.

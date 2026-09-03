@@ -1,6 +1,6 @@
 {
   "name": "laravel-cookie-guard",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "<p align=\"center\"> <img src=\"logo.jpg\" alt=\"logo\" width=\"400\"> </p>",
   "main": "index.js",
   "directories": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "node tests/scripts.test.js && node tests/scripts.behaviour.test.js",
-    "test:coverage": "c8 node tests/scripts.test.js",
+    "test:coverage": "c8 --reporter=text --reporter=lcov npm test",
     "dev": "vite",
     "build": "vite build && cp resources/styles/_variables.css public/_variables.css",
     "lint": "eslint resources",

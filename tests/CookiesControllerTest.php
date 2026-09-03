@@ -117,3 +117,31 @@ it('sets the application locale from route parameter', function (): void {
 
     expect(app()->getLocale())->toBe('de');
 });
+
+it('falls back to the application locale when the submitted locale is not a valid identifier', function (): void {
+    app()->setLocale('en');
+
+    $response = $this->postJson('/guard-settings/save', [
+        'strictly_necessary' => true,
+        'locale' => '../../../../etc/passwd',
+    ]);
+
+    $response->assertOk()
+        ->assertJson([
+            'success' => true,
+            'message' => 'Cookies consent selection saved',
+        ]);
+});
+
+it('rejects path separators in the cookie policy locale', function (): void {
+    $this->get('/cookie-policy/..%5C..%5Cetc')->assertNotFound();
+    $this->get('/cookie-policy/en%2F..%2F..%2Fetc')->assertNotFound();
+});
+
+it('accepts region-qualified locales', function (): void {
+    $this->get('/cookie-policy/pt-br')->assertOk();
+
+    $this->postJson('/guard-settings/save', ['strictly_necessary' => true, 'locale' => 'pt-br'])
+        ->assertOk()
+        ->assertJson(['message' => __('cookies_consent::messages.selection_saved_message', [], 'pt-br')]);
+});

@@ -4,6 +4,7 @@ import path from 'path';
 export default defineConfig({
     build: {
         outDir: path.resolve(__dirname, 'public'),
+        sourcemap: true,
         cssCodeSplit: false,
         rollupOptions: {
             input: {
