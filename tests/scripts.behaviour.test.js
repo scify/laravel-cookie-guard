@@ -5,9 +5,23 @@
 
 const fs = require('fs');
 const path = require('path');
+const vm = require('vm');
 const { JSDOM } = require('jsdom');
 
-const scriptCode = fs.readFileSync(path.join(__dirname, '../public/scripts.js'), 'utf8');
+const scriptPath = path.join(__dirname, '../public/scripts.js');
+const scriptCode = fs.readFileSync(scriptPath, 'utf8');
+
+// Compile once with the real filename so V8 coverage (c8) attributes executed
+// lines to public/scripts.js and can remap them to resources/js/scripts.js via
+// the Vite source map. window.eval() would report no coverage at all.
+const compiledScript = new vm.Script(scriptCode, { filename: scriptPath });
+
+/**
+ * Execute the compiled bundle inside the given jsdom window.
+ */
+function runScript(dom) {
+    compiledScript.runInContext(dom.getInternalVMContext());
+}
 
 let passed = 0;
 let failed = 0;
@@ -71,7 +85,7 @@ function buildDOM(categories = ['strictly_necessary', 'analytics', 'marketing'],
     });
 
     // Inject and execute the compiled script in the jsdom window context
-    dom.window.eval(scriptCode);
+    runScript(dom);
 
     return dom.window;
 }
@@ -92,7 +106,7 @@ test('getConsentSettings: reject sets all optional categories to false', () => {
         return Promise.resolve({ json: () => Promise.resolve({ success: false }) });
     };
 
-    dom.window.eval(scriptCode);
+    runScript(dom);
     dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
     dom.window.document.getElementById('reject-optional-cookies').click();
 
@@ -114,7 +128,7 @@ test('getConsentSettings: accept all sets every category to true', () => {
         return Promise.resolve({ json: () => Promise.resolve({ success: false }) });
     };
 
-    dom.window.eval(scriptCode);
+    runScript(dom);
     dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
     dom.window.document.getElementById('accept-all-cookies').click();
 
@@ -137,7 +151,7 @@ test('getConsentSettings: accept selected respects checkbox state', () => {
         return Promise.resolve({ json: () => Promise.resolve({ success: false }) });
     };
 
-    dom.window.eval(scriptCode);
+    runScript(dom);
     dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
     dom.window.document.getElementById('accept-selected-cookies').click();
 
@@ -158,7 +172,7 @@ test('consent keys are unprefixed category names (backwards compat)', () => {
         return Promise.resolve({ json: () => Promise.resolve({ success: false }) });
     };
 
-    dom.window.eval(scriptCode);
+    runScript(dom);
     dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
     dom.window.document.getElementById('accept-all-cookies').click();
 

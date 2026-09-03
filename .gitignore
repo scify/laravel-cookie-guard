@@ -13,6 +13,7 @@ storage
 
 # Do not ignore the public directory or the generated files
 !/public/scripts.js
+!/public/scripts.js.map
 !/public/styles.css
 !/public/_variables.css
 .phpunit.cache*
