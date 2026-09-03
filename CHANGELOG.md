@@ -5,6 +5,15 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## v5.0.0 - PHP 8.2 requirement & dependency updates
+
+- **Breaking:** the package now requires PHP 8.2 or newer (`"php": "^8.2"`). PHP 8.0 and 8.1 are no longer supported.
+- **Breaking:** the package now declares a Laravel floor of 11 (`illuminate/contracts: ^11.0|^12.0|^13.0`). It uses the typed config getters `config()->integer()` and `config()->string()`, which were introduced in Laravel 11.
+- CI now tests against Laravel 12 on PHP 8.2, 8.3 and 8.4, and Laravel 13 on PHP 8.3 and 8.4.
+- Updated development dependencies to their latest major versions: Orchestra Testbench 11, Pest 4, PHPUnit 12, ESLint 10, jsdom 30, c8 12. The previous majors remain allowed so the PHP 8.2 / Laravel 12 matrix jobs can resolve.
+- Raised the PHPStan level from 4 to 9 and fixed the reported type issues.
+- Hardened the GitHub Actions workflows: `npm ci --ignore-scripts`, lock-file based `composer install` for the coverage job, and removed an unpinned `npm install -g npm@latest` step.
+
 ## v4.1.13 - Fix `view:cache` failure when vendor views are not published
 
 - Fixed a `DirectoryNotFoundException` thrown by `php artisan view:cache` when the package's vendor views had not been published. The service provider now only registers the published views path if it actually exists, falling back to the bundled package views otherwise.
