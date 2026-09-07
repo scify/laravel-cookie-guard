@@ -99,3 +99,14 @@ jobs:
           disable_search: true
           fail_ci_if_error: false
         continue-on-error: true
+
+  tests-passed:
+    runs-on: ubuntu-latest
+    name: tests-passed
+    needs: [ test, coverage ]
+    if: always()
+
+    steps:
+      - name: Fail if any test job did not succeed
+        if: ${{ needs.test.result != 'success' || needs.coverage.result != 'success' }}
+        run: exit 1
