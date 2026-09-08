@@ -99,6 +99,27 @@ it('renders cookie categories from config', function (): void {
     $view->assertSee('test_cookie', false);
 });
 
+it('renders plural cookie durations in every locale', function (): void {
+    config(['cookies_consent.use_separate_page' => false]);
+    config(['cookies_consent.cookies' => [
+        'strictly_necessary' => [
+            ['name' => 'a', 'description' => 'a', 'duration' => 'cookies_consent::messages.minutes', 'duration_count' => 2, 'policy_external_link' => null],
+            ['name' => 'b', 'description' => 'b', 'duration' => 'cookies_consent::messages.hours', 'duration_count' => 2, 'policy_external_link' => null],
+            ['name' => 'c', 'description' => 'c', 'duration' => 'cookies_consent::messages.days', 'duration_count' => 2, 'policy_external_link' => null],
+            ['name' => 'd', 'description' => 'd', 'duration' => 'cookies_consent::messages.months', 'duration_count' => 2, 'policy_external_link' => null],
+            ['name' => 'e', 'description' => 'e', 'duration' => 'cookies_consent::messages.years', 'duration_count' => 2, 'policy_external_link' => null],
+        ],
+    ]]);
+
+    foreach (File::directories(__DIR__ . '/../lang') as $directory) {
+        app()->setLocale(basename($directory));
+
+        $view = $this->blade('<x-laravel-cookie-guard />');
+
+        $view->assertDontSee('[2,', false);
+    }
+});
+
 it('renders the cookie policy page component', function (): void {
     $view = $this->blade('<x-laravel-cookie-guard-page />');
 
