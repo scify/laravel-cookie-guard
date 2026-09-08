@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Laravel Cookie Guard is a GDPR-compliant cookie consent package for Laravel applications. It provides a customizable modal dialog allowing users to control which cookie categories they accept, with support for 26 languages.
+Laravel Cookie Guard is a GDPR-compliant cookie consent package for Laravel applications. It provides a customizable modal dialog allowing users to control which cookie categories they accept, with support for 24 languages.
 
 **Repository:** <https://github.com/scify/laravel-cookie-guard>
 **Author:** SciFY (Paul Isaris)
@@ -56,7 +56,7 @@ resources/
 
 config/cookies_consent.php                    # Configuration file
 routes/web.php                                # Package routes
-lang/{locale}/messages.php                    # Translations (26 locales)
+lang/{locale}/messages.php                    # Translations (24 locales)
 public/                                       # Compiled assets (gitignored, built)
 tests/                                        # Pest test suite
 ```
