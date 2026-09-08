@@ -5,6 +5,13 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## v5.0.2 - Fix plural duration intervals on Laravel 12.48+
+
+- Fixed cookie durations rendering as `[2,Inf] 2 years` on Laravel 12.48 and newer. All 24 locale files spelled the open plural interval as `[2,Inf]`, the Symfony Translation form. Laravel's `MessageSelector` documents `[2,*]`, and `[2,Inf]` only worked because the pre-12.48 condition regex accepted any text between brackets. laravel/framework#58367 restricts the condition to digits and `*`, so the interval was neither matched nor stripped. The `hours`, `days`, `years`, `minutes` and `months` keys now use `[2,*]`, which Laravel has supported since 5.4. Fixes #119, contributed by @codeuxius in #123.
+- Added a test that renders all five duration units with `duration_count` 2 in every locale and asserts that no raw interval reaches the output.
+- If you published the package translations, re-run `php artisan vendor:publish --tag="cookies-consent-translations" --force`. The published copies override the package files and still contain `[2,Inf]`.
+- v4.x contains the same `[2,Inf]` spelling and is not patched. v4 users on Laravel 12.48+ should upgrade to v5 (PHP 8.2+, Laravel 12+) or stay on Laravel below 12.48.
+
 ## v5.0.1 - Locale validation, Laravel 12+, real JavaScript coverage reporting
 
 - **Security:** the `locale` submitted to `POST /guard-settings/save` is now validated against a locale identifier pattern (for example `en`, `pt-br`, `zh_Hant_TW`) before it is passed to the translator. Previously the raw value ended up in a translation file path. Invalid values fall back to the application locale. The `GET /cookie-policy/{locale}` route now applies the same pattern and returns 404 for anything else.
