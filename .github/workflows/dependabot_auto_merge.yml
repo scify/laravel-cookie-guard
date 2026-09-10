@@ -1,0 +1,47 @@
+# Auto-merge Dependabot pull requests.
+#
+# How it works:
+#   - Runs only for PRs opened by dependabot[bot]
+#   - Merges only semver-minor and semver-patch updates. Majors keep
+#     requiring manual review: routine majors are already ignored in
+#     dependabot.yml, but security updates can still propose one. An
+#     undeterminable update type (empty output) is also left alone.
+#   - Enables GitHub native auto-merge, which merges the PR only after
+#     all *required* status checks on the branch protection pass
+#
+# Prerequisites (repository settings — without these the workflow is unsafe):
+#   1. "Allow auto-merge" enabled (Settings -> General)
+#   2. Branch protection on `main` with required status checks
+#      `quality` (check.yml) and `run-tests` (tests.yml).
+#      WARNING: with no required checks, `gh pr merge --auto` merges
+#      immediately, before CI has run.
+
+name: Dependabot Auto-Merge
+
+on: pull_request
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    auto-merge:
+        runs-on: ubuntu-latest
+        if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'scify/laravel-cookie-guard'
+        steps:
+            - name: Fetch Dependabot metadata
+              id: metadata
+              uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+              with:
+                  github-token: '${{ secrets.GITHUB_TOKEN }}'
+
+            - name: Enable auto-merge
+              # Allowlist, not denylist: an empty update-type (non-semver
+              # version, undeterminable grouped PR) must not auto-merge.
+              if: >-
+                  steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
+                  steps.metadata.outputs.update-type == 'version-update:semver-patch'
+              run: gh pr merge --auto --merge "$PR_URL"
+              env:
+                  PR_URL: ${{ github.event.pull_request.html_url }}
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
