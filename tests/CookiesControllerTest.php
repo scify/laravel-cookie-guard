@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Cookie;
-
 it('saves cookie consent selection and returns success JSON response', function (): void {
     $response = $this->postJson('/guard-settings/save', [
         'strictly_necessary' => true,
@@ -35,27 +33,6 @@ it('includes submitted data in the response', function (): void {
         ->assertJsonFragment([
             'data' => $consentData,
         ]);
-});
-
-it('queues a cookie with the configured prefix', function (): void {
-    Cookie::spy();
-
-    $this->postJson('/guard-settings/save', [
-        'strictly_necessary' => true,
-        'locale' => 'en',
-    ]);
-
-    Cookie::shouldHaveReceived('queue')
-        ->once()
-        ->withArgs(function ($name, $value, $minutes): bool {
-            $prefix = config('cookies_consent.cookie_prefix');
-            $expectedName = $prefix . 'cookies_consent_selection';
-            $expectedMinutes = 1440 * config('cookies_consent.cookie_lifetime');
-
-            return $name === $expectedName
-                && $minutes === $expectedMinutes
-                && str_contains($value, 'strictly_necessary');
-        });
 });
 
 it('returns localized message for German locale', function (): void {
@@ -144,4 +121,19 @@ it('accepts region-qualified locales', function (): void {
     $this->postJson('/guard-settings/save', ['strictly_necessary' => true, 'locale' => 'pt-br'])
         ->assertOk()
         ->assertJson(['message' => __('cookies_consent::messages.selection_saved_message', [], 'pt-br')]);
+});
+
+it('registers the package routes inside the web middleware group', function (): void {
+    $saveRoute = app('router')->getRoutes()->getByAction('SciFY\LaravelCookiesConsent\Http\Controllers\CookiesController@save_cookies_consent_selection');
+
+    expect($saveRoute)->not->toBeNull()
+        ->and($saveRoute->gatherMiddleware())->toContain('web');
+});
+
+it('does not set a server-side consent cookie', function (): void {
+    config(['cookies_consent.cookie_prefix' => 'my_app_']);
+
+    $this->postJson('/guard-settings/save', ['strictly_necessary' => true, 'locale' => 'en'])
+        ->assertOk()
+        ->assertCookieMissing('my_app_cookies_consent_selection');
 });

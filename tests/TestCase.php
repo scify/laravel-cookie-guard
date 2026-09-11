@@ -14,6 +14,14 @@ class TestCase extends Orchestra {
         $this->setUpPublicAssets();
     }
 
+    /**
+     * The package routes run inside the `web` middleware group, whose
+     * EncryptCookies middleware needs an application key.
+     */
+    protected function defineEnvironment($app): void {
+        $app['config']->set('app.key', 'base64:' . base64_encode(random_bytes(32)));
+    }
+
     protected function getPackageProviders($app): array {
         return [
             LaravelCookiesConsentServiceProvider::class,
