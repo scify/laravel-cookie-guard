@@ -3,7 +3,6 @@ import "../styles/styles.scss";
 document.addEventListener("DOMContentLoaded", function () {
 	initializeAccordionButtons();
 	initializeCookieBanner();
-	initializeCookiePolicyLink();
 	openCookieBannerByHash();
 	initializeConsentSettingsLink();
 });
@@ -279,6 +278,7 @@ function handleCookieConsent(consent) {
 				throw new Error(data.message || "The server did not confirm the consent selection");
 			}
 			setCookie(cookiePrefix + "cookies_consent", JSON.stringify(consent), cookieLifetime);
+			eraseRejectedCookies(consent);
 			setSliders(JSON.stringify(consent));
 			showSuccessMessage(data.message);
 			// if on cookies page, do not hide the banner
@@ -319,15 +319,6 @@ function showSuccessMessage(messageText) {
 	}
 }
 
-function initializeCookiePolicyLink() {
-	const cookiePolicyLink = document.getElementById("cookie-policy-link");
-	if (cookiePolicyLink) {
-		cookiePolicyLink.addEventListener("click", function () {
-			eraseCookie("cookieConsent");
-		});
-	}
-}
-
 function onCookiesPage() {
 	const cookieBanner = document.getElementById("scify-cookies-consent");
 	return cookieBanner.dataset.onCookiesPage === "true" || cookieBanner.dataset.onCookiesPage === "1";
@@ -355,8 +346,38 @@ function getCookie(name) {
 	return null;
 }
 
+/**
+ * Erases the cookies declared (by name) in every category the visitor rejected.
+ * Only names the operator listed in the config are touched.
+ * @param consent {Object} The consent settings, one boolean per category
+ */
+function eraseRejectedCookies(consent) {
+	document.querySelectorAll(".cookie-category").forEach((checkbox) => {
+		const category = checkbox.id.replace(/^lcg-/, "");
+		if (consent[category] !== false) return;
+		let names = [];
+		try {
+			names = JSON.parse(checkbox.dataset.cookieNames || "[]");
+		} catch {
+			names = [];
+		}
+		names.forEach(eraseCookie);
+	});
+}
+
+/**
+ * Expires a cookie on the current host and on each parent domain down to the
+ * registrable one (browsers refuse the public suffix), since third-party cookies
+ * such as Google Analytics live on the registrable domain.
+ * @param name {string} The cookie name
+ */
 function eraseCookie(name) {
-	document.cookie = name + "=; Max-Age=-99999999;";
+	const expired = name + "=; Max-Age=0; path=/";
+	document.cookie = expired;
+	const labels = window.location.hostname.split(".");
+	for (let i = 0; i < labels.length - 1; i++) {
+		document.cookie = expired + "; domain=" + labels.slice(i).join(".");
+	}
 }
 
 window.toggleCookieBanner = function () {
