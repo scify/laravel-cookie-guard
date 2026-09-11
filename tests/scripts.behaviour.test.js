@@ -68,6 +68,14 @@ function stubDialog(dom) {
 }
 
 /**
+ * Resolve when jsdom fires its own DOMContentLoaded, so the bundle's
+ * initialiser runs exactly once (a manual dispatch would run it twice).
+ */
+function whenReady(dom) {
+    return new Promise((resolve) => dom.window.document.addEventListener('DOMContentLoaded', resolve));
+}
+
+/**
  * Resolve once the fetch().then().then() chain in handleCookieConsent has run.
  */
 function flushPromises() {
@@ -223,7 +231,7 @@ asyncTest('consent cookie expires after the configured lifetime', async () => {
     stubDialog(dom);
 
     runScript(dom);
-    dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
+    await whenReady(dom);
     dom.window.document.getElementById('accept-all-cookies').click();
     await flushPromises();
 
@@ -231,6 +239,82 @@ asyncTest('consent cookie expires after the configured lifetime', async () => {
     assert(cookie, 'cookies_consent cookie was not written');
     const days = Math.round((cookie.expires.getTime() - Date.now()) / 86400000);
     assert(days === 180, `expected the cookie to expire in 180 days, got ${days}`);
+});
+
+asyncTest('banner hides only after the server confirms the save', async () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary', 'analytics'], []).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+    dom.window.fetch = () => Promise.resolve({ json: () => Promise.resolve({ success: true, message: 'ok' }) });
+    stubDialog(dom);
+
+    runScript(dom);
+    await whenReady(dom);
+    const banner = dom.window.document.getElementById('scify-cookies-consent');
+    assert(banner.style.display === 'block', 'banner should be visible before the click');
+
+    dom.window.document.getElementById('accept-all-cookies').click();
+    assert(banner.style.display === 'block', 'banner must stay visible until the server answers');
+    await flushPromises();
+    assert(banner.style.display === 'none', 'banner should hide after a successful save');
+});
+
+asyncTest('banner stays open and no cookie is written when the server does not confirm the save', async () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary', 'analytics'], []).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+    dom.window.fetch = () => Promise.resolve({ json: () => Promise.resolve({ message: 'The given data was invalid.' }) });
+    stubDialog(dom);
+    dom.window.console.error = () => {};
+
+    runScript(dom);
+    await whenReady(dom);
+    dom.window.document.getElementById('accept-all-cookies').click();
+    await flushPromises();
+
+    const banner = dom.window.document.getElementById('scify-cookies-consent');
+    assert(banner.style.display === 'block', `banner should stay visible, display is "${banner.style.display}"`);
+    assert(!dom.window.document.cookie.includes('cookies_consent='), 'no consent cookie must be written');
+});
+
+asyncTest('banner stays open when the request fails', async () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary', 'analytics'], []).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+    dom.window.fetch = () => Promise.reject(new Error('network down'));
+    stubDialog(dom);
+    dom.window.console.error = () => {};
+
+    runScript(dom);
+    await whenReady(dom);
+    dom.window.document.getElementById('accept-all-cookies').click();
+    await flushPromises();
+
+    const banner = dom.window.document.getElementById('scify-cookies-consent');
+    assert(banner.style.display === 'block', `banner should stay visible, display is "${banner.style.display}"`);
+});
+
+test('save request asks for a JSON response', () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary'], []).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+
+    let capturedHeaders = null;
+    dom.window.fetch = (url, options) => {
+        capturedHeaders = options.headers;
+        return Promise.resolve({ json: () => Promise.resolve({ success: false }) });
+    };
+
+    runScript(dom);
+    dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
+    dom.window.document.getElementById('accept-all-cookies').click();
+
+    assert(capturedHeaders !== null, 'fetch was not called');
+    assert(capturedHeaders.Accept === 'application/json', `Accept header should be application/json, got ${capturedHeaders.Accept}`);
 });
 
 Promise.all(pending).then(() => {

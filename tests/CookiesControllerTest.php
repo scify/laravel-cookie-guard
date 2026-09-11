@@ -20,6 +20,12 @@ it('saves cookie consent selection and returns success JSON response', function 
 });
 
 it('includes submitted data in the response', function (): void {
+    config(['cookies_consent.cookies' => [
+        'strictly_necessary' => [],
+        'marketing' => [],
+        'targeting' => [],
+    ]]);
+
     $consentData = [
         'strictly_necessary' => true,
         'marketing' => true,
@@ -136,4 +142,33 @@ it('does not set a server-side consent cookie', function (): void {
     $this->postJson('/guard-settings/save', ['strictly_necessary' => true, 'locale' => 'en'])
         ->assertOk()
         ->assertCookieMissing('my_app_cookies_consent_selection');
+});
+
+it('drops keys that are not configured cookie categories', function (): void {
+    $response = $this->postJson('/guard-settings/save', [
+        'strictly_necessary' => true,
+        'not_a_category' => true,
+        'locale' => 'en',
+    ]);
+
+    $response->assertOk()
+        ->assertJsonPath('data.strictly_necessary', true)
+        ->assertJsonMissingPath('data.not_a_category');
+});
+
+it('rejects a category value that is not a boolean', function (): void {
+    $this->postJson('/guard-settings/save', [
+        'strictly_necessary' => 'yes please',
+        'locale' => 'en',
+    ])->assertUnprocessable();
+});
+
+it('forces required categories to true', function (): void {
+    $response = $this->postJson('/guard-settings/save', [
+        'strictly_necessary' => false,
+        'locale' => 'en',
+    ]);
+
+    $response->assertOk()
+        ->assertJsonPath('data.strictly_necessary', true);
 });

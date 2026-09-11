@@ -11,20 +11,37 @@ use Illuminate\Routing\Controller;
  */
 class CookiesController extends Controller {
     /**
-     * Called when the user clicks on "ACCEPT SELECTION"
-     * This method goes over all the input fields (checkboxes)
-     * submitted by the cookies consent form, and stores
-     * all the relevant cookies.
+     * Called when the user clicks on "ACCEPT SELECTION".
+     * Accepts one boolean per configured cookie category plus the locale,
+     * drops anything else, and echoes the accepted selection back. The
+     * consent cookie itself is written by the browser.
      *
      * @return JsonResponse the result of the operation
      */
     public function save_cookies_consent_selection(Request $request): JsonResponse {
-        $data = $request->all();
+        $data = $request->validate($this->consent_rules());
+
+        foreach (config()->array('cookies_consent.required') as $category) {
+            $data[$category] = true;
+        }
 
         // get the message for the specific locale
         $message = __('cookies_consent::messages.selection_saved_message', [], $this->get_request_locale($request));
 
         return response()->json(['message' => $message, 'data' => $data, 'success' => true]);
+    }
+
+    /**
+     * @return array<string, array<int, string>>
+     */
+    private function consent_rules(): array {
+        $rules = ['locale' => ['sometimes', 'nullable', 'string']];
+
+        foreach (array_keys(config()->array('cookies_consent.cookies')) as $category) {
+            $rules[(string) $category] = ['sometimes', 'boolean'];
+        }
+
+        return $rules;
     }
 
     /**
