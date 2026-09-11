@@ -82,7 +82,7 @@
 </div>
 @if (config('cookies_consent.display_floating_button'))
     <button id="scify-cookie-consent-floating-button" class="cookie-button" style="display: none;"
-            onclick="toggleCookieBanner()" onkeyup="if (event.key === 'Enter') toggleCookieBanner()" tabindex="0">
+            onclick="toggleCookieBanner()">
         @include('cookies_consent::components.cookie-icon')
     </button>
 @endif
