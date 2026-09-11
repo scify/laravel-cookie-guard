@@ -29,6 +29,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | Choose your preferred cookies to be shown. You can add more cookies as desired.
+    | The `name` of each cookie is also used to erase it when the visitor rejects its category,
+    | so list the real cookie names.
     |
     | Built-in: "strictly_necessary"
     |
