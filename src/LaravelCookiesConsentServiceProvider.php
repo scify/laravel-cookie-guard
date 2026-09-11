@@ -3,6 +3,7 @@
 namespace SciFY\LaravelCookiesConsent;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Translation\TranslationServiceProvider;
 use SciFY\LaravelCookiesConsent\View\Components\LaravelCookiesConsent;
@@ -11,17 +12,7 @@ use SciFY\LaravelCookiesConsent\View\Components\LaravelCookiesConsentScripts;
 
 class LaravelCookiesConsentServiceProvider extends ServiceProvider {
     public function boot(): void {
-        $publishedPathResources = resource_path('lang/vendor/scify/laravel-cookie-guard');
-        $publishedPathLang = base_path('lang/vendor/scify/laravel-cookie-guard');
-        $packagePath = __DIR__ . '/../lang';
-
-        if (is_dir($publishedPathResources)) {
-            $this->loadTranslationsFrom($publishedPathResources, 'cookies_consent');
-        } elseif (is_dir($publishedPathLang)) {
-            $this->loadTranslationsFrom($publishedPathLang, 'cookies_consent');
-        } else {
-            $this->loadTranslationsFrom($packagePath, 'cookies_consent');
-        }
+        $this->loadTranslationsFrom($this->translationsPath(), 'cookies_consent');
 
         $viewPaths = [__DIR__ . '/../resources/views'];
         $publishedViewPath = resource_path('views/vendor/scify/laravel-cookie-guard');
@@ -45,7 +36,7 @@ class LaravelCookiesConsentServiceProvider extends ServiceProvider {
         ], 'cookies-consent-config');
 
         $this->publishes([
-            __DIR__ . '/../lang' => app()->langPath() . '/vendor/scify/laravel-cookie-guard',
+            __DIR__ . '/../lang' => $this->app->langPath('vendor/cookies_consent'),
         ], 'cookies-consent-translations');
 
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
@@ -53,6 +44,33 @@ class LaravelCookiesConsentServiceProvider extends ServiceProvider {
         Blade::component('laravel-cookie-guard', LaravelCookiesConsent::class);
         Blade::component('laravel-cookie-guard-page', LaravelCookiesConsentPage::class);
         Blade::component('laravel-cookie-guard-scripts', LaravelCookiesConsentScripts::class);
+    }
+
+    /**
+     * Translations are published to lang/vendor/cookies_consent, where Laravel merges
+     * them over the package files key by key. Translations published before v5.1 live
+     * under lang/vendor/scify/laravel-cookie-guard and replace the package files
+     * entirely; that path is still honoured, with a warning, until v6.
+     */
+    private function translationsPath(): string {
+        $legacyPaths = [
+            resource_path('lang/vendor/scify/laravel-cookie-guard'),
+            $this->app->langPath('vendor/scify/laravel-cookie-guard'),
+        ];
+
+        foreach ($legacyPaths as $legacyPath) {
+            if (is_dir($legacyPath)) {
+                Log::warning(sprintf(
+                    'laravel-cookie-guard: translations published to %s replace the package files and will no longer be read in v6. Move the strings you changed to %s and delete the rest.',
+                    $legacyPath,
+                    $this->app->langPath('vendor/cookies_consent'),
+                ));
+
+                return $legacyPath;
+            }
+        }
+
+        return __DIR__ . '/../lang';
     }
 
     public function register(): void {
