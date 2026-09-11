@@ -5,11 +5,11 @@ return [
      * This prefix will be applied when setting and getting all cookies.
      * If not set, the cookies will not be prefixed.
      * If set, a good strategy is to also add a trailing underscore "_", that will be added between the field value, and each cookie.
-     * For example, if `cookie_prefix` is set to `my_app_`, then the cookies will be stored in a JSON object with the key `my_app_cookies_consent_selection`.
+     * For example, if `cookie_prefix` is set to `my_app_`, then the consent is stored in a cookie named `my_app_cookies_consent`.
      * Example:
      *
      * {
-     *    "my_app_cookies_consent_selection": {
+     *    "my_app_cookies_consent": {
      *       "strictly_necessary": true,
      *      "performance": false,
      *     "targeting": false
@@ -64,7 +64,9 @@ return [
     ],
     'required' => ['strictly_necessary'],
     /*
-     * Set the cookie duration in days.  Default is 365 days.
+     * Lifetime, in days, of the `{cookie_prefix}cookies_consent` cookie that stores the visitor's choices.
+     * Default is 365 days. If you change it, also update the `duration` / `duration_count` declared
+     * for that cookie under `strictly_necessary` above, so that the banner tells the visitor the truth.
      */
     'cookie_lifetime' => 365,
 ];

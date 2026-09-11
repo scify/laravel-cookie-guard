@@ -37,15 +37,48 @@ function test(name, fn) {
     }
 }
 
+const pending = [];
+
+function asyncTest(name, fn) {
+    pending.push(
+        fn().then(
+            () => {
+                console.log(`✓ ${name}`);
+                passed++;
+            },
+            (e) => {
+                console.log(`✗ ${name}: ${e.message}`);
+                failed++;
+            },
+        ),
+    );
+}
+
 function assert(condition, message) {
     if (!condition) throw new Error(message || 'Assertion failed');
+}
+
+/**
+ * jsdom does not implement HTMLDialogElement.showModal()/close().
+ */
+function stubDialog(dom) {
+    const dialog = dom.window.document.querySelector('dialog');
+    dialog.showModal = () => {};
+    dialog.close = () => {};
+}
+
+/**
+ * Resolve once the fetch().then().then() chain in handleCookieConsent has run.
+ */
+function flushPromises() {
+    return new Promise((resolve) => setTimeout(resolve, 0));
 }
 
 /**
  * Build a minimal DOM environment with the cookie banner and category checkboxes.
  * Returns the window object after executing the compiled script.
  */
-function buildDOM(categories = ['strictly_necessary', 'analytics', 'marketing'], checkedIds = []) {
+function buildDOM(categories = ['strictly_necessary', 'analytics', 'marketing'], checkedIds = [], cookieLifetime = 365) {
     const checkboxesHtml = categories.map((cat) => {
         const checked = checkedIds.includes(cat) ? 'checked' : '';
         return `<input class="cookie-category" type="checkbox" id="lcg-${cat}" ${checked}>`;
@@ -60,6 +93,7 @@ function buildDOM(categories = ['strictly_necessary', 'analytics', 'marketing'],
         data-show-floating-button="false"
         data-hide-floating-button-on-mobile="false"
         data-cookie-prefix=""
+        data-cookie-lifetime="${cookieLifetime}"
         data-ajax-url="/guard-settings/save"
         data-locale="en"
         data-on-cookies-page="false"
@@ -180,5 +214,26 @@ test('consent keys are unprefixed category names (backwards compat)', () => {
     assert('analytics' in capturedConsent, 'consent must have unprefixed key "analytics"');
 });
 
-console.log(`\n${passed} passed, ${failed} failed`);
-process.exit(failed > 0 ? 1 : 0);
+asyncTest('consent cookie expires after the configured lifetime', async () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary', 'analytics'], [], 180).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+    dom.window.fetch = () => Promise.resolve({ json: () => Promise.resolve({ success: true, message: 'ok' }) });
+    stubDialog(dom);
+
+    runScript(dom);
+    dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
+    dom.window.document.getElementById('accept-all-cookies').click();
+    await flushPromises();
+
+    const cookie = dom.cookieJar.getCookiesSync('http://localhost/').find((c) => c.key === 'cookies_consent');
+    assert(cookie, 'cookies_consent cookie was not written');
+    const days = Math.round((cookie.expires.getTime() - Date.now()) / 86400000);
+    assert(days === 180, `expected the cookie to expire in 180 days, got ${days}`);
+});
+
+Promise.all(pending).then(() => {
+    console.log(`\n${passed} passed, ${failed} failed`);
+    process.exit(failed > 0 ? 1 : 0);
+});

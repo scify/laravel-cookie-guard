@@ -4,6 +4,7 @@
          aria-labelledby="cookie-consent-title" aria-describedby="cookie-consent-description"
          data-ajax-url="{{ url('/guard-settings/save') }}"
          data-cookie-prefix="{{ config('cookies_consent.cookie_prefix') }}"
+         data-cookie-lifetime="{{ config('cookies_consent.cookie_lifetime') }}"
          data-show-floating-button="false" data-on-cookies-page="true"
          data-hide-floating-button-on-mobile="{{ config('cookies_consent.hide_floating_button_on_mobile') }}">
         <div class="cookies-external-page">

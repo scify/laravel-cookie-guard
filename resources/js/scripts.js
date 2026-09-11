@@ -250,7 +250,8 @@ function getConsentSettings(acceptAll = false, requiredCategory = null) {
  * @description
  * This function handles the user's cookie consent by sending an AJAX request to the server.
  * The consent settings are stored as a JSON object with the category names as keys and their consent status as values.
- * The consent settings are then stored in a cookie with a specified prefix.
+ * The consent settings are then stored in a cookie with a specified prefix, for the
+ * number of days configured in `cookies_consent.cookie_lifetime`.
  * If the consent is successfully stored, the cookie banner is hidden and a success message is displayed
  * to inform the user about the successful storage of their consent.
  */
@@ -260,6 +261,7 @@ function handleCookieConsent(consent) {
 	const showFloatingButton =
 		cookieBanner.dataset.showFloatingButton === "true" || cookieBanner.dataset.showFloatingButton === "1";
 	const cookiePrefix = cookieBanner.dataset.cookiePrefix;
+	const cookieLifetime = parseInt(cookieBanner.dataset.cookieLifetime, 10) || 365;
 	consent["locale"] = cookieBanner.dataset.locale;
 
 	// if on cookies page, do not hide the banner
@@ -281,7 +283,7 @@ function handleCookieConsent(consent) {
 		.then((response) => response.json())
 		.then((data) => {
 			if (data.success) {
-				setCookie(cookiePrefix + "cookies_consent", JSON.stringify(consent), 30);
+				setCookie(cookiePrefix + "cookies_consent", JSON.stringify(consent), cookieLifetime);
 				setSliders(JSON.stringify(consent));
 				showSuccessMessage(data.message);
 				const dialog = cookieBanner.querySelector("dialog");
