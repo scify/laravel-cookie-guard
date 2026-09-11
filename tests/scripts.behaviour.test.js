@@ -83,14 +83,32 @@ function flushPromises() {
 }
 
 /**
+ * Build a fetch stub that responds like the controller: success, with the posted
+ * selection echoed back as `data`. The posted body is kept in `captured.body`.
+ */
+function confirmingFetch(captured = {}) {
+    return (url, options) => {
+        captured.body = JSON.parse(options.body);
+        return Promise.resolve({ json: () => Promise.resolve({ success: true, message: 'ok', data: captured.body }) });
+    };
+}
+
+/**
  * Build a minimal DOM environment with the cookie banner and category checkboxes.
  * Returns the window object after executing the compiled script.
  */
-function buildDOM(categories = ['strictly_necessary', 'analytics', 'marketing'], checkedIds = [], cookieLifetime = 365, cookieNames = {}) {
+function buildDOM(
+    categories = ['strictly_necessary', 'analytics', 'marketing'],
+    checkedIds = [],
+    cookieLifetime = 365,
+    cookieNames = {},
+    requiredCategories = ['strictly_necessary'],
+) {
     const checkboxesHtml = categories.map((cat) => {
-        const checked = checkedIds.includes(cat) ? 'checked' : '';
+        // The template renders required categories as `checked disabled`.
+        const state = requiredCategories.includes(cat) ? 'checked disabled' : checkedIds.includes(cat) ? 'checked' : '';
         const names = JSON.stringify(cookieNames[cat] || []).replace(/"/g, '&quot;');
-        return `<input class="cookie-category" type="checkbox" id="lcg-${cat}" data-cookie-names="${names}" ${checked}>`;
+        return `<input class="cookie-category" type="checkbox" id="lcg-${cat}" data-cookie-names="${names}" ${state}>`;
     }).join('\n');
 
     const html = `<!DOCTYPE html>
@@ -228,7 +246,7 @@ asyncTest('consent cookie expires after the configured lifetime', async () => {
         buildDOM(['strictly_necessary', 'analytics'], [], 180).document.documentElement.outerHTML,
         { runScripts: 'dangerously', url: 'http://localhost' },
     );
-    dom.window.fetch = () => Promise.resolve({ json: () => Promise.resolve({ success: true, message: 'ok' }) });
+    dom.window.fetch = confirmingFetch();
     stubDialog(dom);
 
     runScript(dom);
@@ -247,7 +265,7 @@ asyncTest('banner hides only after the server confirms the save', async () => {
         buildDOM(['strictly_necessary', 'analytics'], []).document.documentElement.outerHTML,
         { runScripts: 'dangerously', url: 'http://localhost' },
     );
-    dom.window.fetch = () => Promise.resolve({ json: () => Promise.resolve({ success: true, message: 'ok' }) });
+    dom.window.fetch = confirmingFetch();
     stubDialog(dom);
 
     runScript(dom);
@@ -329,11 +347,7 @@ function buildEraseScenario(existingCookies) {
         { runScripts: 'dangerously', url: 'http://app.example.org/' },
     );
     for (const cookie of existingCookies) dom.window.document.cookie = cookie;
-    // The template renders required categories as `checked disabled`.
-    const required = dom.window.document.getElementById('lcg-strictly_necessary');
-    required.checked = true;
-    required.disabled = true;
-    dom.window.fetch = () => Promise.resolve({ json: () => Promise.resolve({ success: true, message: 'ok' }) });
+    dom.window.fetch = confirmingFetch();
     stubDialog(dom);
     return dom;
 }
@@ -381,6 +395,54 @@ asyncTest('accepted and required categories keep their cookies', async () => {
     assert(names.includes('_ga'), '_ga (accepted analytics) should be kept');
     assert(!names.includes('_fbp'), '_fbp (rejected marketing) should be erased');
     assert(names.includes('my_app_cookies_consent'), 'the required category cookie should be kept');
+});
+
+asyncTest('rejecting optional categories keeps every required category and its cookies', async () => {
+    const names = { strictly_necessary: ['laravel_session'], functional: ['lang_pref'], analytics: ['_ga'] };
+    const required = ['strictly_necessary', 'functional'];
+    const dom = new JSDOM(
+        buildDOM(Object.keys(names), [], 365, names, required).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://app.example.org/' },
+    );
+    const existing = ['laravel_session=1; path=/', 'lang_pref=1; path=/', '_ga=1; path=/'];
+    for (const cookie of existing) dom.window.document.cookie = cookie;
+    const captured = {};
+    dom.window.fetch = confirmingFetch(captured);
+    stubDialog(dom);
+
+    runScript(dom);
+    await whenReady(dom);
+    dom.window.document.getElementById('reject-optional-cookies').click();
+    await flushPromises();
+
+    assert(captured.body.functional === true, 'functional is required and should be sent as true');
+    assert(captured.body.analytics === false, 'analytics is optional and should be rejected');
+    const kept = cookieNames(dom);
+    assert(kept.includes('lang_pref'), 'lang_pref (required functional) should be kept');
+    assert(kept.includes('laravel_session'), 'laravel_session (required strictly_necessary) should be kept');
+    assert(!kept.includes('_ga'), '_ga (rejected analytics) should be erased');
+});
+
+asyncTest('consent cookie stores the selection the server confirmed', async () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary', 'analytics'], []).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+    // The server drops a category it does not know and forces the required one to true.
+    const confirmed = { strictly_necessary: true, locale: 'en' };
+    dom.window.fetch = () =>
+        Promise.resolve({ json: () => Promise.resolve({ success: true, message: 'ok', data: confirmed }) });
+    stubDialog(dom);
+
+    runScript(dom);
+    await whenReady(dom);
+    dom.window.document.getElementById('accept-all-cookies').click();
+    await flushPromises();
+
+    const cookie = dom.cookieJar.getCookiesSync('http://localhost/').find((c) => c.key === 'cookies_consent');
+    assert(cookie, 'cookies_consent cookie was not written');
+    const stored = decodeURIComponent(cookie.value);
+    assert(stored === JSON.stringify(confirmed), `cookie should hold the confirmed selection, got ${stored}`);
 });
 
 Promise.all(pending).then(() => {
