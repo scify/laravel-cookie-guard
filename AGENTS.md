@@ -76,7 +76,7 @@ Responsibilities:
 1. Page loads → `initializeCookieBanner()` checks for existing consent cookie
 2. If no cookie → Show modal dialog
 3. User selects preferences → Click save/accept/reject
-4. JavaScript sends POST to `/guard-settings/save` with consent JSON (CSRF token from the component's meta tag)
+4. JavaScript sends POST to `/guard-settings/save` with consent JSON (CSRF token from the `XSRF-TOKEN` cookie, or the banner's `data-csrf-token` attribute)
 5. `CookiesController::save_cookies_consent_selection()` validates the payload (one boolean per category + locale) and returns a localized message
 6. On success the JavaScript writes the `{cookie_prefix}cookies_consent` cookie for `cookie_lifetime` days, shows the toast, closes the modal, shows the floating button
 
@@ -203,7 +203,7 @@ Override CSS variables in your app's stylesheet:
 1. **Assets not appearing**: Run `php artisan vendor:publish --tag="cookies-consent-public"` and clear browser cache
 2. **Translations not working**: Ensure locale is set before components render
 3. **Modal not showing**: Check for JavaScript errors; requires `<x-laravel-cookie-guard-scripts />` in page
-4. **Cookie not persisting**: Verify CSRF token meta tag exists: `<meta name="csrf-token" content="{{ csrf_token() }}">`
+4. **Cookie not persisting**: Verify the `XSRF-TOKEN` cookie is set (routes run in `web`) or the banner root renders `data-csrf-token`; re-publish the components if you published them before 5.1
 5. **Floating button hidden on mobile**: Check `hide_floating_button_on_mobile` config option
 
 ## Dependencies

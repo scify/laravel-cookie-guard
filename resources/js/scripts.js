@@ -229,15 +229,22 @@ function handleAcceptSelectedCookies() {
 }
 
 function handleRejectOptionalCookies() {
-	handleCookieConsent(getConsentSettings(false, "strictly_necessary"));
+	handleCookieConsent(getConsentSettings(false));
 }
 
-function getConsentSettings(acceptAll = false, requiredCategory = null) {
+/**
+ * Reads one boolean per category from the checkboxes.
+ * A disabled checkbox is a required category (the template renders those `checked disabled`)
+ * and keeps its rendered state whichever button was clicked.
+ * @param optional {boolean|null} true accepts every optional category, false rejects them,
+ * null keeps the state of each checkbox
+ * @returns {Object} The consent settings, one boolean per category
+ */
+function getConsentSettings(optional = null) {
 	const consent = {};
 	document.querySelectorAll(".cookie-category").forEach((checkbox) => {
 		const category = checkbox.id.replace(/^lcg-/, "");
-		consent[category] =
-			acceptAll || category === requiredCategory || (requiredCategory === null && checkbox.checked);
+		consent[category] = checkbox.disabled || optional === null ? checkbox.checked : optional;
 	});
 	return consent;
 }
@@ -249,7 +256,8 @@ function getConsentSettings(acceptAll = false, requiredCategory = null) {
  * @description
  * This function handles the user's cookie consent by sending an AJAX request to the server.
  * The consent settings are stored as a JSON object with the category names as keys and their consent status as values.
- * The consent settings are then stored in a cookie with a specified prefix, for the
+ * The server returns the selection it accepted (unknown categories dropped, required categories
+ * forced to true), and that selection is stored in a cookie with a specified prefix, for the
  * number of days configured in `cookies_consent.cookie_lifetime`.
  * If the server confirms the selection, the cookie is written, the banner is hidden and a success message
  * is displayed. Otherwise the banner stays open so the visitor can try again.
@@ -261,25 +269,28 @@ function handleCookieConsent(consent) {
 		cookieBanner.dataset.showFloatingButton === "true" || cookieBanner.dataset.showFloatingButton === "1";
 	const cookiePrefix = cookieBanner.dataset.cookiePrefix;
 	const cookieLifetime = parseInt(cookieBanner.dataset.cookieLifetime, 10) || 365;
+	const [csrfHeaderName, csrfToken] = csrfHeader(cookieBanner);
 	consent["locale"] = cookieBanner.dataset.locale;
+
+	const headers = { Accept: "application/json", "Content-Type": "application/json" };
+	headers[csrfHeaderName] = csrfToken;
 
 	fetch(cookieBanner.dataset.ajaxUrl, {
 		method: "POST",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-			"X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
-		},
+		headers: headers,
 		body: JSON.stringify(consent),
 	})
 		.then((response) => response.json())
 		.then((data) => {
-			if (!data.success) {
+			if (!data.success || !data.data) {
 				throw new Error(data.message || "The server did not confirm the consent selection");
 			}
-			setCookie(cookiePrefix + "cookies_consent", JSON.stringify(consent), cookieLifetime);
-			eraseRejectedCookies(consent);
-			setSliders(JSON.stringify(consent));
+			// The server drops unknown categories and forces the required ones to true,
+			// so its copy of the selection is the one the browser stores and acts on.
+			const selection = JSON.stringify(data.data);
+			setCookie(cookiePrefix + "cookies_consent", selection, cookieLifetime);
+			eraseRejectedCookies(data.data);
+			setSliders(selection);
 			showSuccessMessage(data.message);
 			// if on cookies page, do not hide the banner
 			if (!onCookiesPage()) {
@@ -322,6 +333,29 @@ function showSuccessMessage(messageText) {
 function onCookiesPage() {
 	const cookieBanner = document.getElementById("scify-cookies-consent");
 	return cookieBanner.dataset.onCookiesPage === "true" || cookieBanner.dataset.onCookiesPage === "1";
+}
+
+/**
+ * Builds the CSRF header for the save request.
+ * The `XSRF-TOKEN` cookie is used first: Laravel refreshes it on every response, so it
+ * stays current on pages that never reload. Without it, the banner root's `data-csrf-token`
+ * attribute is used, then the `csrf-token` meta tag of components published before 5.1.
+ * @param cookieBanner {Element} The banner root element
+ * @returns {Array} The header name and its value
+ */
+function csrfHeader(cookieBanner) {
+	const xsrfToken = getCookie("XSRF-TOKEN");
+	if (xsrfToken) {
+		return ["X-XSRF-TOKEN", xsrfToken];
+	}
+	if (cookieBanner.dataset.csrfToken) {
+		return ["X-CSRF-TOKEN", cookieBanner.dataset.csrfToken];
+	}
+	const meta = document.querySelector('meta[name="csrf-token"]');
+	if (meta) {
+		return ["X-CSRF-TOKEN", meta.getAttribute("content") || ""];
+	}
+	return ["X-CSRF-TOKEN", ""];
 }
 
 function setCookie(name, value, days) {

@@ -4,7 +4,6 @@
     $categoriesCollapsedByDefault = config('cookies_consent.categories_collapsed_by_default', false);
     $accordionHeading = $accordionHeading ?? 'h5';
 @endphp
-<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="accordion" id="cookieAccordion">
     @foreach ($cookieCategories as $category => $cookies)
         <div class="form-check form-switch">

@@ -222,3 +222,22 @@ it('renders the declared cookie names on each category checkbox', function (): v
     $view->assertSee('id="lcg-analytics"', false)
         ->assertSee('data-cookie-names="[&quot;_ga&quot;,&quot;_ga_ABC123&quot;]"', false);
 });
+
+it('renders the floating button without a key handler of its own', function (): void {
+    config(['cookies_consent.display_floating_button' => true]);
+
+    $view = $this->blade('<x-laravel-cookie-guard />');
+
+    $view->assertSee('id="scify-cookie-consent-floating-button"', false)
+        ->assertDontSee('onkeyup', false);
+});
+
+it('renders the csrf token on the banner root of both components', function (): void {
+    $this->startSession();
+
+    $this->blade('<x-laravel-cookie-guard />')
+        ->assertSee('data-csrf-token="' . csrf_token() . '"', false);
+
+    $this->blade('<x-laravel-cookie-guard-page />')
+        ->assertSee('data-csrf-token="' . csrf_token() . '"', false);
+});

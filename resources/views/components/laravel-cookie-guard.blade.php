@@ -6,6 +6,7 @@
          data-hide-floating-button-on-mobile="{{ config('cookies_consent.hide_floating_button_on_mobile') }}"
          data-cookie-prefix="{{ config('cookies_consent.cookie_prefix') }}"
          data-cookie-lifetime="{{ config('cookies_consent.cookie_lifetime') }}"
+         data-csrf-token="{{ csrf_token() }}"
          data-locale="{{ app()->getLocale() }}"
          data-use-show-modal="{{ !config('cookies_consent.use_floating_modal') }}"
          style="display: none;">
@@ -82,7 +83,7 @@
 </div>
 @if (config('cookies_consent.display_floating_button'))
     <button id="scify-cookie-consent-floating-button" class="cookie-button" style="display: none;"
-            onclick="toggleCookieBanner()" onkeyup="if (event.key === 'Enter') toggleCookieBanner()" tabindex="0">
+            onclick="toggleCookieBanner()">
         @include('cookies_consent::components.cookie-icon')
     </button>
 @endif

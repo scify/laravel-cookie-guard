@@ -318,10 +318,10 @@ Analytics live on the registrable domain). Only the names you list are touched, 
 each category. Required categories are never erased.
 
 The package registers its routes in the `web` middleware group. The consent is saved with a `POST` request to
-`/guard-settings/save`, which is protected by the CSRF middleware like any other web route. The component renders
-the `csrf-token` meta tag it needs, so nothing else is required. If you post to that route from your own code, send
-the token as well. The request accepts one boolean per configured cookie category plus a `locale`; anything else is
-ignored, and the required categories are always stored as accepted.
+`/guard-settings/save`, which is protected by the CSRF middleware like any other web route. The JavaScript sends the
+`XSRF-TOKEN` cookie Laravel sets (or the `data-csrf-token` rendered on the banner root), so nothing else is required.
+If you post to that route from your own code, send the token as well. The request accepts one boolean per configured
+cookie category plus a `locale`; anything else is ignored, and the required categories are always stored as accepted.
 
 ## Usage
 
