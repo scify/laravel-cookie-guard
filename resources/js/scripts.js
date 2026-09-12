@@ -190,23 +190,20 @@ function toggleBannerDisplay(
  * If the user has already accepted the cookies, the sliders are set according to the consent settings.
  */
 function setSliders(cookieConsent) {
-	if (cookieConsent) {
-		try {
-			const consentSettings = JSON.parse(cookieConsent);
-			if (consentSettings && Object.keys(consentSettings).length > 0) {
-				for (const category in consentSettings) {
-					if (consentSettings.hasOwnProperty(category)) {
-						const categoryCheckbox = document.getElementById("lcg-" + category);
-						if (categoryCheckbox) {
-							categoryCheckbox.checked = consentSettings[category];
-						}
-					}
-				}
-			}
-		} catch (error) {
-			console.warn("Error parsing cookie consent JSON:", error);
-		}
+	if (!cookieConsent) return;
+	let consentSettings;
+	try {
+		consentSettings = JSON.parse(cookieConsent);
+	} catch (error) {
+		console.warn("Error parsing cookie consent JSON:", error);
+		return;
 	}
+	Object.entries(consentSettings || {}).forEach(([category, accepted]) => {
+		const categoryCheckbox = document.getElementById("lcg-" + category);
+		if (categoryCheckbox) {
+			categoryCheckbox.checked = accepted;
+		}
+	});
 }
 
 function handleCustomiseCookies() {
@@ -303,7 +300,7 @@ function handleCookieConsent(consent) {
 	const showFloatingButton =
 		cookieBanner.dataset.showFloatingButton === "true" || cookieBanner.dataset.showFloatingButton === "1";
 	const cookiePrefix = cookieBanner.dataset.cookiePrefix;
-	const configuredLifetime = parseInt(cookieBanner.dataset.cookieLifetime, 10);
+	const configuredLifetime = Number.parseInt(cookieBanner.dataset.cookieLifetime, 10);
 	// 0 keeps the consent for the browser session; a missing attribute (components published before 5.1) means 365.
 	const cookieLifetime = Number.isNaN(configuredLifetime) ? 365 : configuredLifetime;
 	const [csrfHeaderName, csrfToken] = csrfHeader(cookieBanner);
