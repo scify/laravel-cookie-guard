@@ -197,3 +197,13 @@ it('renders link to cookie policy page when separate page is enabled', function 
 
     $view->assertSee('cookie-policy', false);
 });
+
+it('renders the configured cookie lifetime for the JavaScript', function (): void {
+    config(['cookies_consent.cookie_lifetime' => 180]);
+
+    $this->blade('<x-laravel-cookie-guard />')
+        ->assertSee('data-cookie-lifetime="180"', false);
+
+    $this->blade('<x-laravel-cookie-guard-page />')
+        ->assertSee('data-cookie-lifetime="180"', false);
+});

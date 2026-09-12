@@ -307,7 +307,16 @@ If you want to remove a cookie category, simply remove it from the array.
 You can use the `enabled` array to set the cookie categories that will be pre-selected,
 and the `required` array to set the cookies that the user won't be able to deselect.
 
-If you want to change how long the cookies will be stored, edit the `cookie_lifetime` variable.
+If you want to change how long the visitor's consent is remembered, edit the `cookie_lifetime` variable (in days).
+It sets the lifetime of the `{cookie_prefix}cookies_consent` cookie the browser stores. If you change it, also
+update the `duration` / `duration_count` declared for that cookie in the `strictly_necessary` category, so that
+the banner tells the visitor the truth.
+
+The package registers its routes in the `web` middleware group. The consent is saved with a `POST` request to
+`/guard-settings/save`, which is protected by the CSRF middleware like any other web route. The component renders
+the `csrf-token` meta tag it needs, so nothing else is required. If you post to that route from your own code, send
+the token as well. The request accepts one boolean per configured cookie category plus a `locale`; anything else is
+ignored, and the required categories are always stored as accepted.
 
 ## Usage
 
@@ -712,7 +721,8 @@ php artisan vendor:publish \
 
 The configuration file will be published to `config/cookies_consent.php`.
 
-Then, edit the `cookie_lifetime` field (in days).
+Then, edit the `cookie_lifetime` field (in days), and update the duration declared for the
+`{cookie_prefix}cookies_consent` cookie in the `strictly_necessary` category to match.
 
 ---
 

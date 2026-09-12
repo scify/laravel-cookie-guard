@@ -20,9 +20,8 @@ composer test                   # Run Pest tests
 composer test-coverage          # Run tests with coverage
 
 # Linting
-npm run lint:js                 # ESLint for JavaScript
-npm run lint:css                # Stylelint for CSS/SCSS
-npm run lint:blade              # blade-formatter for Blade templates
+npm run lint                    # ESLint for JavaScript
+npm run lint:styles             # Stylelint for CSS/SCSS
 ./vendor/bin/pint               # Laravel Pint for PHP
 
 # Publishing (in consuming Laravel app)
@@ -77,9 +76,9 @@ Responsibilities:
 1. Page loads → `initializeCookieBanner()` checks for existing consent cookie
 2. If no cookie → Show modal dialog
 3. User selects preferences → Click save/accept/reject
-4. JavaScript sends POST to `/guard-settings/save` with consent JSON
-5. `CookiesController::save_cookies_consent_selection()` stores HTTP cookie
-6. Response triggers success toast, closes modal, shows floating button
+4. JavaScript sends POST to `/guard-settings/save` with consent JSON (CSRF token from the component's meta tag)
+5. `CookiesController::save_cookies_consent_selection()` validates the payload (one boolean per category + locale) and returns a localized message
+6. On success the JavaScript writes the `{cookie_prefix}cookies_consent` cookie for `cookie_lifetime` days, shows the toast, closes the modal, shows the floating button
 
 ### Key Files for Common Tasks
 
@@ -90,7 +89,7 @@ Responsibilities:
 | Change modal behavior | `resources/js/scripts.js` |
 | Add new translation | `lang/{locale}/messages.php` |
 | Modify modal HTML structure | `resources/views/components/laravel-cookie-guard.blade.php` |
-| Change how consent is saved | `src/Http/Controllers/CookiesController.php` |
+| Change how consent is validated | `src/Http/Controllers/CookiesController.php` |
 | Add new Blade component props | `src/View/Components/LaravelCookiesConsent.php` |
 
 ## Configuration (`config/cookies_consent.php`)
@@ -105,7 +104,7 @@ Key options:
 - `cookies` - Array of cookie categories with nested cookie definitions
 - `enabled` - Pre-checked categories on first load
 - `required` - Categories user cannot disable
-- `cookie_lifetime` - Days until consent cookie expires (default: 365)
+- `cookie_lifetime` - Days until the browser's consent cookie expires (default: 365); rendered as `data-cookie-lifetime` for the JavaScript
 
 ## Blade Components Usage
 
