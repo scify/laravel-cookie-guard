@@ -123,8 +123,8 @@ front-end.
   it's existence can be tweaked in the configuration file.
 - A separate page for the cookies preferences, where users can read more about each cookie category and change their
   preferences.
-- Multilingual support. The plugin comes with 6 built-in languages: English, Greek, Spanish, German, Italian, and
-  Swedish. You can add your own language by publishing the translations and editing/adding your own translations.
+- Multilingual support. The plugin comes with 24 built-in languages; see the `lang/` directory for the list. You can
+  add your own language by publishing the translations and editing/adding your own translations.
 
 ## Installation
 
@@ -619,8 +619,8 @@ the `$_COOKIE[config('cookies_consent.cookie_prefix') . 'cookies_consent_targeti
 
 ### Frontend code
 
-You can use the `window.localStorage` object, in order to check for the appropriate cookie. (declared in the
-configuration file)
+In the browser, read the `{cookie_prefix}cookies_consent` cookie from `document.cookie` and parse its JSON value:
+one boolean per cookie category, keyed by the category name.
 
 ## Customization
 
@@ -759,7 +759,7 @@ will be stored in another cookie, and the window won't pop up again, until this 
 
 **Question:** In which languages is the plugin available?
 
-**Answer:** The plugin has 6 built-in languages: English, Greek, Spanish, German, Italian, and Swedish. If you would
+**Answer:** The plugin has 24 built-in languages; see the `lang/` directory of the package for the list. If you would
 like to add a language, create `lang/vendor/cookies_consent/{locale}/messages.php` in your application with all the
 keys of the package's `lang/en/messages.php` (see [Customizing the component texts](#customizing-the-component-texts)).
 If you add a new language, consider also opening
