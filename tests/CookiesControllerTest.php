@@ -1,6 +1,7 @@
 <?php
 
 const SAVE_URL = '/guard-settings/save';
+use Illuminate\Routing\Router;
 
 it('saves cookie consent selection and returns success JSON response', function (): void {
     $response = $this->postJson(SAVE_URL, [
@@ -132,7 +133,7 @@ it('accepts region-qualified locales', function (): void {
 });
 
 it('registers the package routes inside the web middleware group', function (): void {
-    $saveRoute = app('router')->getRoutes()->getByAction('SciFY\LaravelCookiesConsent\Http\Controllers\CookiesController@save_cookies_consent_selection');
+    $saveRoute = resolve(Router::class)->getRoutes()->getByAction('SciFY\LaravelCookiesConsent\Http\Controllers\CookiesController@save_cookies_consent_selection');
 
     expect($saveRoute)->not->toBeNull()
         ->and($saveRoute->gatherMiddleware())->toContain('web');
