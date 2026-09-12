@@ -348,9 +348,14 @@ function csrfHeader(cookieBanner) {
 	if (xsrfToken) {
 		return ["X-XSRF-TOKEN", xsrfToken];
 	}
+	if (cookieBanner.dataset.csrfToken) {
+		return ["X-CSRF-TOKEN", cookieBanner.dataset.csrfToken];
+	}
 	const meta = document.querySelector('meta[name="csrf-token"]');
-	const token = cookieBanner.dataset.csrfToken || (meta && meta.getAttribute("content")) || "";
-	return ["X-CSRF-TOKEN", token];
+	if (meta) {
+		return ["X-CSRF-TOKEN", meta.getAttribute("content") || ""];
+	}
+	return ["X-CSRF-TOKEN", ""];
 }
 
 function setCookie(name, value, days) {
