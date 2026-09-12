@@ -144,14 +144,14 @@ POST /guard-settings/save     - Save consent preferences (AJAX)
 
 ## Testing
 
-PHP tests use Pest with Orchestra Testbench. JavaScript tests are plain Node scripts that load the compiled bundle from `public/scripts.js`, so run `npm run build` first.
+PHP tests use Pest with Orchestra Testbench. JavaScript tests use Node's built-in `node:test` runner and jsdom; they load the compiled bundle from `public/scripts.js`, so run `npm run build` first.
 
 - `tests/TestCase.php` - Base test case with service provider loading
 - `tests/ComponentsTest.php` - Blade component rendering, config-driven output, locale plural forms
 - `tests/CookiesControllerTest.php` - Consent saving, cookie prefix, locale validation, policy page route
 - `tests/TranslationTest.php` - Verifies translation keys exist
 - `tests/scripts.test.js` - Bundle shape (IIFE, strict mode, no global leaks)
-- `tests/scripts.behaviour.test.js` - Consent object building in jsdom
+- `tests/scripts.behaviour.test.js` - Banner behaviour in jsdom: consent building, save request, cookie writing and erasing, page-load state, toggle/hash/link openers, accordion, toast, policy page. `buildDOM(options)` mirrors the Blade markup; `boot(dom)` runs the bundle.
 
 Run tests:
 

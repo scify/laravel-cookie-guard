@@ -5,22 +5,32 @@ document.addEventListener("DOMContentLoaded", function () {
 	initializeCookieBanner();
 	openCookieBannerByHash();
 	initializeConsentSettingsLink();
+	window.addEventListener("hashchange", openCookieBannerByHash);
 });
 
 /**
- * Opens the cookie banner by hash.
+ * Opens the cookie banner when the URL hash is #consent-settings.
+ * Runs on page load and on every hash change.
  * @function openCookieBannerByHash
  * @returns {void}
- * @description
- * This function opens the cookie banner by hash.
- * If the hash is #consent-settings, the cookie banner is opened.
- * If the hash is not #consent-settings, the cookie banner is closed.
  */
 function openCookieBannerByHash() {
 	if (window.location.hash === "#consent-settings") {
-		if (typeof window.toggleCookieBanner === "function") {
-			window.toggleCookieBanner();
-		}
+		openCookieBanner();
+	}
+}
+
+/**
+ * Opens the cookie banner if it is hidden. Unlike window.toggleCookieBanner()
+ * this never closes an open banner, so a first-time visitor who follows a
+ * #consent-settings link keeps the banner they already see.
+ * @function openCookieBanner
+ * @returns {void}
+ */
+function openCookieBanner() {
+	const cookieBanner = document.getElementById("scify-cookies-consent");
+	if (cookieBanner && cookieBanner.style.display !== "block" && typeof window.toggleCookieBanner === "function") {
+		window.toggleCookieBanner();
 	}
 }
 
@@ -350,7 +360,7 @@ function showSuccessMessage(messageText) {
 	if (parent) {
 		const message = document.createElement("div");
 		message.classList.add("cookie-success-message");
-		message.innerText = messageText;
+		message.textContent = messageText;
 		parent.appendChild(message);
 		setTimeout(() => {
 			message.classList.add("show");
@@ -474,16 +484,16 @@ window.toggleCookieBanner = function () {
 };
 
 /**
- * Ensures that clicking any link with href="#consent-settings" always opens the cookie banner dialog.
+ * Ensures that clicking any link with href="#consent-settings" opens the cookie banner dialog.
+ * The hash is updated too, so the hashchange listener and the link agree; openCookieBanner()
+ * is idempotent, so the two paths do not toggle the banner twice.
  */
 function initializeConsentSettingsLink() {
 	document.querySelectorAll('a[href="#consent-settings"]').forEach((link) => {
 		link.addEventListener("click", function (e) {
 			e.preventDefault();
-			window.location.hash = "#consent-settings"; // Optional: update hash for consistency
-			if (typeof window.toggleCookieBanner === "function") {
-				window.toggleCookieBanner();
-			}
+			window.location.hash = "#consent-settings";
+			openCookieBanner();
 		});
 	});
 }

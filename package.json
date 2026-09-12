@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node tests/scripts.test.js && node tests/scripts.behaviour.test.js",
+    "test": "node --test \"tests/*.test.js\"",
     "test:coverage": "c8 --reporter=text --reporter=lcov npm test",
     "dev": "vite",
     "build": "vite build && cp resources/styles/_variables.css public/_variables.css",
