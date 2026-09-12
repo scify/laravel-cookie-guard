@@ -207,3 +207,18 @@ it('renders the configured cookie lifetime for the JavaScript', function (): voi
     $this->blade('<x-laravel-cookie-guard-page />')
         ->assertSee('data-cookie-lifetime="180"', false);
 });
+
+it('renders the declared cookie names on each category checkbox', function (): void {
+    config(['cookies_consent.cookies' => [
+        'strictly_necessary' => [['name' => 'my_app_cookies_consent', 'description' => '', 'duration' => 'cookies_consent::messages.years', 'duration_count' => 1, 'policy_external_link' => null]],
+        'analytics' => [
+            ['name' => '_ga', 'description' => '', 'duration' => 'cookies_consent::messages.years', 'duration_count' => 2, 'policy_external_link' => null],
+            ['name' => '_ga_ABC123', 'description' => '', 'duration' => 'cookies_consent::messages.years', 'duration_count' => 2, 'policy_external_link' => null],
+        ],
+    ]]);
+
+    $view = $this->blade('<x-laravel-cookie-guard />');
+
+    $view->assertSee('id="lcg-analytics"', false)
+        ->assertSee('data-cookie-names="[&quot;_ga&quot;,&quot;_ga_ABC123&quot;]"', false);
+});

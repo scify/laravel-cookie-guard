@@ -86,10 +86,11 @@ function flushPromises() {
  * Build a minimal DOM environment with the cookie banner and category checkboxes.
  * Returns the window object after executing the compiled script.
  */
-function buildDOM(categories = ['strictly_necessary', 'analytics', 'marketing'], checkedIds = [], cookieLifetime = 365) {
+function buildDOM(categories = ['strictly_necessary', 'analytics', 'marketing'], checkedIds = [], cookieLifetime = 365, cookieNames = {}) {
     const checkboxesHtml = categories.map((cat) => {
         const checked = checkedIds.includes(cat) ? 'checked' : '';
-        return `<input class="cookie-category" type="checkbox" id="lcg-${cat}" ${checked}>`;
+        const names = JSON.stringify(cookieNames[cat] || []).replace(/"/g, '&quot;');
+        return `<input class="cookie-category" type="checkbox" id="lcg-${cat}" data-cookie-names="${names}" ${checked}>`;
     }).join('\n');
 
     const html = `<!DOCTYPE html>
@@ -315,6 +316,71 @@ test('save request asks for a JSON response', () => {
 
     assert(capturedHeaders !== null, 'fetch was not called');
     assert(capturedHeaders.Accept === 'application/json', `Accept header should be application/json, got ${capturedHeaders.Accept}`);
+});
+
+/**
+ * A DOM with declared cookie names, a successful fetch stub and pre-existing cookies.
+ * The URL has a registrable domain so parent-domain cookies can be set and erased.
+ */
+function buildEraseScenario(existingCookies) {
+    const names = { strictly_necessary: ['my_app_cookies_consent'], analytics: ['_ga', '_ga_ABC123'], marketing: ['_fbp'] };
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary', 'analytics', 'marketing'], [], 365, names).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://app.example.org/' },
+    );
+    for (const cookie of existingCookies) dom.window.document.cookie = cookie;
+    // The template renders required categories as `checked disabled`.
+    const required = dom.window.document.getElementById('lcg-strictly_necessary');
+    required.checked = true;
+    required.disabled = true;
+    dom.window.fetch = () => Promise.resolve({ json: () => Promise.resolve({ success: true, message: 'ok' }) });
+    stubDialog(dom);
+    return dom;
+}
+
+function cookieNames(dom) {
+    return dom.cookieJar.getCookiesSync('http://app.example.org/').map((c) => c.key);
+}
+
+asyncTest('rejecting all optional categories erases the cookies they declare', async () => {
+    const dom = buildEraseScenario(['_ga=1; path=/', '_ga_ABC123=1; path=/', '_fbp=1; path=/']);
+    runScript(dom);
+    await whenReady(dom);
+
+    dom.window.document.getElementById('reject-optional-cookies').click();
+    await flushPromises();
+
+    const names = cookieNames(dom);
+    assert(!names.includes('_ga'), '_ga should be erased');
+    assert(!names.includes('_ga_ABC123'), '_ga_ABC123 should be erased');
+    assert(!names.includes('_fbp'), '_fbp should be erased');
+});
+
+asyncTest('erasing a rejected cookie also covers the parent domain', async () => {
+    const dom = buildEraseScenario(['_ga=1; path=/; domain=.example.org']);
+    runScript(dom);
+    await whenReady(dom);
+    assert(cookieNames(dom).includes('_ga'), 'precondition: the domain cookie should be set');
+
+    dom.window.document.getElementById('reject-optional-cookies').click();
+    await flushPromises();
+
+    assert(!cookieNames(dom).includes('_ga'), '_ga on .example.org should be erased');
+});
+
+asyncTest('accepted and required categories keep their cookies', async () => {
+    const dom = buildEraseScenario(['_ga=1; path=/', '_fbp=1; path=/', 'my_app_cookies_consent=old; path=/']);
+    runScript(dom);
+    await whenReady(dom);
+    dom.window.document.getElementById('lcg-analytics').checked = true;
+
+    dom.window.document.getElementById('accept-selected-cookies').click();
+    await flushPromises();
+
+    const names = cookieNames(dom);
+    assert(names.includes('_ga'), '_ga (accepted analytics) should be kept');
+    assert(!names.includes('_fbp'), '_fbp (rejected marketing) should be erased');
+    assert(names.includes('my_app_cookies_consent'), 'the required category cookie should be kept');
 });
 
 Promise.all(pending).then(() => {
