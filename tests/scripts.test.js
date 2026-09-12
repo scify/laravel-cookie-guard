@@ -1,39 +1,28 @@
 /**
- * JavaScript output format tests
- * Run with: node tests/scripts.test.js
+ * Output format tests for the compiled bundle.
+ * Run with: node --test tests/
  */
 
-const fs = require('fs');
-const path = require('path');
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 
-const scriptPath = path.join(__dirname, '../public/scripts.js');
-const code = fs.readFileSync(scriptPath, 'utf8');
+const code = fs.readFileSync(path.join(__dirname, '../public/scripts.js'), 'utf8');
 
-let passed = 0;
-let failed = 0;
+test('the bundle is wrapped in an IIFE, so it declares nothing in the global scope', () => {
+    assert.ok(code.startsWith('(function()'));
+});
 
-function test(name, condition) {
-    if (condition) {
-        console.log(`✓ ${name}`);
-        passed++;
-    } else {
-        console.log(`✗ ${name}`);
-        failed++;
-    }
-}
+test('the bundle declares no global _ (lodash conflict)', () => {
+    assert.ok(!/^function _\(/.test(code));
+    assert.ok(!/^var _=/.test(code));
+});
 
-// Test 1: Code should be wrapped in IIFE to avoid global scope pollution
-test('Script is wrapped in IIFE', code.startsWith('(function()'));
+test('the bundle exposes window.toggleCookieBanner', () => {
+    assert.ok(code.includes('window.toggleCookieBanner='));
+});
 
-// Test 2: No global function declarations that could conflict with lodash
-test('No global _ function (lodash conflict)', !(/^function _\(/.test(code)));
-test('No global var _ declaration', !(/^var _=/.test(code)));
-
-// Test 3: Public API should still be exposed
-test('Exposes window.toggleCookieBanner', code.includes('window.toggleCookieBanner='));
-
-// Test 4: Uses strict mode
-test('Uses strict mode', code.includes('"use strict"'));
-
-console.log(`\n${passed} passed, ${failed} failed`);
-process.exit(failed > 0 ? 1 : 0);
+test('the bundle uses strict mode', () => {
+    assert.ok(code.includes('"use strict"'));
+});
