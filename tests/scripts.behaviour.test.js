@@ -572,6 +572,25 @@ test('published components without the root attributes still read the checkboxes
     assert(captured.body.marketing === false, 'unchecked marketing should be false');
 });
 
+asyncTest('consent cookie is written with SameSite=Lax', async () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary', 'analytics'], []).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+    dom.window.fetch = confirmingFetch();
+    stubDialog(dom);
+
+    runScript(dom);
+    await whenReady(dom);
+    dom.window.document.getElementById('accept-all-cookies').click();
+    await flushPromises();
+
+    const cookie = dom.cookieJar.getCookiesSync('http://localhost/').find((c) => c.key === 'cookies_consent');
+    assert(cookie, 'cookies_consent cookie was not written');
+    assert(cookie.sameSite === 'lax', `SameSite should be lax, got ${cookie.sameSite}`);
+    assert(cookie.secure === false, 'Secure must not be set on an http page');
+});
+
 Promise.all(pending).then(() => {
     console.log(`\n${passed} passed, ${failed} failed`);
     process.exit(failed > 0 ? 1 : 0);
