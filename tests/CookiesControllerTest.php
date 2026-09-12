@@ -80,21 +80,29 @@ it('handles empty consent data', function (): void {
     $response->assertOk()
         ->assertJson([
             'success' => true,
+            'data' => ['strictly_necessary' => true],
         ]);
 });
 
 it('renders the cookie policy page', function (): void {
     $response = $this->get('/cookie-policy/en');
 
-    $response->assertOk();
+    $response->assertOk()
+        ->assertSee('<html lang="en">', false)
+        ->assertSee(__('cookies_consent::messages.cookie_policy_title', [], 'en'))
+        ->assertSee('id="close-cookie-policy-page"', false)
+        ->assertSee('data-on-cookies-page="true"', false);
 });
 
-it('renders the cookie policy page with different locales', function (): void {
-    $locales = ['en', 'de', 'fr', 'es', 'el'];
+it('renders the cookie policy page in the requested locale', function (): void {
+    foreach (['de', 'fr', 'es', 'el'] as $locale) {
+        $title = __('cookies_consent::messages.cookie_policy_title', [], $locale);
+        expect($title)->not->toBe(__('cookies_consent::messages.cookie_policy_title', [], 'en'));
 
-    foreach ($locales as $locale) {
-        $response = $this->get('/cookie-policy/' . $locale);
-        $response->assertOk();
+        $this->get('/cookie-policy/' . $locale)
+            ->assertOk()
+            ->assertSee('<html lang="' . $locale . '">', false)
+            ->assertSee($title);
     }
 });
 
