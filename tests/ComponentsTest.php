@@ -208,7 +208,7 @@ it('renders the configured cookie lifetime for the JavaScript', function (): voi
         ->assertSee('data-cookie-lifetime="180"', false);
 });
 
-it('renders the declared cookie names on each category checkbox', function (): void {
+it('renders the cookie categories and the required list on the banner root of both components', function (): void {
     config(['cookies_consent.cookies' => [
         'strictly_necessary' => [['name' => 'my_app_cookies_consent', 'description' => '', 'duration' => 'cookies_consent::messages.years', 'duration_count' => 1, 'policy_external_link' => null]],
         'analytics' => [
@@ -216,11 +216,26 @@ it('renders the declared cookie names on each category checkbox', function (): v
             ['name' => '_ga_ABC123', 'description' => '', 'duration' => 'cookies_consent::messages.years', 'duration_count' => 2, 'policy_external_link' => null],
         ],
     ]]);
+    $categories = 'data-cookie-categories="{&quot;strictly_necessary&quot;:[&quot;my_app_cookies_consent&quot;],&quot;analytics&quot;:[&quot;_ga&quot;,&quot;_ga_ABC123&quot;]}"';
+    $required = 'data-required-categories="[&quot;strictly_necessary&quot;]"';
 
-    $view = $this->blade('<x-laravel-cookie-guard />');
+    $this->blade('<x-laravel-cookie-guard />')
+        ->assertSee($categories, false)
+        ->assertSee($required, false)
+        ->assertDontSee('data-cookie-names', false);
 
-    $view->assertSee('id="lcg-analytics"', false)
-        ->assertSee('data-cookie-names="[&quot;_ga&quot;,&quot;_ga_ABC123&quot;]"', false);
+    $this->blade('<x-laravel-cookie-guard-page />')
+        ->assertSee($categories, false)
+        ->assertSee($required, false);
+});
+
+it('renders the cookie categories on the banner root in separate page mode, where no checkbox exists', function (): void {
+    config(['cookies_consent.use_separate_page' => true]);
+
+    $this->blade('<x-laravel-cookie-guard />')
+        ->assertDontSee('class="form-check-input cookie-category"', false)
+        ->assertSee('data-cookie-categories="{&quot;strictly_necessary&quot;:', false)
+        ->assertSee('data-required-categories="[&quot;strictly_necessary&quot;]"', false);
 });
 
 it('renders the floating button without a key handler of its own', function (): void {

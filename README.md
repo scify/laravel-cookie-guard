@@ -123,8 +123,8 @@ front-end.
   it's existence can be tweaked in the configuration file.
 - A separate page for the cookies preferences, where users can read more about each cookie category and change their
   preferences.
-- Multilingual support. The plugin comes with 6 built-in languages: English, Greek, Spanish, German, Italian, and
-  Swedish. You can add your own language by publishing the translations and editing/adding your own translations.
+- Multilingual support. The plugin comes with 24 built-in languages; see the `lang/` directory for the list. You can
+  add your own language by publishing the translations and editing/adding your own translations.
 
 ## Installation
 
@@ -248,12 +248,12 @@ return [
             ],
         ],
     ],
-    'enabled' => [
-        'strictly_necessary',
-    ],
     'required' => ['strictly_necessary'],
     /*
-     * Set the cookie duration in days.  Default is 365 days.
+     * Lifetime, in days, of the `{cookie_prefix}cookies_consent` cookie that stores the visitor's choices.
+     * Default is 365 days. Set it to 0 to keep the consent for the browser session only.
+     * If you change it, also update the `duration` / `duration_count` declared for that cookie
+     * under `strictly_necessary` above, so that the banner tells the visitor the truth.
      */
     'cookie_lifetime' => 365,
 ];
@@ -304,10 +304,11 @@ You can add as many cookie categories as you like, simply by adding values to th
 
 If you want to remove a cookie category, simply remove it from the array.
 
-You can use the `enabled` array to set the cookie categories that will be pre-selected,
-and the `required` array to set the cookies that the user won't be able to deselect.
+You can use the `required` array to set the cookie categories that the user won't be able to deselect. They render
+checked and locked; every other category starts unchecked.
 
 If you want to change how long the visitor's consent is remembered, edit the `cookie_lifetime` variable (in days).
+A value of `0` keeps the consent for the browser session only.
 It sets the lifetime of the `{cookie_prefix}cookies_consent` cookie the browser stores. If you change it, also
 update the `duration` / `duration_count` declared for that cookie in the `strictly_necessary` category, so that
 the banner tells the visitor the truth.
@@ -619,8 +620,8 @@ the `$_COOKIE[config('cookies_consent.cookie_prefix') . 'cookies_consent_targeti
 
 ### Frontend code
 
-You can use the `window.localStorage` object, in order to check for the appropriate cookie. (declared in the
-configuration file)
+In the browser, read the `{cookie_prefix}cookies_consent` cookie from `document.cookie` and parse its JSON value:
+one boolean per cookie category, keyed by the category name.
 
 ## Customization
 
@@ -759,7 +760,7 @@ will be stored in another cookie, and the window won't pop up again, until this 
 
 **Question:** In which languages is the plugin available?
 
-**Answer:** The plugin has 6 built-in languages: English, Greek, Spanish, German, Italian, and Swedish. If you would
+**Answer:** The plugin has 24 built-in languages; see the `lang/` directory of the package for the list. If you would
 like to add a language, create `lang/vendor/cookies_consent/{locale}/messages.php` in your application with all the
 keys of the package's `lang/en/messages.php` (see [Customizing the component texts](#customizing-the-component-texts)).
 If you add a new language, consider also opening

@@ -102,7 +102,6 @@ Key options:
 - `categories_collapsed_by_default` - Accordion default state
 - `use_floating_modal` - `<dialog>` vs floating modal approach
 - `cookies` - Array of cookie categories with nested cookie definitions
-- `enabled` - Pre-checked categories on first load
 - `required` - Categories user cannot disable
 - `cookie_lifetime` - Days until the browser's consent cookie expires (default: 365); rendered as `data-cookie-lifetime` for the JavaScript
 

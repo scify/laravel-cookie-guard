@@ -1,8 +1,7 @@
 {
   "name": "laravel-cookie-guard",
   "version": "5.0.2",
-  "description": "<p align=\"center\"> <img src=\"logo.jpg\" alt=\"logo\" width=\"400\"> </p>",
-  "main": "index.js",
+  "description": "GDPR-compliant cookie consent dialog for Laravel applications.",
   "directories": {
     "test": "tests"
   },
@@ -22,8 +21,8 @@
     "url": "git+https://github.com/scify/laravel-cookie-guard.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "SciFY",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/scify/laravel-cookie-guard/issues"
   },
