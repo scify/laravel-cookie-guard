@@ -6,6 +6,7 @@
          data-hide-floating-button-on-mobile="{{ config('cookies_consent.hide_floating_button_on_mobile') }}"
          data-cookie-prefix="{{ config('cookies_consent.cookie_prefix') }}"
          data-cookie-lifetime="{{ config('cookies_consent.cookie_lifetime') }}"
+         data-csrf-token="{{ csrf_token() }}"
          data-locale="{{ app()->getLocale() }}"
          data-use-show-modal="{{ !config('cookies_consent.use_floating_modal') }}"
          style="display: none;">

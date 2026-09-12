@@ -113,7 +113,7 @@ function buildDOM(
 
     const html = `<!DOCTYPE html>
 <html>
-<head><meta name="csrf-token" content="test-token"></head>
+<head></head>
 <body>
   <div id="scify-cookies-consent-wrapper">
     <div id="scify-cookies-consent"
@@ -121,6 +121,7 @@ function buildDOM(
         data-hide-floating-button-on-mobile="false"
         data-cookie-prefix=""
         data-cookie-lifetime="${cookieLifetime}"
+        data-csrf-token="test-token"
         data-ajax-url="/guard-settings/save"
         data-locale="en"
         data-on-cookies-page="false"
@@ -334,6 +335,72 @@ test('save request asks for a JSON response', () => {
 
     assert(capturedHeaders !== null, 'fetch was not called');
     assert(capturedHeaders.Accept === 'application/json', `Accept header should be application/json, got ${capturedHeaders.Accept}`);
+});
+
+test('save request carries the csrf token from the banner root', () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary'], []).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+
+    let capturedHeaders = null;
+    dom.window.fetch = (url, options) => {
+        capturedHeaders = options.headers;
+        return Promise.resolve({ json: () => Promise.resolve({ success: false }) });
+    };
+
+    runScript(dom);
+    dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
+    dom.window.document.getElementById('accept-all-cookies').click();
+
+    assert(capturedHeaders !== null, 'fetch was not called');
+    const token = capturedHeaders['X-CSRF-TOKEN'];
+    assert(token === 'test-token', `X-CSRF-TOKEN should be test-token, got ${token}`);
+});
+
+test('save request falls back to the csrf-token meta tag of published components', () => {
+    const html = buildDOM(['strictly_necessary'], [])
+        .document.documentElement.outerHTML.replace(' data-csrf-token="test-token"', '')
+        .replace('<head></head>', '<head><meta name="csrf-token" content="meta-token"></head>');
+    const dom = new JSDOM(html, { runScripts: 'dangerously', url: 'http://localhost' });
+
+    let capturedHeaders = null;
+    dom.window.fetch = (url, options) => {
+        capturedHeaders = options.headers;
+        return Promise.resolve({ json: () => Promise.resolve({ success: false }) });
+    };
+
+    runScript(dom);
+    dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
+    dom.window.document.getElementById('accept-all-cookies').click();
+
+    assert(capturedHeaders !== null, 'fetch was not called');
+    const token = capturedHeaders['X-CSRF-TOKEN'];
+    assert(token === 'meta-token', `X-CSRF-TOKEN should be meta-token, got ${token}`);
+});
+
+test('save request prefers the XSRF-TOKEN cookie Laravel refreshes on every response', () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary'], []).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+    // Laravel writes the encrypted token URL-encoded; the header carries it decoded.
+    const encrypted = 'eyJpdiI6ImFiYyIsInZhbHVlIjoieHl6In0=';
+    dom.window.document.cookie = 'XSRF-TOKEN=' + encodeURIComponent(encrypted) + '; path=/';
+
+    let capturedHeaders = null;
+    dom.window.fetch = (url, options) => {
+        capturedHeaders = options.headers;
+        return Promise.resolve({ json: () => Promise.resolve({ success: false }) });
+    };
+
+    runScript(dom);
+    dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
+    dom.window.document.getElementById('accept-all-cookies').click();
+
+    assert(capturedHeaders !== null, 'fetch was not called');
+    assert(capturedHeaders['X-XSRF-TOKEN'] === encrypted, 'X-XSRF-TOKEN should carry the cookie value decoded');
+    assert(!('X-CSRF-TOKEN' in capturedHeaders), 'X-CSRF-TOKEN should not be sent when the cookie is present');
 });
 
 /**

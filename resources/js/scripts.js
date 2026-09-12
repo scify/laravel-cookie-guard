@@ -269,15 +269,15 @@ function handleCookieConsent(consent) {
 		cookieBanner.dataset.showFloatingButton === "true" || cookieBanner.dataset.showFloatingButton === "1";
 	const cookiePrefix = cookieBanner.dataset.cookiePrefix;
 	const cookieLifetime = parseInt(cookieBanner.dataset.cookieLifetime, 10) || 365;
+	const [csrfHeaderName, csrfToken] = csrfHeader(cookieBanner);
 	consent["locale"] = cookieBanner.dataset.locale;
+
+	const headers = { Accept: "application/json", "Content-Type": "application/json" };
+	headers[csrfHeaderName] = csrfToken;
 
 	fetch(cookieBanner.dataset.ajaxUrl, {
 		method: "POST",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-			"X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
-		},
+		headers: headers,
 		body: JSON.stringify(consent),
 	})
 		.then((response) => response.json())
@@ -333,6 +333,24 @@ function showSuccessMessage(messageText) {
 function onCookiesPage() {
 	const cookieBanner = document.getElementById("scify-cookies-consent");
 	return cookieBanner.dataset.onCookiesPage === "true" || cookieBanner.dataset.onCookiesPage === "1";
+}
+
+/**
+ * Builds the CSRF header for the save request.
+ * The `XSRF-TOKEN` cookie is used first: Laravel refreshes it on every response, so it
+ * stays current on pages that never reload. Without it, the banner root's `data-csrf-token`
+ * attribute is used, then the `csrf-token` meta tag of components published before 5.1.
+ * @param cookieBanner {Element} The banner root element
+ * @returns {Array} The header name and its value
+ */
+function csrfHeader(cookieBanner) {
+	const xsrfToken = getCookie("XSRF-TOKEN");
+	if (xsrfToken) {
+		return ["X-XSRF-TOKEN", xsrfToken];
+	}
+	const meta = document.querySelector('meta[name="csrf-token"]');
+	const token = cookieBanner.dataset.csrfToken || (meta && meta.getAttribute("content")) || "";
+	return ["X-CSRF-TOKEN", token];
 }
 
 function setCookie(name, value, days) {

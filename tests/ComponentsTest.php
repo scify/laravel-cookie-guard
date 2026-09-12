@@ -231,3 +231,13 @@ it('renders the floating button without a key handler of its own', function (): 
     $view->assertSee('id="scify-cookie-consent-floating-button"', false)
         ->assertDontSee('onkeyup', false);
 });
+
+it('renders the csrf token on the banner root of both components', function (): void {
+    $this->startSession();
+
+    $this->blade('<x-laravel-cookie-guard />')
+        ->assertSee('data-csrf-token="' . csrf_token() . '"', false);
+
+    $this->blade('<x-laravel-cookie-guard-page />')
+        ->assertSee('data-csrf-token="' . csrf_token() . '"', false);
+});
