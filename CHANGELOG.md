@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The Swedish translations moved from `lang/se` to `lang/sv`, the ISO 639-1 code for Swedish (`se` is Northern Sami). An application with `app.locale = 'sv'` now gets Swedish instead of the English fallback. If you set the locale to `se` to reach these strings, switch to `sv`.
 - Removed the `enabled` config option. It was documented as the list of pre-selected categories, but nothing read it: the checkboxes start unchecked except the `required` ones, which render checked and locked. A published config that still contains the key keeps working.
 - The consent cookie is written with `SameSite=Lax`, and with `Secure` when the page is served over HTTPS. The server-side cookie removed above inherited both from the application's session config; the JavaScript cookie set neither.
+- Removed leftovers of the package skeleton: the interactive `configure.php`, an unused migration stub, and `.gitattributes` entries for files that never existed. `package.json` now states the MIT licence like `composer.json`. The test workflow now runs for pull requests against any branch, so stacked pull requests get the full matrix.
 - Tests: the route middleware and the absence of the server cookie are asserted on the real response instead of a `Cookie` spy. The jsdom behaviour tests can now run the success path of the save (async helper, dialog stub, natural `DOMContentLoaded`) and read the cookie expiry from the cookie jar.
 
 ## v5.0.2 - Fix plural duration intervals on Laravel 12.48+
