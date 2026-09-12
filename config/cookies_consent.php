@@ -61,9 +61,6 @@ return [
             ],
         ],
     ],
-    'enabled' => [
-        'strictly_necessary',
-    ],
     'required' => ['strictly_necessary'],
     /*
      * Lifetime, in days, of the `{cookie_prefix}cookies_consent` cookie that stores the visitor's choices.

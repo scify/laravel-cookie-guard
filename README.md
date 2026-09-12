@@ -248,9 +248,6 @@ return [
             ],
         ],
     ],
-    'enabled' => [
-        'strictly_necessary',
-    ],
     'required' => ['strictly_necessary'],
     /*
      * Set the cookie duration in days.  Default is 365 days.
@@ -304,8 +301,8 @@ You can add as many cookie categories as you like, simply by adding values to th
 
 If you want to remove a cookie category, simply remove it from the array.
 
-You can use the `enabled` array to set the cookie categories that will be pre-selected,
-and the `required` array to set the cookies that the user won't be able to deselect.
+You can use the `required` array to set the cookie categories that the user won't be able to deselect. They render
+checked and locked; every other category starts unchecked.
 
 If you want to change how long the visitor's consent is remembered, edit the `cookie_lifetime` variable (in days).
 It sets the lifetime of the `{cookie_prefix}cookies_consent` cookie the browser stores. If you change it, also
