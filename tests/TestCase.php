@@ -2,6 +2,7 @@
 
 namespace SciFY\LaravelCookiesConsent\Tests;
 
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Facades\File;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RuntimeException;
@@ -19,7 +20,7 @@ class TestCase extends Orchestra {
      * EncryptCookies middleware needs an application key.
      */
     protected function defineEnvironment($app): void {
-        $app['config']->set('app.key', 'base64:' . base64_encode(random_bytes(32)));
+        $app->make(Repository::class)->set('app.key', 'base64:' . base64_encode(random_bytes(32)));
     }
 
     protected function getPackageProviders($app): array {

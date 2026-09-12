@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\Config\RectorConfig;
+use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use RectorLaravel\Rector\If_\ThrowIfRector;
 use RectorLaravel\Set\LaravelSetList;
-use RectorLaravel\Set\LaravelSetProvider;
 
 return RectorConfig::configure()
-    ->withSetProviders(LaravelSetProvider::class)
     ->withSets([
         LaravelSetList::LARAVEL_ARRAYACCESS_TO_METHOD_CALL,
         LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
@@ -36,6 +35,9 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         ThrowIfRector::class,
+        // The Laravel 7.0 set renames Blade::component() to aliasComponent(), assuming the
+        // pre-7 path-based signature. The provider registers class-based components.
+        RenameMethodRector::class => [__DIR__ . '/src/LaravelCookiesConsentServiceProvider.php'],
     ])
     ->withPreparedSets(
         deadCode: true,
