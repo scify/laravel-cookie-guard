@@ -250,7 +250,10 @@ return [
     ],
     'required' => ['strictly_necessary'],
     /*
-     * Set the cookie duration in days.  Default is 365 days.
+     * Lifetime, in days, of the `{cookie_prefix}cookies_consent` cookie that stores the visitor's choices.
+     * Default is 365 days. Set it to 0 to keep the consent for the browser session only.
+     * If you change it, also update the `duration` / `duration_count` declared for that cookie
+     * under `strictly_necessary` above, so that the banner tells the visitor the truth.
      */
     'cookie_lifetime' => 365,
 ];
@@ -305,6 +308,7 @@ You can use the `required` array to set the cookie categories that the user won'
 checked and locked; every other category starts unchecked.
 
 If you want to change how long the visitor's consent is remembered, edit the `cookie_lifetime` variable (in days).
+A value of `0` keeps the consent for the browser session only.
 It sets the lifetime of the `{cookie_prefix}cookies_consent` cookie the browser stores. If you change it, also
 update the `duration` / `duration_count` declared for that cookie in the `strictly_necessary` category, so that
 the banner tells the visitor the truth.

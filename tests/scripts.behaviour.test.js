@@ -591,6 +591,24 @@ asyncTest('consent cookie is written with SameSite=Lax', async () => {
     assert(cookie.secure === false, 'Secure must not be set on an http page');
 });
 
+asyncTest('cookie_lifetime 0 writes a session cookie without an expiry', async () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary', 'analytics'], [], 0).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+    dom.window.fetch = confirmingFetch();
+    stubDialog(dom);
+
+    runScript(dom);
+    await whenReady(dom);
+    dom.window.document.getElementById('accept-all-cookies').click();
+    await flushPromises();
+
+    const cookie = dom.cookieJar.getCookiesSync('http://localhost/').find((c) => c.key === 'cookies_consent');
+    assert(cookie, 'cookies_consent cookie was not written');
+    assert(String(cookie.expires) === 'Infinity', `a session cookie has no expiry, got ${cookie.expires}`);
+});
+
 Promise.all(pending).then(() => {
     console.log(`\n${passed} passed, ${failed} failed`);
     process.exit(failed > 0 ? 1 : 0);

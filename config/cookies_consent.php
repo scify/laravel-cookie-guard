@@ -64,8 +64,9 @@ return [
     'required' => ['strictly_necessary'],
     /*
      * Lifetime, in days, of the `{cookie_prefix}cookies_consent` cookie that stores the visitor's choices.
-     * Default is 365 days. If you change it, also update the `duration` / `duration_count` declared
-     * for that cookie under `strictly_necessary` above, so that the banner tells the visitor the truth.
+     * Default is 365 days. Set it to 0 to keep the consent for the browser session only.
+     * If you change it, also update the `duration` / `duration_count` declared for that cookie
+     * under `strictly_necessary` above, so that the banner tells the visitor the truth.
      */
     'cookie_lifetime' => 365,
 ];

@@ -303,7 +303,9 @@ function handleCookieConsent(consent) {
 	const showFloatingButton =
 		cookieBanner.dataset.showFloatingButton === "true" || cookieBanner.dataset.showFloatingButton === "1";
 	const cookiePrefix = cookieBanner.dataset.cookiePrefix;
-	const cookieLifetime = parseInt(cookieBanner.dataset.cookieLifetime, 10) || 365;
+	const configuredLifetime = parseInt(cookieBanner.dataset.cookieLifetime, 10);
+	// 0 keeps the consent for the browser session; a missing attribute (components published before 5.1) means 365.
+	const cookieLifetime = Number.isNaN(configuredLifetime) ? 365 : configuredLifetime;
 	const [csrfHeaderName, csrfToken] = csrfHeader(cookieBanner);
 	consent["locale"] = cookieBanner.dataset.locale;
 
