@@ -1,7 +1,9 @@
 <?php
 
+const SAVE_URL = '/guard-settings/save';
+
 it('saves cookie consent selection and returns success JSON response', function (): void {
-    $response = $this->postJson('/guard-settings/save', [
+    $response = $this->postJson(SAVE_URL, [
         'strictly_necessary' => true,
         'marketing' => false,
         'locale' => 'en',
@@ -33,7 +35,7 @@ it('includes submitted data in the response', function (): void {
         'locale' => 'en',
     ];
 
-    $response = $this->postJson('/guard-settings/save', $consentData);
+    $response = $this->postJson(SAVE_URL, $consentData);
 
     $response->assertOk()
         ->assertJsonFragment([
@@ -42,7 +44,7 @@ it('includes submitted data in the response', function (): void {
 });
 
 it('returns localized message for German locale', function (): void {
-    $response = $this->postJson('/guard-settings/save', [
+    $response = $this->postJson(SAVE_URL, [
         'strictly_necessary' => true,
         'locale' => 'de',
     ]);
@@ -56,7 +58,7 @@ it('returns localized message for German locale', function (): void {
 });
 
 it('returns localized message for French locale', function (): void {
-    $response = $this->postJson('/guard-settings/save', [
+    $response = $this->postJson(SAVE_URL, [
         'strictly_necessary' => true,
         'locale' => 'fr',
     ]);
@@ -70,7 +72,7 @@ it('returns localized message for French locale', function (): void {
 });
 
 it('handles empty consent data', function (): void {
-    $response = $this->postJson('/guard-settings/save', [
+    $response = $this->postJson(SAVE_URL, [
         'locale' => 'en',
     ]);
 
@@ -104,7 +106,7 @@ it('sets the application locale from route parameter', function (): void {
 it('falls back to the application locale when the submitted locale is not a valid identifier', function (): void {
     app()->setLocale('en');
 
-    $response = $this->postJson('/guard-settings/save', [
+    $response = $this->postJson(SAVE_URL, [
         'strictly_necessary' => true,
         'locale' => '../../../../etc/passwd',
     ]);
@@ -124,7 +126,7 @@ it('rejects path separators in the cookie policy locale', function (): void {
 it('accepts region-qualified locales', function (): void {
     $this->get('/cookie-policy/pt-br')->assertOk();
 
-    $this->postJson('/guard-settings/save', ['strictly_necessary' => true, 'locale' => 'pt-br'])
+    $this->postJson(SAVE_URL, ['strictly_necessary' => true, 'locale' => 'pt-br'])
         ->assertOk()
         ->assertJson(['message' => __('cookies_consent::messages.selection_saved_message', [], 'pt-br')]);
 });
@@ -139,13 +141,13 @@ it('registers the package routes inside the web middleware group', function (): 
 it('does not set a server-side consent cookie', function (): void {
     config(['cookies_consent.cookie_prefix' => 'my_app_']);
 
-    $this->postJson('/guard-settings/save', ['strictly_necessary' => true, 'locale' => 'en'])
+    $this->postJson(SAVE_URL, ['strictly_necessary' => true, 'locale' => 'en'])
         ->assertOk()
         ->assertCookieMissing('my_app_cookies_consent_selection');
 });
 
 it('drops keys that are not configured cookie categories', function (): void {
-    $response = $this->postJson('/guard-settings/save', [
+    $response = $this->postJson(SAVE_URL, [
         'strictly_necessary' => true,
         'not_a_category' => true,
         'locale' => 'en',
@@ -157,14 +159,14 @@ it('drops keys that are not configured cookie categories', function (): void {
 });
 
 it('rejects a category value that is not a boolean', function (): void {
-    $this->postJson('/guard-settings/save', [
+    $this->postJson(SAVE_URL, [
         'strictly_necessary' => 'yes please',
         'locale' => 'en',
     ])->assertUnprocessable();
 });
 
 it('forces required categories to true', function (): void {
-    $response = $this->postJson('/guard-settings/save', [
+    $response = $this->postJson(SAVE_URL, [
         'strictly_necessary' => false,
         'locale' => 'en',
     ]);

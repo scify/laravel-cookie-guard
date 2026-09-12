@@ -1,7 +1,7 @@
 @use "generic-rules";
 @use "form";
 @use "accordion";
-@import "scify-cookie-policy-page";
+@use "scify-cookie-policy-page";
 
 #scify-cookies-consent-wrapper,
 #scify-cookie-policy-page {
@@ -14,6 +14,7 @@
 			min-height: auto;
 			max-width: 100%;
 			margin: 0 auto;
+			padding-bottom: 40px;
 			position: relative !important;
 			width: 100% !important;
 
@@ -44,9 +45,6 @@
 			}
 		}
 
-		.cookies-policy-wrapper {
-			padding-bottom: 40px;
-		}
 	}
 
 	// Cookie Success Message
