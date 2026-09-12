@@ -626,8 +626,21 @@ configuration file)
 
 ### Customizing the component texts
 
-If you want to modify the texts shown in the cookies dialog, you can publish the language resource files with this
-command:
+The package registers its translations under the `cookies_consent` namespace, so you override them the way Laravel
+documents for any package: create `lang/vendor/cookies_consent/{locale}/messages.php` and define only the keys you
+want to change. Everything you do not define keeps coming from the package, including future fixes.
+
+```php
+// lang/vendor/cookies_consent/en/messages.php
+<?php
+
+return [
+    'title' => 'Cookies on this site',
+    'description' => 'We use cookies to ...',
+];
+```
+
+If you prefer to start from the full files, publish them:
 
 ```bash
 php artisan vendor:publish \
@@ -635,10 +648,16 @@ php artisan vendor:publish \
 --tag="cookies-consent-translations"
 ```
 
-This will publish the translation files to `lang/vendor/scify/laravel-cookie-guard/` directory.
+This copies every locale to `lang/vendor/cookies_consent/`. Keep only the locales and keys you change and delete the
+rest, otherwise your copies shadow the package strings and you will not receive translation fixes.
 
-The plugin comes with many built-in languages. You can change the translations for a given language, or add additional
-languages yourself.
+The plugin comes with many built-in languages. To add a language, create `lang/vendor/cookies_consent/{locale}/messages.php`
+with all the keys of `lang/en/messages.php`.
+
+**Upgrading from a version before 5.1:** translations published earlier live in `lang/vendor/scify/laravel-cookie-guard/`
+and replace the package files completely. That directory is still read, with a warning in the log, but support for it
+is removed in v6. Move the strings you changed to `lang/vendor/cookies_consent/{locale}/messages.php` and delete the old
+directory.
 
 ### Customizing the component contents
 
@@ -741,15 +760,9 @@ will be stored in another cookie, and the window won't pop up again, until this 
 **Question:** In which languages is the plugin available?
 
 **Answer:** The plugin has 6 built-in languages: English, Greek, Spanish, German, Italian, and Swedish. If you would
-like to add a language, publish the translations by running:
-
-```bash
-php artisan vendor:publish \
---provider="SciFY\LaravelCookiesConsent\LaravelCookiesConsentServiceProvider" \
---tag="cookies-consent-translations"
-```
-
-And add/change your own translations. If you add a new language, consider also opening
+like to add a language, create `lang/vendor/cookies_consent/{locale}/messages.php` in your application with all the
+keys of the package's `lang/en/messages.php` (see [Customizing the component texts](#customizing-the-component-texts)).
+If you add a new language, consider also opening
 a [pull request](https://github.com/scify/laravel-cookie-guard/pulls), in order for this language to be included in
 the plugin.
 
