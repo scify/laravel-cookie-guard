@@ -5,7 +5,15 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## v5.1.0 - Save route under `web`, config-driven consent lifetime, validated payload
+## v5.1.0 - Save route under `web`, consent lifetime and erasure, validated payload, translation overrides
+
+Minor release. No breaking changes to the Blade components, the routes or the configuration keys, but the package now behaves as documented in several places where it did not. After updating:
+
+- Re-publish the assets: `php artisan vendor:publish --tag="cookies-consent-public" --force`. The JavaScript changed in every area below.
+- If you published the Blade components, re-publish them or add the new root attributes (`data-cookie-lifetime`, `data-cookie-categories`, `data-required-categories`, `data-csrf-token`) yourself; the JavaScript falls back to the old markup but erases nothing and uses 365 days.
+- If you published translations, move the strings you changed from `lang/vendor/scify/laravel-cookie-guard/` to `lang/vendor/cookies_consent/` and delete the old directory. The old path is still read, with a warning in the log, until v6.
+- If your own code posts to `/guard-settings/save`, send the CSRF token: the route now runs inside the `web` middleware group.
+- If your app used locale `se` for Swedish, switch to `sv`.
 
 - **Security:** the package routes now run inside the `web` middleware group. `POST /guard-settings/save` was registered without middleware since the first release, so the CSRF token the JavaScript sent was never checked. If you call that route from your own code, send the CSRF token (on Laravel 13 a same-origin request is also accepted without one).
 - The save request sends the `XSRF-TOKEN` cookie as `X-XSRF-TOKEN`, so the token stays current on pages that never reload (Inertia, Livewire, Turbo); a token rendered into the page went stale after login and the save failed with 419 on Laravel 12. Without the cookie the JavaScript uses `data-csrf-token`, now on the banner root of both components, then the `csrf-token` meta tag of components published before 5.1. The package no longer renders that meta tag itself (it was in `_cookie-categories.blade.php`); if your own scripts read it, render one in your layout.

@@ -1,6 +1,6 @@
 {
   "name": "laravel-cookie-guard",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "GDPR-compliant cookie consent dialog for Laravel applications.",
   "directories": {
     "test": "tests"
