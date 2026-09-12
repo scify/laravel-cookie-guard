@@ -121,13 +121,16 @@ function buildDOM(
     cookieLifetime = 365,
     cookieNames = {},
     requiredCategories = ['strictly_necessary'],
+    separatePage = false,
 ) {
-    const checkboxesHtml = categories.map((cat) => {
+    // The banner in `use_separate_page` mode renders no checkboxes.
+    const checkboxesHtml = separatePage ? '' : categories.map((cat) => {
         // The template renders required categories as `checked disabled`.
         const state = requiredCategories.includes(cat) ? 'checked disabled' : checkedIds.includes(cat) ? 'checked' : '';
-        const names = JSON.stringify(cookieNames[cat] || []).replace(/"/g, '&quot;');
-        return `<input class="cookie-category" type="checkbox" id="lcg-${cat}" data-cookie-names="${names}" ${state}>`;
+        return `<input class="cookie-category" type="checkbox" id="lcg-${cat}" ${state}>`;
     }).join('\n');
+    const attr = (value) => JSON.stringify(value).replace(/"/g, '&quot;');
+    const declared = Object.fromEntries(categories.map((cat) => [cat, cookieNames[cat] || []]));
 
     const html = `<!DOCTYPE html>
 <html>
@@ -139,6 +142,8 @@ function buildDOM(
         data-hide-floating-button-on-mobile="false"
         data-cookie-prefix=""
         data-cookie-lifetime="${cookieLifetime}"
+        data-cookie-categories="${attr(declared)}"
+        data-required-categories="${attr(requiredCategories)}"
         data-csrf-token="test-token"
         data-ajax-url="/guard-settings/save"
         data-locale="en"
@@ -496,6 +501,75 @@ asyncTest('consent cookie stores the selection the server confirmed', async () =
     assert(cookie, 'cookies_consent cookie was not written');
     const stored = decodeURIComponent(cookie.value);
     assert(stored === JSON.stringify(confirmed), `cookie should hold the confirmed selection, got ${stored}`);
+});
+
+
+// --- Separate-page mode: the banner has no checkboxes, the root attributes drive the consent ---
+
+function buildSeparatePageScenario(existingCookies = []) {
+    const names = { strictly_necessary: ['my_app_cookies_consent'], analytics: ['_ga'], marketing: ['_fbp'] };
+    const dom = new JSDOM(
+        buildDOM(Object.keys(names), [], 365, names, ['strictly_necessary'], true).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://app.example.org/' },
+    );
+    for (const cookie of existingCookies) dom.window.document.cookie = cookie;
+    stubDialog(dom);
+    return dom;
+}
+
+asyncTest('separate-page banner: accept all consents to every configured category', async () => {
+    const dom = buildSeparatePageScenario();
+    const captured = {};
+    dom.window.fetch = confirmingFetch(captured);
+    runScript(dom);
+    await whenReady(dom);
+    assert(dom.window.document.querySelector('.cookie-category') === null, 'precondition: no checkboxes');
+
+    dom.window.document.getElementById('accept-all-cookies').click();
+    await flushPromises();
+
+    assert(captured.body.strictly_necessary === true, 'strictly_necessary should be true');
+    assert(captured.body.analytics === true, `analytics should be true, got ${captured.body.analytics}`);
+    assert(captured.body.marketing === true, `marketing should be true, got ${captured.body.marketing}`);
+});
+
+asyncTest('separate-page banner: reject optional rejects every optional category and erases its cookies', async () => {
+    const dom = buildSeparatePageScenario(['_ga=1; path=/', '_fbp=1; path=/', 'my_app_cookies_consent=old; path=/']);
+    const captured = {};
+    dom.window.fetch = confirmingFetch(captured);
+    runScript(dom);
+    await whenReady(dom);
+
+    dom.window.document.getElementById('reject-optional-cookies').click();
+    await flushPromises();
+
+    assert(captured.body.strictly_necessary === true, 'strictly_necessary should be true');
+    assert(captured.body.analytics === false, 'analytics should be false');
+    assert(captured.body.marketing === false, 'marketing should be false');
+    const kept = cookieNames(dom);
+    assert(!kept.includes('_ga'), '_ga should be erased');
+    assert(!kept.includes('_fbp'), '_fbp should be erased');
+    assert(kept.includes('my_app_cookies_consent'), 'the required category cookie should be kept');
+});
+
+test('published components without the root attributes still read the checkboxes', () => {
+    const dom = new JSDOM(
+        buildDOM(['strictly_necessary', 'analytics', 'marketing'], ['analytics']).document.documentElement.outerHTML,
+        { runScripts: 'dangerously', url: 'http://localhost' },
+    );
+    const root = dom.window.document.getElementById('scify-cookies-consent');
+    root.removeAttribute('data-cookie-categories');
+    root.removeAttribute('data-required-categories');
+    const captured = {};
+    dom.window.fetch = confirmingFetch(captured);
+
+    runScript(dom);
+    dom.window.document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
+    dom.window.document.getElementById('accept-selected-cookies').click();
+
+    assert(captured.body.strictly_necessary === true, 'disabled checkbox marks the category required');
+    assert(captured.body.analytics === true, 'checked analytics should be true');
+    assert(captured.body.marketing === false, 'unchecked marketing should be false');
 });
 
 Promise.all(pending).then(() => {

@@ -242,11 +242,46 @@ function handleRejectOptionalCookies() {
  */
 function getConsentSettings(optional = null) {
 	const consent = {};
-	document.querySelectorAll(".cookie-category").forEach((checkbox) => {
-		const category = checkbox.id.replace(/^lcg-/, "");
-		consent[category] = checkbox.disabled || optional === null ? checkbox.checked : optional;
+	Object.entries(consentCategories()).forEach(([category, { required }]) => {
+		const checkbox = document.getElementById("lcg-" + category);
+		if (required) {
+			consent[category] = true;
+		} else if (optional !== null) {
+			consent[category] = optional;
+		} else {
+			consent[category] = checkbox ? checkbox.checked : false;
+		}
 	});
 	return consent;
+}
+
+/**
+ * @returns {Object<string, {required: boolean, cookies: string[]}>}
+ * @description
+ * Reads the configured cookie categories from the banner root: `data-cookie-categories`
+ * maps each category to the cookie names declared in it, `data-required-categories`
+ * lists the categories the visitor cannot reject. The banner in `use_separate_page`
+ * mode renders no checkboxes, so the root attributes are the only complete source.
+ * Published components that predate the attributes fall back to the checkboxes.
+ */
+function consentCategories() {
+	const cookieBanner = document.getElementById("scify-cookies-consent");
+	const categories = {};
+	try {
+		const declared = JSON.parse(cookieBanner.dataset.cookieCategories || "{}");
+		const required = JSON.parse(cookieBanner.dataset.requiredCategories || "[]");
+		Object.keys(declared).forEach((category) => {
+			categories[category] = { required: required.includes(category), cookies: declared[category] };
+		});
+	} catch (error) {
+		console.warn("Error parsing the cookie categories of the banner:", error);
+	}
+	if (Object.keys(categories).length === 0) {
+		document.querySelectorAll(".cookie-category").forEach((checkbox) => {
+			categories[checkbox.id.replace(/^lcg-/, "")] = { required: checkbox.disabled, cookies: [] };
+		});
+	}
+	return categories;
 }
 
 /**
@@ -386,16 +421,10 @@ function getCookie(name) {
  * @param consent {Object} The consent settings, one boolean per category
  */
 function eraseRejectedCookies(consent) {
-	document.querySelectorAll(".cookie-category").forEach((checkbox) => {
-		const category = checkbox.id.replace(/^lcg-/, "");
-		if (consent[category] !== false) return;
-		let names = [];
-		try {
-			names = JSON.parse(checkbox.dataset.cookieNames || "[]");
-		} catch {
-			names = [];
+	Object.entries(consentCategories()).forEach(([category, { cookies }]) => {
+		if (consent[category] === false) {
+			cookies.forEach(eraseCookie);
 		}
-		names.forEach(eraseCookie);
 	});
 }
 

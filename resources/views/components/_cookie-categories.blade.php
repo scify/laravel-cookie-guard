@@ -8,7 +8,6 @@
     @foreach ($cookieCategories as $category => $cookies)
         <div class="form-check form-switch">
             <input class="form-check-input cookie-category" type="checkbox" id="lcg-{{ $category }}"
-                data-cookie-names="{{ json_encode(array_column($cookies, 'name')) }}"
                 {{ in_array($category, config('cookies_consent.required')) ? 'checked disabled' : '' }}>
             <label class="form-check-label" for="lcg-{{ $category }}">
                 {{ __('cookies_consent::messages.' . $category) }}
