@@ -1,96 +1,77 @@
-# Dependabot configuration — https://docs.github.com/code-security/dependabot
+# Dependabot configuration for a Laravel repository (Composer + npm + GitHub Actions).
 #
-# Strategy: keep PR noise low while staying current and secure.
-#   - minor/patch updates are grouped into a single PR per ecosystem
-#   - major updates stay ungrouped so breaking changes get individual review
-#   - `cooldown` delays brand-new releases, reducing supply-chain risk from
-#     a compromised or broken just-published version
-#   - GitHub Actions are kept patched (a compromised action runs in CI)
+# Strategy: security updates only.
+#   - `open-pull-requests-limit: 0` disables scheduled version updates for each
+#     ecosystem. Security (advisory-driven) PRs are not subject to this limit.
+#   - Security PRs per ecosystem are grouped into a single PR.
+#   - No `ignore` block: a security fix that exists only in a new major must
+#     still be proposed. Majors need manual review.
+#   - `schedule` is required by the schema but produces no PRs at limit 0.
 #
-# Security (advisory-driven) updates also require "Dependabot security updates"
-# to be enabled in the repository's Security settings.
-
+# Security updates also require "Dependabot security updates" to be enabled in
+# the repository's Security settings.
 version: 2
 
 updates:
-    # ---- PHP / Composer -------------------------------------------------
-    - package-ecosystem: composer
-      directory: /
-      schedule:
-          interval: weekly
-          day: monday
-          time: '06:00'
-          timezone: Etc/UTC
-      open-pull-requests-limit: 10
-      versioning-strategy: increase
-      cooldown:
-          default-days: 7
-      labels:
-          - dependencies
-          - php
-      # Routine updates: minor/patch only. Major bumps are skipped here, but
-      # security updates can still propose a major if that's the only fix.
-      ignore:
-          - dependency-name: '*'
-            update-types:
-                - version-update:semver-major
-      groups:
-          composer-minor-patch:
-              applies-to: version-updates
-              update-types:
-                  - minor
-                  - patch
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Etc/UTC
+    open-pull-requests-limit: 0
+    # Raise the constraint in composer.json, not only the lock file, so a later
+    # `composer update` cannot resolve back to the vulnerable version.
+    versioning-strategy: increase
+    labels:
+      - dependencies
+      - php
+    commit-message:
+      prefix: 'chore(deps)'
+      prefix-development: 'chore(deps-dev)'
+    groups:
+      composer-security:
+        applies-to: security-updates
+        patterns:
+          - '*'
 
-    # ---- JavaScript / npm ----------------------------------------------
-    - package-ecosystem: npm
-      directory: /
-      schedule:
-          interval: weekly
-          day: monday
-          time: '06:00'
-          timezone: Etc/UTC
-      open-pull-requests-limit: 10
-      versioning-strategy: increase
-      cooldown:
-          default-days: 7
-      labels:
-          - dependencies
-          - javascript
-      # Routine updates: minor/patch only. Major bumps are skipped here, but
-      # security updates can still propose a major if that's the only fix.
-      ignore:
-          - dependency-name: '*'
-            update-types:
-                - version-update:semver-major
-      groups:
-          npm-minor-patch:
-              applies-to: version-updates
-              update-types:
-                  - minor
-                  - patch
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Etc/UTC
+    open-pull-requests-limit: 0
+    versioning-strategy: increase
+    labels:
+      - dependencies
+      - javascript
+    commit-message:
+      prefix: 'chore(deps)'
+      prefix-development: 'chore(deps-dev)'
+    groups:
+      npm-security:
+        applies-to: security-updates
+        patterns:
+          - '*'
 
-    # ---- GitHub Actions ------------------------------------------------
-    - package-ecosystem: github-actions
-      directory: /
-      schedule:
-          interval: weekly
-          day: monday
-          time: '06:00'
-          timezone: Etc/UTC
-      open-pull-requests-limit: 10
-      cooldown:
-          default-days: 3
-      labels:
-          - dependencies
-          - github-actions
-      # Routine updates: minor/patch only. NOTE: many actions release via major
-      # tags (v4 -> v5), so this keeps you on the current major. Remove this
-      # ignore block if you want major action bumps proposed automatically.
-      ignore:
-          - dependency-name: '*'
-            update-types:
-                - version-update:semver-major
-      groups:
-          github-actions:
-              patterns:
-                  - '*'
+  # Reads `uses:` lines in .github/workflows/*.yml. For this ecosystem `/`
+  # means .github/workflows, not the repository root.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Etc/UTC
+    open-pull-requests-limit: 0
+    labels:
+      - dependencies
+      - github-actions
+    groups:
+      github-actions-security:
+        applies-to: security-updates
+        patterns:
+          - '*'
