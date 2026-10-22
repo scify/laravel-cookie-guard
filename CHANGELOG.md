@@ -5,6 +5,14 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+Development and CI only. The shipped files (PHP, Blade, translations and the built assets in `public/`) do not change, so this needs no release on its own.
+
+- Node.js 26.12.1 in `.nvmrc` (CVE-2026-111497, CVE-2026-105483, CVE-2026-106069, CVE-2026-105482). CI reads the version from `.nvmrc` instead of `node-version: '24'`.
+- `engines` and `devEngines` in `package.json` accept only patched Node.js lines (`^22.23.4 || ^24.22.1 || ^26.12.1`) and npm 11.19.1 or newer.
+- Dev dependencies: `stylelint` 17.16.0, `stylelint-scss` 7.3.0, `postcss-selector-parser` 7.1.6, `fast-uri` 3.1.8. `composer.lock` (used by CI only): `symfony/http-foundation` 7.4.21 (CVE-2026-108082).
+
 ## v5.1.0 - Save route under `web`, consent lifetime and erasure, validated payload, translation overrides
 
 Minor release. No breaking changes to the Blade components, the routes or the configuration keys, but the package now behaves as documented in several places where it did not. After updating:
