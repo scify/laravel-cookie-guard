@@ -5,9 +5,9 @@ All notable changes to `laravel-cookie-guard` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## v5.1.1 - MIT license
 
-The license changes to MIT, so this needs a release: `LICENCE.md` ships with the package. The code (PHP, Blade, translations and the built assets in `public/`) does not change. The other entries are development and CI changes.
+Patch release. The license changes to MIT: `LICENCE.md` ships with the package. The code (PHP, Blade, translations and the built assets in `public/`) does not change, so you do not need to re-publish anything. The other entries are development and CI changes.
 
 - License: `LICENCE.md`, the README and `SECURITY.md` now say MIT, like `composer.json` and Packagist. Before, `LICENCE.md` contained the Apache License 2.0.
 - Node.js 26.12.1 in `.nvmrc` (CVE-2026-111497, CVE-2026-105483, CVE-2026-106069, CVE-2026-105482). CI reads the version from `.nvmrc` instead of `node-version: '24'`.
