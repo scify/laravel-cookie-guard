@@ -82,7 +82,7 @@ jobs:
           coverage: xdebug
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-interaction
+        run: composer update --prefer-dist --no-interaction
 
       - name: Run PHP tests with coverage
         run: vendor/bin/pest --coverage --coverage-clover=clover.xml

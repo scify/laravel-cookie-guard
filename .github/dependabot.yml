@@ -1,4 +1,4 @@
-# Dependabot configuration for a Laravel repository (Composer + npm + GitHub Actions).
+# Dependabot configuration for a Laravel package (Composer + npm + GitHub Actions).
 #
 # Strategy: security updates only.
 #   - `open-pull-requests-limit: 0` disables scheduled version updates for each
@@ -21,9 +21,10 @@ updates:
       time: '06:00'
       timezone: Etc/UTC
     open-pull-requests-limit: 0
-    # Raise the constraint in composer.json, not only the lock file, so a later
-    # `composer update` cannot resolve back to the vulnerable version.
-    versioning-strategy: increase
+    # composer.json is the package's compatibility promise to the apps that
+    # install it. widen adds new versions to a range and never drops old ones;
+    # increase would narrow it. The package commits no composer.lock.
+    versioning-strategy: widen
     labels:
       - dependencies
       - php
