@@ -18,3 +18,4 @@ storage
 !/public/_variables.css
 .phpunit.cache*
 .phpunit.cache/
+composer.lock
