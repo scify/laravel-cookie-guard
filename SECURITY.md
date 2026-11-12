@@ -36,10 +36,10 @@ processes, please [contact us](https://scify.org/#footer-form).
 - **Version Support:** SciFY may provide security support for multiple versions,
   depending on the terms of the enterprise agreement.
 
-## Apache 2.0 License Users
+## MIT License Users
 
 - **Security SLA:** SciFY does not provide a formal SLA for security issues under
-  the Apache 2.0 License.
+  the MIT License.
 - **Release Schedule:** Releases prioritize new functionality and include fixes
   for known security vulnerabilities at the time of release. While major
   releases typically occur one to two times per year, SciFY does not guarantee a
