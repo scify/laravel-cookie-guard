@@ -6,7 +6,7 @@ Laravel Cookie Guard is a GDPR-compliant cookie consent package for Laravel appl
 
 **Repository:** <https://github.com/scify/laravel-cookie-guard>
 **Author:** SciFY (Paul Isaris)
-**License:** MIT/Apache 2.0
+**License:** MIT
 
 ## Quick Reference
 

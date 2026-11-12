@@ -14,6 +14,7 @@ Development and CI only. The shipped files (PHP, Blade, translations and the bui
 - Dev dependencies: `stylelint` 17.16.0, `stylelint-scss` 7.3.0, `postcss-selector-parser` 7.1.6, `fast-uri` 3.1.8. `composer.lock` (used by CI only): `symfony/http-foundation` 7.4.21 (CVE-2026-108082).
 - `composer.lock` is no longer committed. CI resolves the Composer ranges with `composer update`. Dependabot uses `versioning-strategy: widen` for Composer.
 - README badges: removed the broken and decorative badges, added a PHP version badge, and linked the license badge to `LICENCE.md`.
+- License: `LICENCE.md`, the README and `SECURITY.md` now say MIT, like `composer.json` and Packagist. Before, `LICENCE.md` contained the Apache License 2.0.
 
 ## v5.1.0 - Save route under `web`, consent lifetime and erasure, validated payload, translation overrides
 

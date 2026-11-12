@@ -13,7 +13,7 @@ The **last** Cookies Consent Plugin your **Laravel app** will ever need!
 [![codecov](https://codecov.io/gh/scify/laravel-cookie-guard/graph/badge.svg)](https://codecov.io/gh/scify/laravel-cookie-guard)
 [![PHP Version](https://img.shields.io/packagist/dependency-v/scify/laravel-cookie-guard/php)](composer.json)
 [![Total Downloads](https://img.shields.io/packagist/dt/scify/laravel-cookie-guard.svg)](https://packagist.org/packages/scify/laravel-cookie-guard)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENCE.md)
+[![License](https://img.shields.io/packagist/l/scify/laravel-cookie-guard.svg)](LICENCE.md)
 
 <!-- omit in toc -->
 
@@ -824,4 +824,4 @@ Also, don't forget to update the `CHANGELOG.md` file with the new version name, 
 
 ## License
 
-The Apache Licence. Please see the [Licence File](LICENCE.md) for more information.
+The MIT Licence. Please see the [Licence File](LICENCE.md) for more information.
