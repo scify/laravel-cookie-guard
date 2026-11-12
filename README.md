@@ -8,20 +8,12 @@ The **last** Cookies Consent Plugin your **Laravel app** will ever need!
 
 <hr>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/scify/laravel-cookie-guard.svg?style=flat-square)](https://packagist.org/packages/scify/laravel-cookie-guard)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/scify/laravel-cookie-guard/run-tests.yml?branch=main)](https://github.com/scify/laravel-cookie-guard/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/scify/laravel-cookie-guard.svg)](https://packagist.org/packages/scify/laravel-cookie-guard)
+[![Tests](https://img.shields.io/github/actions/workflow/status/scify/laravel-cookie-guard/run-tests.yml?branch=main&label=tests)](https://github.com/scify/laravel-cookie-guard/actions/workflows/run-tests.yml?query=branch%3Amain)
 [![codecov](https://codecov.io/gh/scify/laravel-cookie-guard/graph/badge.svg)](https://codecov.io/gh/scify/laravel-cookie-guard)
-[![Total Downloads](https://img.shields.io/packagist/dt/scify/laravel-cookie-guard.svg?style=flat-square)](https://packagist.org/packages/scify/laravel-cookie-guard)
-[![GitHub Issues](https://img.shields.io/github/issues/scify/laravel-cookie-guard)](https://img.shields.io/github/issues/scify/laravel-cookie-guard)
-[![GitHub Stars](https://img.shields.io/github/stars/scify/laravel-cookie-guard)](https://img.shields.io/github/stars/scify/laravel-cookie-guard)
-[![GitHub forks](https://img.shields.io/github/forks/scify/laravel-cookie-guard)](https://img.shields.io/github/forks/scify/laravel-cookie-guard)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
-[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/scify)
-[![GitHub contributors](https://img.shields.io/github/contributors/scify/laravel-cookie-guard)](https://github.com/scify/laravel-cookie-guard/graphs/contributors)
-[![GitHub pull-requests](https://img.shields.io/github/issues-pr/scify/laravel-cookie-guard)](https://github.com/scify/laravel-cookie-guard/pulls)
-[![GitHub closed pull-requests](https://img.shields.io/github/issues-pr-closed/scify/laravel-cookie-guard)](https://github.com/scify/laravel-cookie-guard/pulls?q=is%3Apr+is%3Aclosed)
+[![PHP Version](https://img.shields.io/packagist/dependency-v/scify/laravel-cookie-guard/php)](composer.json)
+[![Total Downloads](https://img.shields.io/packagist/dt/scify/laravel-cookie-guard.svg)](https://packagist.org/packages/scify/laravel-cookie-guard)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENCE.md)
 
 <!-- omit in toc -->
 
